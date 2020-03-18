@@ -16,6 +16,8 @@
   "parserOptions": {
     "ecmaVersion": 2018
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {}
 }
