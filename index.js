@@ -1,8 +1,9 @@
 const express = require('express'),
-    morgan = require('morgan');
+    morgan = require('morgan'),
+    app = express();
 
-const app = express();
-
+// The first 10 movies I could think of that I enjoy. That aren't
+// children's movies.
 
 let topMovies = [{
     title: 'Life is Beautiful',
@@ -46,16 +47,33 @@ let topMovies = [{
 }
 ]
 
-// Get requests
+// Logging - 
 
+app.use(morgan('common'));
+
+// app.disable('etag'); This disables caching and prevents the 
+// 304 HTTP error code I received originally. However, it would 
+// increase the load for any visitors.
+
+// GET requests
+
+// Returns a JSON object of the topMovies variable
+app.get('/movies', function (req, res) {
+    res.json(topMovies)
+})
+
+// Returns plain text
 app.get('/', function (req, res) {
     res.send('Welcome to my movie API.');
 });
-app.get("/documentation", function (req, res) {
-    res.sendFile("public/documentation.html", { root: __dirname });
-});
-app.get('/movies', function (req, res) {
-    res.json(topMovies)
+
+// Accesses the public directory
+app.use(express.static('public'));
+
+// Error handling funciton. How to test?!
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
 });
 
 // Listen for requests
