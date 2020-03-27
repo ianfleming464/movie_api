@@ -2,16 +2,13 @@ const express = require('express'),
     morgan = require('morgan'),
     app = express();
 
-// The first 10 movies I could think of that I enjoy. That aren't
-// children's movies.
-
 let topMovies = [{
-    title: 'Life is Beautiful',
-    year: '1997'
+    title: 'Ferris Bueller\'s Day Off',
+    year: '1986'
 },
 {
-    title: 'Goodfellas',
-    year: '1990'
+    title: 'Airplane!',
+    year: '1980'
 },
 {
     title: 'Predator',
@@ -26,24 +23,24 @@ let topMovies = [{
     year: '1986'
 },
 {
-    title: 'Children of Men',
-    year: '2006'
+    title: 'The Princess Bride',
+    year: '1987'
 },
 {
-    title: '28 Days Later',
-    year: '2002'
+    title: 'Back to the Future',
+    year: '1985'
 },
 {
-    title: 'Trainspotting',
-    year: '1996'
+    title: 'Beverly Hills Cop',
+    year: '1984'
 },
 {
     title: 'Purple Rain',
     year: '1984'
 },
 {
-    title: 'The Abyss',
-    year: '1989'
+    title: 'Twins',
+    year: '1988'
 }
 ]
 
@@ -64,7 +61,7 @@ app.get('/movies', function (req, res) {
 
 // Returns plain text
 app.get('/', function (req, res) {
-    res.send('Welcome to my movie API.');
+    res.send('Welcome to my 1980s movie API.');
 });
 
 // Accesses the public directory
