@@ -1,28 +1,109 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
 <html lang="en" class="no-js">
-<!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>| Wax on, wax off |</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <!-- Temporary stylesheet until I figure out overall look of API and (probably) use Bootstrap-->
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title> | Wax on, wax off | </title>
-  <meta name="description" content="" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- <link rel="stylesheet" href="" /> -->
-</head>
-
-<body>
-  <h1>Wax on, wax off</h1>
-  <h3>A 1980s Movie API</h3>
-  <p>The API will provide users with access to information
-    about different movies, directors and genres. Users will be able
-    to sign up, update their personal information, and create a list
-    of their favourite movies
-  </p>
-</body>
-
+  <body>
+    <h1>Wax on, wax off</h1>
+    <h2>A 1980s Movie API</h2>
+    <p>
+      The API will provide users with access to information about different
+      movies, directors and genres. Users will be able to sign up, update their
+      personal information, and create a list of their favourite movies
+    </p>
+    <br />
+    <table>
+      <tr>
+        <th>Request</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th>Request body format</th>
+        <th>Response</th>
+      </tr>
+      <tr>
+        <td>Return a list of ALL movies to the user</td>
+        <td>localhost:8080/movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON object holding data about all the movies</td>
+      </tr>
+      <tr>
+        <td>
+          Return data (description, genre, director, year, image URL) about a
+          single movie by title to the user
+        </td>
+        <td>localhost:8080/movies/[title]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON object holding data about a single movie</td>
+      </tr>
+      <tr>
+        <td>Return data about a genre (description) by name/title</td>
+        <td>localhost:8080/movies/[genre]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON object holding genre data about a single movie</td>
+      </tr>
+      <tr>
+        <td>
+          Return data about a director (name, birth year, death year) by name
+        </td>
+        <td>localhost:8080/movies/[director]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON object holding director data about a single movie</td>
+      </tr>
+      <tr>
+        <td>Allow new users to register</td>
+        <td>localhost:8080/movies/users</td>
+        <td>POST</td>
+        <td>
+          JSON object holding user data, for example: {name: 'Ian Fleming',
+          password: ****, email: ian@fleming.com, DOB: 1981-07-07 }
+        </td>
+        <td>JSON object holding user data that was added, including an ID</td>
+      </tr>
+      <tr>
+        <td>
+          Allow users to update their user info (username, password, email, DOB)
+        </td>
+        <td>localhost:8080/movies/users/[username]/[password]/[email]/[DOB]</td>
+        <td>PUT</td>
+        <td>None</td>
+        <td>Text message inducating relevant info was updated</td>
+      </tr>
+      <tr>
+        <td>Allow users to add a movie to a list of favourites</td>
+        <td>localhost:8080/movies/users/favourites</td>
+        <td>POST</td>
+        <td>
+          JSON object holding movie data, for example: { title: 'Red Heat',
+          genre: { action, comedy }, director: Walter Hill, image URL: ****,
+          year: 1988 }
+        </td>
+        <td>JSON object holding movie data that was added, including ID</td>
+      </tr>
+      <tr>
+        <td>Allow users to remove a movie from their list of favourites</td>
+        <td>localhost:8080/movies/users/favourites/[title]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>Text message indicating that the relevant movie was deleted</td>
+      </tr>
+      <tr>
+        <td>Allow existing users to deregister</td>
+        <td>localhost:8080/movies/users</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>Text message indicating that the relevant user was deleted</td>
+      </tr>
+    </table>
+  </body>
 </html>
