@@ -1,0 +1,12 @@
+/* Temporary stylesheet until I figure out overall look of API and (probably) use Bootstrap */
+body {
+  font-family: monospace;
+  font-size: 10px;
+}
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 5px;
+}
