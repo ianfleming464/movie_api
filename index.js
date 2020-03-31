@@ -1,8 +1,14 @@
 const express = require("express"),
-  morgan = require("morgan"),
-  app = express();
+  bodyParser = require("body-parser"),
+  uuid = require("uuid");
 
-let topMovies = [
+const app = express();
+
+const morgan = require("morgan");
+
+// Data arrays
+
+let movies = [
   {
     title: "Ferris Bueller's Day Off",
     description:
@@ -32,7 +38,7 @@ let topMovies = [
     title: "Predator",
     description:
       "A team of commandos on a mission in a Central American jungle find themselves hunted by an extraterrestrial warrior.",
-    genre: "Action/Horror",
+    genre: "Science fiction",
     director: {
       name: "John McTiernan",
       Born: "January 8, 1951"
@@ -61,9 +67,10 @@ let topMovies = [
       name: "James Cameron",
       born: "August 16, 1954"
     },
-    image: "/public/aliens.png",
+    // image: "/public/aliens.png",
     year: "1986"
   },
+
   {
     title: "The Princess Bride",
     description:
@@ -126,33 +133,121 @@ let topMovies = [
   }
 ];
 
+let directors = [
+  {
+    name: "John Hughes",
+    born: "February 18, 1950",
+    died: "August 6, 2009"
+  },
+  {
+    name: "Jim Abrahams",
+    born: "May 10, 1944"
+  },
+  {
+    name: "John McTiernan",
+    born: "January 8, 1951"
+  },
+  {
+    name: "Ridley Scott",
+    born: "November 30, 1937"
+  },
+  {
+    name: "James Cameron",
+    born: "August 16, 1954"
+  },
+  {
+    name: "Rob Reiner",
+    born: "March 6, 1947"
+  },
+  {
+    name: "Robert Zemeckis",
+    born: "May 14, 1951"
+  },
+  {
+    name: "Martin Brest",
+    born: "August 8, 1951"
+  },
+  {
+    name: "Albert Magnoli",
+    born: "January 31, 1954"
+  },
+  {
+    name: "Ivan Reitman",
+    born: "October 27, 1946"
+  }
+];
+
+let genres = [
+  {
+    name: "Comedy",
+    description:
+      "A comedy film is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect. Films in this style traditionally have a happy ending (black comedy being an exception)."
+  },
+  {
+    name: "Science fiction",
+    description:
+      "Science fiction (or sci-fi) is a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science, such as extraterrestrial lifeforms, alien worlds, extrasensory perception and time travel, along with futuristic elements. Science fiction films have often been used to focus on political or social issues, and to explore philosophical issues like the human condition."
+  },
+  {
+    name: "Adventure",
+    description:
+      "Adventure films are a genre of film that typically use their action scenes to display and explore exotic locations in an energetic way. Main plot elements include quests for lost continents and exotic setting; struggles and situations that confront the main characters, the creation of empires, characters embarking on treasure and heroic journeys, travels, explorations, quests and searches for the unknown usually also having to overcome an adversary."
+  },
+  {
+    name: "Drama",
+    description:
+      "Drama is a genre of narrative fiction intended to be more serious than humorous in tone. Drama of this kind is usually qualified with additional terms that specify its particular subgenre. These terms tend to indicate a particular setting or subject-matter, or else they qualify the otherwise serious tone of a drama with elements that encourage a broader range of moods."
+  }
+];
+
+// MIDDLEWARE
+
+// adding bodyParser -
+
+app.use(bodyParser.json());
+
 // Logging -
 
 app.use(morgan("common"));
 
-// app.disable('etag'); This disables caching and prevents the
-// 304 HTTP error code I received originally. However, it would
-// increase the load for any visitors.
+// Accesses the public directory -
 
-// GET requests
+app.use(express.static("public"));
 
-// Returns a JSON object of the topMovies variable
-app.get("/movies", function(req, res) {
-  res.json(topMovies);
+// Error handling
+
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("There has been an error.");
 });
+
+// Endpoints
+
+// Returns a JSON object of the movies variable
+
+app.get("/movies", (req, res) => {
+  res.json(movies);
+});
+
+// Returns data about single movie by title
+
+app.get("/movies/:title", (req, res) => {
+  res.json(
+    movies.find(movie => {
+      return movie.title === req.params.title;
+    })
+  );
+});
+
+// app.get("/movies/:title", (req, res) => {
+//   res.send("Huzzah!");
+// });
+
+//------------------------------------------------
 
 // Returns plain text
 app.get("/", function(req, res) {
   res.send("Welcome to my 1980s movie API.");
-});
-
-// Accesses the public directory
-app.use(express.static("public"));
-
-// Error handling funciton. How to test?!
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
 });
 
 // Listen for requests
