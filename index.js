@@ -49,7 +49,7 @@ let topMovies = [
       name: "Ridley Scott",
       born: "November 30, 1937"
     },
-    image: "/public/bladerunner.jpeg",
+    image: "/public/bladerunner.png",
     year: "1982"
   },
   {
@@ -61,7 +61,7 @@ let topMovies = [
       name: "James Cameron",
       born: "August 16, 1954"
     },
-    image: "/public/aliens.jpeg",
+    image: "/public/aliens.png",
     year: "1986"
   },
   {
@@ -73,7 +73,7 @@ let topMovies = [
       name: "Rob Reiner",
       born: "March 6, 1947"
     },
-    image: "/public/princessbride.jpeg",
+    image: "/public/princessbride.png",
     year: "1987"
   },
   {
