@@ -16,8 +16,7 @@ let movies = [
     genre: "Comedy",
     director: {
       name: "John Hughes",
-      born: "February 18, 1950",
-      died: "August 6, 2009"
+      born: "February 18, 1950"
     },
     image: "/public/ferrisbueller.png",
     year: "1986"
@@ -67,7 +66,7 @@ let movies = [
       name: "James Cameron",
       born: "August 16, 1954"
     },
-    // image: "/public/aliens.png",
+    image: "/public/aliens.png",
     year: "1986"
   },
 
@@ -136,8 +135,7 @@ let movies = [
 let directors = [
   {
     name: "John Hughes",
-    born: "February 18, 1950",
-    died: "August 6, 2009"
+    born: "February 18, 1950"
   },
   {
     name: "Jim Abrahams",
@@ -223,6 +221,12 @@ app.use(function(err, req, res, next) {
 
 // Endpoints
 
+// Returns plain text
+
+app.get("/", function(req, res) {
+  res.send("Welcome to my 1980s movie API.");
+});
+
 // Returns a JSON object of the movies variable
 
 app.get("/movies", (req, res) => {
@@ -231,23 +235,67 @@ app.get("/movies", (req, res) => {
 
 // Returns data about single movie by title
 
+// app.get("/movies/:title", (req, res) => {
+//   res.json(
+//     movies.find(movie => {
+//       return movie.title === req.params.title;
+//     })
+//   );
+// });
+
 app.get("/movies/:title", (req, res) => {
-  res.json(
-    movies.find(movie => {
-      return movie.title === req.params.title;
-    })
+  res.send("Successful GET request for obtaining movie by title!");
+});
+
+// Return data about a genre by name
+
+app.get("/genres/:name", (req, res) => {
+  res.send("Successful GET request for obtaining genre data!");
+});
+
+// Return director info
+
+app.get("/directors/:name", (req, res) => {
+  res.send("Succesful GET request for returning director info!");
+});
+
+// Allow new users to register
+
+app.post("/users", (req, res) => {
+  let newUser = req.body;
+
+  if (!newUser.username) {
+    const message = "Missing username in request body";
+    res.status(400).send(message);
+  } else {
+    res.send("User successfully added.");
+  }
+});
+
+// Allow users to update user info
+
+app.put("/users/:username/:password/:email/:dateOfBirth", (req, res) => {
+  res.send("Successful PUT request for updating user info");
+});
+
+// Allow users to add a movie to a list of favourites
+
+app.post("/users/:username/favourites", (req, res) => {
+  res.send("Successful POST request adding a movie to a list of favourites");
+}); // note to self: apply some sort of filter() functionality to give error message if the film year is not from the 1980s
+
+// Allow users to remove a movie from a list of favourites
+
+app.delete("/users/:username/favourites", (req, res) => {
+  res.send(
+    "Successful DELETE request removing a movie to a list of favourites"
   );
 });
 
-// app.get("/movies/:title", (req, res) => {
-//   res.send("Huzzah!");
-// });
+// Allow existing users to deregister
 
-//------------------------------------------------
-
-// Returns plain text
-app.get("/", function(req, res) {
-  res.send("Welcome to my 1980s movie API.");
+app.delete("/users/:username", (req, res) => {
+  res.send("Succesful DELETE of existing user");
 });
 
 // Listen for requests
