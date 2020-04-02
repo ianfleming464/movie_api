@@ -45,28 +45,28 @@
         <td>JSON object holding data about a single movie</td>
       </tr>
       <tr>
-        <td>Return data about a genre (description) by name/title</td>
-        <td>localhost:8080/movies/[genre]</td>
+        <td>Return data about a genre (description) by name</td>
+        <td>localhost:8080/genres/[name]</td>
         <td>GET</td>
         <td>None</td>
         <td>JSON object holding genre data about a single movie</td>
       </tr>
       <tr>
         <td>
-          Return data about a director (name, birth year, death year) by name
+          Return data about a director (name, date of birth)
         </td>
-        <td>localhost:8080/movies/[director]</td>
+        <td>localhost:8080/directors/[name]</td>
         <td>GET</td>
         <td>None</td>
         <td>JSON object holding director data about a single movie</td>
       </tr>
       <tr>
         <td>Allow new users to register</td>
-        <td>localhost:8080/movies/users</td>
+        <td>localhost:8080/users</td>
         <td>POST</td>
         <td>
-          JSON object holding user data, for example: {name: 'Ian Fleming',
-          password: ****, email: ian@fleming.com, DOB: 1981-07-07 }
+          JSON object holding user data, for example: {name: 'IanFleming',
+          password: '****'', email: 'ian@fleming.com', born: '19810707' }
         </td>
         <td>JSON object holding user data that was added, including an ID</td>
       </tr>
@@ -74,32 +74,34 @@
         <td>
           Allow users to update their user info (username, password, email, DOB)
         </td>
-        <td>localhost:8080/movies/users/[username]/[password]/[email]/[DOB]</td>
+        <td>
+          localhost:8080/users/[username]/[password]/[email]/[dateOfBirth]
+        </td>
         <td>PUT</td>
         <td>None</td>
-        <td>Text message inducating relevant info was updated</td>
+        <td>Text message indicating relevant info was updated</td>
       </tr>
       <tr>
         <td>Allow users to add a movie to a list of favourites</td>
-        <td>localhost:8080/movies/users/favourites</td>
+        <td>localhost:8080/users/[username]/favourites</td>
         <td>POST</td>
         <td>
           JSON object holding movie data, for example: { title: 'Red Heat',
-          genre: { action, comedy }, director: Walter Hill, image URL: ****,
-          year: 1988 }
+          genre: 'action', director: 'Walter Hill', image URL: '****'', year:
+          '1988' }
         </td>
         <td>JSON object holding movie data that was added, including ID</td>
       </tr>
       <tr>
         <td>Allow users to remove a movie from their list of favourites</td>
-        <td>localhost:8080/movies/users/favourites/[title]</td>
+        <td>localhost:8080/users/[username]/favourites/</td>
         <td>DELETE</td>
         <td>None</td>
         <td>Text message indicating that the relevant movie was deleted</td>
       </tr>
       <tr>
         <td>Allow existing users to deregister</td>
-        <td>localhost:8080/movies/users</td>
+        <td>localhost:8080/users/[username]</td>
         <td>DELETE</td>
         <td>None</td>
         <td>Text message indicating that the relevant user was deleted</td>
