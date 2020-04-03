@@ -216,7 +216,7 @@ app.use(express.static("public"));
 
 // Returns plain text
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.send("Welcome to my 1980s movie API.");
 });
 
@@ -293,7 +293,7 @@ app.delete("/users/:username", (req, res) => {
 
 // Error handling
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send("There has been an error.");
 });
