@@ -18,7 +18,7 @@ let movies = [
       name: "John Hughes",
       born: "February 18, 1950"
     },
-    image: "/public/ferrisbueller.png",
+    image: "https://www.imdb.com/title/tt0091042/mediaviewer/rm4100659200",
     year: "1986"
   },
   {
@@ -30,7 +30,7 @@ let movies = [
       name: "Jim Abrahams",
       born: "May 10, 1944"
     },
-    image: "/public/airplane.png",
+    image: "https://www.imdb.com/title/tt0080339/mediaviewer/rm1610833408",
     year: "1980"
   },
   {
@@ -42,7 +42,7 @@ let movies = [
       name: "John McTiernan",
       Born: "January 8, 1951"
     },
-    image: "/public/predator.png",
+    image: "https://www.imdb.com/title/tt0093773/mediaviewer/rm35588864",
     year: "1987"
   },
   {
@@ -54,7 +54,7 @@ let movies = [
       name: "Ridley Scott",
       born: "November 30, 1937"
     },
-    image: "/public/bladerunner.png",
+    image: "https://www.imdb.com/title/tt0083658/mediaviewer/rm3676975360",
     year: "1982"
   },
   {
@@ -66,7 +66,7 @@ let movies = [
       name: "James Cameron",
       born: "August 16, 1954"
     },
-    image: "/public/aliens.png",
+    image: "https://www.imdb.com/title/tt0090605/mediaviewer/rm490960896",
     year: "1986"
   },
 
@@ -79,7 +79,7 @@ let movies = [
       name: "Rob Reiner",
       born: "March 6, 1947"
     },
-    image: "/public/princessbride.png",
+    image: "https://www.imdb.com/title/tt0093779/mediaviewer/rm2230196992",
     year: "1987"
   },
   {
@@ -91,7 +91,7 @@ let movies = [
       name: "Robert Zemeckis",
       born: "May 14, 1951"
     },
-    image: "/public/backtothefuture.png",
+    image: "https://www.imdb.com/title/tt0088763/mediaviewer/rm554638848",
     year: "1985"
   },
   {
@@ -103,7 +103,7 @@ let movies = [
       name: "Martin Brest",
       born: "August 8, 1951"
     },
-    image: "/public/beverleyhillscop.png",
+    image: "https://www.imdb.com/title/tt0086960/mediaviewer/rm1574835200",
     year: "1984"
   },
   {
@@ -115,7 +115,7 @@ let movies = [
       name: "Albert Magnoli",
       born: "January 31, 1954"
     },
-    image: "/public/purplerain.png",
+    image: "https://www.imdb.com/title/tt0087957/mediaviewer/rm2949198592",
     year: "1984"
   },
   {
@@ -127,7 +127,7 @@ let movies = [
       name: "Ivan Reitman",
       born: "October 27, 1946"
     },
-    image: "/public/twins.png",
+    image: "https://www.imdb.com/title/tt0096320/mediaviewer/rm2320435968",
     year: "1988"
   }
 ];
