@@ -16,7 +16,8 @@ let movies = [
     genre: "Comedy",
     director: {
       name: "John Hughes",
-      born: "February 18, 1950"
+      born: "February 18, 1950",
+      died: "August 6, 2009"
     },
     image: "https://www.imdb.com/title/tt0091042/mediaviewer/rm4100659200",
     year: "1986"
@@ -129,6 +130,68 @@ let movies = [
     },
     image: "https://www.imdb.com/title/tt0096320/mediaviewer/rm2320435968",
     year: "1988"
+  },
+  {
+    title: "The Terminator",
+    description:
+      "In 1984, a human soldier is tasked to stop an indestructible cyborg killing machine, both sent from 2029, from executing a young woman, whose unborn son is the key to humanity's future salvation.",
+    genre: "Science fiction",
+    director: {
+      name: "James Cameron",
+      born: "August 16, 1954"
+    },
+    image: "https://www.imdb.com/title/tt0088247/mediaviewer/rm774208512",
+    year: "1984"
+  },
+  {
+    title: "Planes, Trains and Automobiles",
+    description:
+      "A man must struggle to travel home for Thanksgiving with a lovable oaf of a shower curtain ring salesman as his only companion.",
+    genre: "Comedy",
+    director: {
+      name: "John Hughes",
+      born: "February 18, 1950",
+      died: "August 6, 2009"
+    },
+    image: "https://www.imdb.com/title/tt0093748/mediaviewer/rm1855067136",
+    year: "1987"
+  },
+  {
+    title: "The Breakfast Club",
+    description:
+      "Five high school students meet in Saturday detention and discover how they have a lot more in common than they thought.",
+    genre: "Drama",
+    director: {
+      name: "John Hughes",
+      born: "February 18, 1950",
+      died: "August 6, 2009"
+    },
+    image: "https://www.imdb.com/title/tt0088847/mediaviewer/rm2988051200",
+    year: "1985"
+  },
+  {
+    title: "Rambo: First Blood Part II",
+    description:
+      "Rambo returns to the jungles of Vietnam on a mission to infiltrate an enemy base-camp and rescue the American POWs still held captive there.",
+    genre: "Action",
+    director: {
+      name: "James Cameron",
+      born: "August 16, 1954"
+    },
+    image: "https://www.imdb.com/title/tt0089880/mediaviewer/rm2029328128",
+    year: "1985"
+  },
+  {
+    title: "The Naked Gun",
+    description:
+      "Incompetent police Detective Frank Drebin must foil an attempt to assassinate Queen Elizabeth II.",
+    genre: "Comedy",
+    director: {
+      name: "Jim Abrahams",
+      born: "May 10, 1944"
+    },
+    image: "https://www.imdb.com/title/tt0095705/mediaviewer/rm2877822976",
+    year: "1988"
   }
 ];
 
@@ -216,7 +279,7 @@ app.use(express.static("public"));
 
 // Returns plain text
 
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
   res.send("Welcome to my 1980s movie API.");
 });
 
@@ -293,7 +356,7 @@ app.delete("/users/:username", (req, res) => {
 
 // Error handling
 
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send("There has been an error.");
 });
