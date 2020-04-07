@@ -192,6 +192,19 @@ let movies = [
     },
     image: "https://www.imdb.com/title/tt0095705/mediaviewer/rm2877822976",
     year: "1988"
+  },
+  {
+    title: "Some Kind of Wonderful",
+    description:
+      "When Keith goes out with Amanda, the girl of his dreams, Amanda's ex-boyfriend plans to get back at Keith. Meanwhile, Keith's best friend, tomboy Watts, realizes she has feelings for Keith.",
+    genre: "Drama",
+    director: {
+      name: "John Hughes",
+      born: "February 18, 1950",
+      died: "August 6, 2009"
+    },
+    image: "https://www.imdb.com/title/tt0094006/mediaviewer/rm4068035072",
+    year: "1987"
   }
 ];
 
@@ -260,6 +273,33 @@ let movies = [
 //       "Drama is a genre of narrative fiction intended to be more serious than humorous in tone. Drama of this kind is usually qualified with additional terms that specify its particular subgenre. These terms tend to indicate a particular setting or subject-matter, or else they qualify the otherwise serious tone of a drama with elements that encourage a broader range of moods."
 //   }
 // ];
+
+let users = [
+  {
+    name: "Gemma Hearne",
+    password: "1q2w3e",
+    email: "gemma@hearne.com",
+    born: "1981-04-08"
+  },
+  {
+    name: "Ian Fleming",
+    password: "4r5t6y",
+    email: "ian@fleming.com",
+    born: "1981-07-07"
+  },
+  {
+    name: "Mo McMahon",
+    password: "7u8i9o",
+    email: "theslimreaper@mo.com",
+    born: "1969-01-01"
+  },
+  {
+    name: "John Smith",
+    password: "0o9i8u",
+    email: "lush@corona.com",
+    born: "1979-04-30"
+  }
+];
 
 // MIDDLEWARE
 
