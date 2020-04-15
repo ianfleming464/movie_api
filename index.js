@@ -63,7 +63,7 @@ app.get("/movies/:Title", function(req, res) {
 
 // Return genre description by name
 
-app.get("/movies/genre/:Name", function(req, res) {
+app.get("/movies/genres/:Name", function(req, res) {
   Movies.findOne({ "Genre.Name": req.params.Name })
     .then(function(movie) {
       res.status(201).json(movie.Genre);
@@ -76,7 +76,7 @@ app.get("/movies/genre/:Name", function(req, res) {
 
 // Return director info by name
 
-app.get("/movies/director/:Name", function(req, res) {
+app.get("/movies/directors/:Name", function(req, res) {
   Movies.findOne({ "Director.Name": req.params.Name })
     .then(function(movie) {
       res.status(201).json(movie.Director);
