@@ -35,45 +35,60 @@ app.get("/", function(req, res) {
   res.send("Welcome to my 1980s movie API.");
 });
 
-// Returns a JSON object of the movies variable
+// Return all movies
 
-app.get("/movies", (req, res) => {
-  res.json(movies);
+app.get("/movies", function(req, res) {
+  Movies.find()
+    .then(function(movies) {
+      res.status(201).json(movies);
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
-// Returns data about single movie by title
+// Return data of a single movie
 
-app.get("/movies/:title", (req, res) => {
-  res.send("Successful GET request for obtaining movie by title!");
+app.get("/movies/:Title", function(req, res) {
+  Movies.findOne({ Title: req.params.Title })
+    .then(function(movie) {
+      res.status(201).json(movie);
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
-// Return data about a genre by name
+// Return genre description by name
 
-app.get("/genres/:name", (req, res) => {
-  res.send("Successful GET request for obtaining genre data!");
+app.get("/movies/genre/:Name", function(req, res) {
+  Movies.findOne({ "Genre.Name": req.params.Name })
+    .then(function(movie) {
+      res.status(201).json(movie.Genre);
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
-// Return director info
+// Return director info by name
 
-app.get("/directors/:name", (req, res) => {
-  res.send("Succesful GET request for returning director info!");
+app.get("/movies/director/:Name", function(req, res) {
+  Movies.findOne({ "Director.Name": req.params.Name })
+    .then(function(movie) {
+      res.status(201).json(movie.Director);
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
-// Allow new users to register
+// Add new user
 
-// OLD in memory array  function:
-// app.post("/users", (req, res) => {
-//   let newUser = req.body;
-
-//   if (!newUser.username) {
-//     const message = "Missing username in request body";
-//     res.status(400).send(message);
-//   } else {
-//     res.send("User successfully added.");
-//   }
-// });
-
-//---------------------------------------------
 app.post("/users", function(req, res) {
   Users.findOne({ Username: req.body.Username })
     .then(function(user) {
@@ -101,7 +116,88 @@ app.post("/users", function(req, res) {
     });
 });
 
-// -----------------------------------------------
+// UPDATE info of a specific user
+
+app.put("/users/:Username", function(req, res) {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $set: {
+        Username: req.body.Username, // req.body means that the updated info is extracted from the body of the request sent
+        Password: req.body.Password, // by the user.
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+      }
+    },
+    { new: true }, // This line ensures the updated document is returned.
+    function(err, updatedUser) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
+});
+
+// UPDATE/add movie to favourites list
+
+app.post("/users/:Username/Movies/:MovieID", function(req, res) {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $push: { FavouriteMovies: req.params.MovieID }
+    },
+    { new: true },
+    function(err, updatedUser) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
+});
+
+// DELETE movie from favourites list
+
+app.delete("/users/:Username/Movies/:MovieID", function(req, res) {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $pull: { FavouriteMovies: req.params.MovieID }
+    },
+    { new: true },
+    function(err, updatedUser) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
+});
+
+// DELETE a user by username
+
+app.delete("/users/:Username", function(req, res) {
+  Users.findOneAndRemove({ Username: req.params.Username })
+    .then(function(user) {
+      if (!user) {
+        res.status(400).send(req.params.Username + " was not found");
+      } else {
+        res.status(200).send(req.params.Username + " was deleted");
+      }
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
 // GET all users
 
 app.get("/users", function(req, res) {
@@ -115,37 +211,17 @@ app.get("/users", function(req, res) {
     });
 });
 
-// Allow users to update user info
+// GET user by username
 
-app.put("/users/:username/:password/:email/:dateOfBirth", (req, res) => {
-  res.send("Successful PUT request for updating user info");
-});
-
-// Allow users to add a movie to a list of favourites
-
-app.post("/users/:username/favourites", (req, res) => {
-  res.send("Successful POST request adding a movie to a list of favourites");
-}); // note to self: apply some sort of filter() functionality to give error message if the film year is not from the 1980s
-
-// Allow users to remove a movie from a list of favourites
-
-app.delete("/users/:username/favourites", (req, res) => {
-  res.send(
-    "Successful DELETE request removing a movie to a list of favourites"
-  );
-});
-
-// Allow existing users to deregister
-
-app.delete("/users/:username", (req, res) => {
-  res.send("Succesful DELETE of existing user");
-});
-
-// Error handling
-
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send("There has been an error.");
+app.get("/users/:Username", function(req, res) {
+  Users.findOne({ Username: req.params.Username })
+    .then(function(user) {
+      res.json(user);
+    })
+    .catch(function(err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
 // Listen for requests
