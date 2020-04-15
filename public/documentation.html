@@ -29,7 +29,7 @@
       </tr>
       <tr>
         <td>Return a list of ALL movies to the user</td>
-        <td>localhost:8080/movies</td>
+        <td>/movies</td>
         <td>GET</td>
         <td>None</td>
         <td>JSON object holding data about all the movies</td>
@@ -39,14 +39,14 @@
           Return data (description, genre, director, year, image URL) about a
           single movie by title to the user
         </td>
-        <td>localhost:8080/movies/[Title]</td>
+        <td>/movies/[Title]</td>
         <td>GET</td>
         <td>None</td>
         <td>JSON object holding data about a single movie</td>
       </tr>
       <tr>
         <td>Return data about a genre (description) by name</td>
-        <td>localhost:8080/genres/[Name]</td>
+        <td>movies/genres/[Name]</td>
         <td>GET</td>
         <td>None</td>
         <td>JSON object holding genre data about a single movie</td>
@@ -55,14 +55,14 @@
         <td>
           Return data about a director (Name, Born)
         </td>
-        <td>localhost:8080/directors/[Name]</td>
+        <td>movies/directors/[Name]</td>
         <td>GET</td>
         <td>None</td>
-        <td>JSON object holding director data about a single movie</td>
+        <td>JSON object holding data about a director</td>
       </tr>
       <tr>
         <td>Allow new users to register</td>
-        <td>localhost:8080/users</td>
+        <td>/users</td>
         <td>POST</td>
         <td>
           JSON object holding user data, for example: {Username: 'IanFleming',
@@ -76,7 +76,7 @@
           Birthday)
         </td>
         <td>
-          localhost:8080/users/[Username]/[Password]/[Email]/[Birthday]
+          /users/[Username]/[Password]/[Email]/[Birthday]
         </td>
         <td>PUT</td>
         <td>None</td>
@@ -84,7 +84,7 @@
       </tr>
       <tr>
         <td>Allow users to add a movie to a list of favourites</td>
-        <td>localhost:8080/users/[Username]/favourites</td>
+        <td>/users/[Username]/favourites</td>
         <td>POST</td>
         <td>
           JSON object holding movie data, for example: { title: 'Red Heat',
@@ -95,14 +95,14 @@
       </tr>
       <tr>
         <td>Allow users to remove a movie from their list of favourites</td>
-        <td>localhost:8080/users/[Username]/favourites/</td>
+        <td>/users/[Username]/favourites/</td>
         <td>DELETE</td>
         <td>None</td>
         <td>Text message indicating that the relevant movie was deleted</td>
       </tr>
       <tr>
         <td>Allow existing users to deregister</td>
-        <td>localhost:8080/users/[Username]</td>
+        <td>/users/[Username]</td>
         <td>DELETE</td>
         <td>None</td>
         <td>Text message indicating that the relevant user was deleted</td>
