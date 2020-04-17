@@ -14,7 +14,7 @@ passport.use(
       passwordField: "Password"
     },
     (username, password, callback) => {
-      console.log(username + " " + password);
+      console.log(username + "  " + password);
       Users.findOne({ Username: username }, (error, user) => {
         if (error) {
           console.log(error);
@@ -42,7 +42,7 @@ passport.use(
       secretOrKey: "your_jwt_secret"
     },
     (jwtPayload, callback) => {
-      return Users.findByID(jwtPayload._id)
+      return Users.findById(jwtPayload._id)
         .then(user => {
           return callback(null, user);
         })
