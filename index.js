@@ -19,6 +19,15 @@ mongoose.connect("mongodb://localhost:27017/WaxOnWaxOffDB", {
 
 app.use(bodyParser.json());
 
+// Importing auth.js
+
+let auth = require("./auth")(app);
+
+// Importing passport
+
+const passport = require("passport");
+require("./passport");
+
 // Logging -
 
 app.use(morgan("common"));
