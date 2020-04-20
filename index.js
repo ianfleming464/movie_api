@@ -2,6 +2,7 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   uuid = require("uuid");
 
+const { check, validationResult } = require("express-validator");
 const cors = require("cors");
 const app = express();
 const morgan = require("morgan");
