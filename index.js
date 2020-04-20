@@ -2,6 +2,7 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   uuid = require("uuid");
 
+const cors = require("cors");
 const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
@@ -14,6 +15,27 @@ mongoose.connect("mongodb://localhost:27017/WaxOnWaxOffDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
+// adding CORS - task requires from all origins (default)
+
+app.use(cors());
+
+let allowedOrigins = ["http://localhost:27017", "http://testsite.com"];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        let message =
+          "The CORS policy for this application doesn't allow access from origin " +
+          origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    }
+  })
+);
 
 // adding bodyParser -
 
@@ -112,20 +134,22 @@ app.get(
   }
 );
 
-// Add new user
+// Add new user (i.e. Registration)
 
 app.post(
   "/users",
   // passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Users.findOne({ Username: req.body.Username })
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOne({ Username: req.body.Username }) // Search to see if user with requested username exists
       .then(user => {
         if (user) {
+          // if user is found, send a response that it already exists
           return res.status(400).send(req.body.Username + " already exists");
         } else {
           Users.create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
