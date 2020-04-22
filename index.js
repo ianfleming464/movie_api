@@ -295,4 +295,7 @@ app.get("/users/:Username", passport.authenticate("jwt", { session: false }), (r
 });
 
 // Listen for requests
-app.listen(27017, () => console.log("Your app is listening on port 27017."));
+const port = process.env.PORT || 27017;
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on Port " + port);
+});
