@@ -1,7 +1,19 @@
 import React from "react";
 import axios from "axios";
 
+import { MovieCard } from "../movie-card/movie-card";
+import { MovieView } from "../movie-view/movie-view";
+
 export class MainView extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      movies: null,
+      selectedMovie: null
+    };
+  }
+
   // One of the hooks available in a React component
   componentDidMount() {
     axios
@@ -17,19 +29,24 @@ export class MainView extends React.Component {
       });
   }
 
+  onMovieClick(movie) {
+    this.setState({
+      selectedMovie: movie
+    });
+  }
+
   render() {
-    // If the state isn't initialzed, this will throw on runtime
-    const { movies } = this.state;
+    const { movies, selectedMovie } = this.state;
     //Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
 
     return (
       <div className="main-view">
-        {movies.map(movie => (
-          <div className="movie-card" key={movie._id}>
-            {movie.Title}
-          </div>
-        ))}
+        {selectedMovie ? (
+          <MovieView movie={selectedMovie} />
+        ) : (
+          movies.map(movie => <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)} />)
+        )}
       </div>
     );
   }
