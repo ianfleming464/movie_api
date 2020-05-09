@@ -274,7 +274,7 @@ app.delete("/users/:Username", passport.authenticate("jwt", { session: false }),
 
 // GET all users
 
-app.get("/users", passport.authenticate("jwt", { session: false }), (req, res) => {
+app.get("/users", (req, res) => {
   Users.find()
     .then(users => {
       res.status(201).json(users);
