@@ -32647,8 +32647,6 @@ var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
 require("./login-view.scss");
 
-var _axios = _interopRequireDefault(require("axios"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -32668,6 +32666,8 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function LoginView(props) {
+  var _this = this;
+
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -32685,6 +32685,12 @@ function LoginView(props) {
     console.log(username, password); // Send a request to the server for authentication, then call props.onLoggedIn(username)
 
     props.onLoggedIn(username);
+  };
+
+  var notRegistered = function notRegistered() {
+    _this.setState({
+      register: true
+    });
   };
 
   return _react.default.createElement(_Container.default, {
@@ -32705,18 +32711,18 @@ function LoginView(props) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  })), _react.default.createElement("p", {
-    className: "register-link"
-  }, "Not registered? ", _react.default.createElement("a", {
-    href: "#"
-  }, "Sign up!")), _react.default.createElement(_Button.default, {
+  })), _react.default.createElement(_Button.default, {
     className: "button-login",
     variant: "primary",
     type: "submit",
     onClick: handleSubmit
-  }, "Submit")));
+  }, "Login"), _react.default.createElement(_Button.default, {
+    variant: "link",
+    type: "submit",
+    onClick: notRegistered
+  }, "Sign up!")));
 } // Above has a link to the registration page, once I figure out how to do it..
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./login-view.scss":"components/login-view/login-view.scss","axios":"../../node_modules/axios/index.js"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -32781,26 +32787,30 @@ function RegistrationView(props) {
       birthday = _useState8[0],
       createBirthday = _useState8[1];
 
-  var handleSubmit = function handleSubmit(e) {
-    e.preventDefault(); // props.onLoggedIn(username);
+  var handleRegister = function handleRegister(e) {
+    e.preventDefault();
+    console.log(username, password, email, birthday);
+    alert("Success!");
+    props.onSignedIn(username);
+  }; // axios
+  //   .post("https://my1980smoviesapi.herokuapp.com/users", {
+  //     // Correct path?
+  //     Username: username,
+  //     Password: password,
+  //     Email: email,
+  //     Birthday: birthday
+  //   })
+  //   .then(response => {
+  //     // Assign the result to the state
+  //     const data = response.data;
+  //     alert("Success!");
+  //     console.log(data);
+  //     window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+  //   })
+  //   .catch(e => {
+  //     alert("Error!");
+  //     console.log("Error!");
 
-    _axios.default.post("https://my1980smoviesapi.herokuapp.com/users", {
-      // Correct path?
-      Username: username,
-      Password: password,
-      Email: email,
-      Birthday: birthday
-    }).then(function (response) {
-      // Assign the result to the state
-      var data = response.data;
-      alert("Success!");
-      console.log(data);
-      window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
-    }).catch(function (e) {
-      alert("Error!");
-      console.log("Error!");
-    });
-  };
 
   return _react.default.createElement(_Container.default, {
     className: "registration-container"
@@ -32844,8 +32854,8 @@ function RegistrationView(props) {
     className: "button-register",
     variant: "primary",
     type: "submit",
-    onClick: handleSubmit
-  }, "Register"), ""));
+    onClick: handleRegister
+  }, "Register")));
 }
 },{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./registration-view.scss":"components/registration-view/registration-view.scss","axios":"../../node_modules/axios/index.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
 "use strict";
@@ -33265,8 +33275,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       movies: null,
       selectedMovie: null,
       user: null,
-      // register: true
-      register: false
+      // register: true,
+      register: false,
+      newUser: false
     };
     return _this;
   } // One of the hooks available in a React component_renders the movie card view
@@ -33285,7 +33296,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }).catch(function (error) {
         console.log(error);
       });
-    }
+    } // These are methods which can be passed as props!
+
   }, {
     key: "onMovieClick",
     value: function onMovieClick(movie) {
@@ -33296,25 +33308,31 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onLoggedIn",
     value: function onLoggedIn(user) {
+      //Updates state when user has logged in
       this.setState({
         user: user
       });
     }
   }, {
-    key: "onSignedIn",
-    value: function onSignedIn(user) {
+    key: "onRegistration",
+    value: function onRegistration() {
+      // Updates state when new user has registered
       this.setState({
-        user: user,
-        register: false
+        newUser: true
       });
     }
   }, {
-    key: "register",
-    value: function register() {
+    key: "alreadyRegistered",
+    value: function alreadyRegistered() {
       this.setState({
-        register: true
+        newUser: false
       });
-    }
+    } // onSignedIn(user) {
+    //   this.setState({
+    //     user: user
+    //   });
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -33324,21 +33342,21 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           movies = _this$state.movies,
           selectedMovie = _this$state.selectedMovie,
           user = _this$state.user,
-          register = _this$state.register;
-      if (!user && register === false) return _react.default.createElement(_loginView.LoginView, {
+          newUser = _this$state.newUser;
+      if (!user && !newUser) return _react.default.createElement(_loginView.LoginView, {
         onClick: function onClick() {
-          return _this3.onRegistered();
+          return _this3.onRegistration();
         },
         onLoggedIn: function onLoggedIn(user) {
           return _this3.onLoggedIn(user);
         }
       });
-      if (register) return _react.default.createElement(_registrationView.RegistrationView, {
+      if (newUser) return _react.default.createElement(_registrationView.RegistrationView, {
         onClick: function onClick() {
-          return _this3.alreadyMember();
+          return _this3.alreadyRegistered();
         },
-        onSignedIn: function onSignedIn(user) {
-          return _this3.onSignedIn(user);
+        onLoggedIn: function onLoggedIn(user) {
+          return _this3.onLoggedIn(user);
         }
       }); //Before the movies have been loaded
 
@@ -33462,7 +33480,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51657" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49832" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

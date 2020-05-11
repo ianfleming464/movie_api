@@ -11,30 +11,30 @@ export function RegistrationView(props) {
   const [email, createEmail] = useState("");
   const [birthday, createBirthday] = useState("");
 
-  const handleSubmit = e => {
+  const handleRegister = e => {
     e.preventDefault();
-    // props.onLoggedIn(username);
-
-    axios
-      .post("https://my1980smoviesapi.herokuapp.com/users", {
-        // Correct path?
-        Username: username,
-        Password: password,
-        Email: email,
-        Birthday: birthday
-      })
-      .then(response => {
-        // Assign the result to the state
-        const data = response.data;
-        alert("Success!");
-        console.log(data);
-        window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
-      })
-      .catch(e => {
-        alert("Error!");
-        console.log("Error!");
-      });
+    console.log(username, password, email, birthday);
+    alert("Success!");
+    props.onSignedIn(username);
   };
+  // axios
+  //   .post("https://my1980smoviesapi.herokuapp.com/users", {
+  //     // Correct path?
+  //     Username: username,
+  //     Password: password,
+  //     Email: email,
+  //     Birthday: birthday
+  //   })
+  //   .then(response => {
+  //     // Assign the result to the state
+  //     const data = response.data;
+  //     alert("Success!");
+  //     console.log(data);
+  //     window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+  //   })
+  //   .catch(e => {
+  //     alert("Error!");
+  //     console.log("Error!");
 
   return (
     <Container className="registration-container">
@@ -55,10 +55,9 @@ export function RegistrationView(props) {
           <Form.Control type="text" placeholder="eg. 1981-07-13" value={birthday} onChange={e => createBirthday(e.target.value)} />
         </Form.Group>
 
-        <Button className="button-register" variant="primary" type="submit" onClick={handleSubmit}>
+        <Button className="button-register" variant="primary" type="submit" onClick={handleRegister}>
           Register
         </Button>
-        {""}
       </Form>
     </Container>
   );

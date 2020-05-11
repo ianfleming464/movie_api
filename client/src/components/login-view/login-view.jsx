@@ -3,7 +3,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import "./login-view.scss";
-import axios from "axios";
 
 export function LoginView(props) {
   const [username, setUsername] = useState(""); // Array destructuring - first item is current value, second is a function that lets us update it
@@ -16,6 +15,10 @@ export function LoginView(props) {
     props.onLoggedIn(username);
   };
 
+  const notRegistered = () => {
+    this.setState({ register: true });
+  };
+
   return (
     <Container className="login-container">
       <Form>
@@ -23,15 +26,19 @@ export function LoginView(props) {
           <Form.Label>Username</Form.Label>
           <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} />
         </Form.Group>
+
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
         </Form.Group>
-        <p className="register-link">
+        {/* <p className="register-link">
           Not registered? <a href="#">Sign up!</a>
-        </p>
+        </p> */}
         <Button className="button-login" variant="primary" type="submit" onClick={handleSubmit}>
-          Submit
+          Login
+        </Button>
+        <Button variant="link" type="submit" onClick={notRegistered}>
+          Sign up!
         </Button>
       </Form>
     </Container>

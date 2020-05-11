@@ -17,8 +17,9 @@ export class MainView extends React.Component {
       movies: null,
       selectedMovie: null,
       user: null,
-      // register: true
-      register: false
+      // register: true,
+      register: false,
+      newUser: false
     };
   }
 
@@ -37,6 +38,8 @@ export class MainView extends React.Component {
       });
   }
 
+  // These are methods which can be passed as props!
+
   onMovieClick(movie) {
     this.setState({
       selectedMovie: movie
@@ -44,28 +47,37 @@ export class MainView extends React.Component {
   }
 
   onLoggedIn(user) {
+    //Updates state when user has logged in
     this.setState({
       user
     });
   }
 
-  onSignedIn(user) {
+  onRegistration() {
+    // Updates state when new user has registered
     this.setState({
-      user: user,
-      register: false
+      newUser: true
     });
   }
 
-  register() {
-    this.setState({ register: true });
+  alreadyRegistered() {
+    this.setState({
+      newUser: false
+    });
   }
 
+  // onSignedIn(user) {
+  //   this.setState({
+  //     user: user
+  //   });
+  // }
+
   render() {
-    const { movies, selectedMovie, user, register } = this.state;
+    const { movies, selectedMovie, user, newUser } = this.state;
 
-    if (!user && register === false) return <LoginView onClick={() => this.onRegistered()} onLoggedIn={user => this.onLoggedIn(user)} />;
+    if (!user && !newUser) return <LoginView onClick={() => this.onRegistration()} onLoggedIn={user => this.onLoggedIn(user)} />;
 
-    if (register) return <RegistrationView onClick={() => this.alreadyMember()} onSignedIn={user => this.onSignedIn(user)} />;
+    if (newUser) return <RegistrationView onClick={() => this.alreadyRegistered()} onLoggedIn={user => this.onLoggedIn(user)} />;
 
     //Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
