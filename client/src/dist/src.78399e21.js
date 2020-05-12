@@ -32666,8 +32666,6 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function LoginView(props) {
-  var _this = this;
-
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -32685,12 +32683,6 @@ function LoginView(props) {
     console.log(username, password); // Send a request to the server for authentication, then call props.onLoggedIn(username)
 
     props.onLoggedIn(username);
-  };
-
-  var notRegistered = function notRegistered() {
-    _this.setState({
-      register: true
-    });
   };
 
   return _react.default.createElement(_Container.default, {
@@ -32719,9 +32711,21 @@ function LoginView(props) {
   }, "Login"), _react.default.createElement(_Button.default, {
     variant: "link",
     type: "submit",
-    onClick: notRegistered
+    onClick: function onClick() {
+      return props.onClick();
+    }
   }, "Sign up!")));
-} // Above has a link to the registration page, once I figure out how to do it..
+}
+
+{}
+/* <Button variant="link" type="submit" onClick={notRegistered}>
+Sign up!
+</Button>
+</Form>
+</Container>
+);
+} */
+// Above has a link to the registration page, once I figure out how to do it..
 },{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
@@ -32855,7 +32859,13 @@ function RegistrationView(props) {
     variant: "primary",
     type: "submit",
     onClick: handleRegister
-  }, "Register")));
+  }, "Register"), _react.default.createElement(_Button.default, {
+    variant: "link",
+    type: "submit",
+    onClick: function onClick() {
+      return props.onClick();
+    }
+  }, "Already a member?")));
 }
 },{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./registration-view.scss":"components/registration-view/registration-view.scss","axios":"../../node_modules/axios/index.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
 "use strict";
@@ -33274,9 +33284,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       movies: null,
       selectedMovie: null,
-      user: null,
-      // register: true,
-      register: false,
+      user: false,
+      register: true,
+      // register: false,
       newUser: false
     };
     return _this;
@@ -33316,7 +33326,6 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onRegistration",
     value: function onRegistration() {
-      // Updates state when new user has registered
       this.setState({
         newUser: true
       });
@@ -33327,12 +33336,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       this.setState({
         newUser: false
       });
-    } // onSignedIn(user) {
-    //   this.setState({
-    //     user: user
-    //   });
-    // }
-
+    }
+  }, {
+    key: "onSignedIn",
+    value: function onSignedIn(user) {
+      this.setState({
+        user: user
+      });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -33480,7 +33491,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49832" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56851" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

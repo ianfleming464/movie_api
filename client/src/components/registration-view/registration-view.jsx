@@ -58,6 +58,9 @@ export function RegistrationView(props) {
         <Button className="button-register" variant="primary" type="submit" onClick={handleRegister}>
           Register
         </Button>
+        <Button variant="link" type="submit" onClick={() => props.onClick()}>
+          Already a member?
+        </Button>
       </Form>
     </Container>
   );

@@ -15,10 +15,6 @@ export function LoginView(props) {
     props.onLoggedIn(username);
   };
 
-  const notRegistered = () => {
-    this.setState({ register: true });
-  };
-
   return (
     <Container className="login-container">
       <Form>
@@ -31,13 +27,10 @@ export function LoginView(props) {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
         </Form.Group>
-        {/* <p className="register-link">
-          Not registered? <a href="#">Sign up!</a>
-        </p> */}
         <Button className="button-login" variant="primary" type="submit" onClick={handleSubmit}>
           Login
         </Button>
-        <Button variant="link" type="submit" onClick={notRegistered}>
+        <Button variant="link" type="submit" onClick={() => props.onClick()}>
           Sign up!
         </Button>
       </Form>
@@ -45,4 +38,13 @@ export function LoginView(props) {
   );
 }
 
+{
+  /* <Button variant="link" type="submit" onClick={notRegistered}>
+Sign up!
+</Button>
+</Form>
+</Container>
+);
+} */
+}
 // Above has a link to the registration page, once I figure out how to do it..
