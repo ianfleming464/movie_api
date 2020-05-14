@@ -2,6 +2,7 @@ $primary-color: #cde6f5;
 $secondary-color: #87919e;
 
 .registration-container {
+  font-family: "Cabin Condensed", sans-serif;
   background-color: $primary-color;
   border-radius: 4px;
   margin-top: 150px;
@@ -10,6 +11,7 @@ $secondary-color: #87919e;
 }
 
 .button-register {
+  font-family: "Cabin Condensed", sans-serif;
   color: black;
   background-color: $secondary-color;
   border: 0;

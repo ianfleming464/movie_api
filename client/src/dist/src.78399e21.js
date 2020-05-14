@@ -32645,6 +32645,8 @@ var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 require("./login-view.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -32680,9 +32682,15 @@ function LoginView(props) {
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault(); //
 
-    console.log(username, password); // Send a request to the server for authentication, then call props.onLoggedIn(username)
-
-    props.onLoggedIn(username);
+    _axios.default.post("https://my1980smoviesapi.herokuapp.com/login", {
+      Username: username,
+      Password: password
+    }).then(function (response) {
+      var data = response.data;
+      props.onLoggedIn(data);
+    }).catch(function (e) {
+      console.log("No such user!");
+    });
   };
 
   return _react.default.createElement(_Container.default, {
@@ -32716,17 +32724,7 @@ function LoginView(props) {
     }
   }, "Sign up!")));
 }
-
-{}
-/* <Button variant="link" type="submit" onClick={notRegistered}>
-Sign up!
-</Button>
-</Form>
-</Container>
-);
-} */
-// Above has a link to the registration page, once I figure out how to do it..
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","axios":"../../node_modules/axios/index.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -33317,11 +33315,15 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "onLoggedIn",
-    value: function onLoggedIn(user) {
+    value: function onLoggedIn(authData) {
       //Updates state when user has logged in
+      console.log(authData);
       this.setState({
-        user: user
+        user: authData.user.Username
       });
+      localStorage.setItem("token", authData.token);
+      localStorage.setItem("user", authData.user.Username);
+      this.getMovies(authData.token);
     }
   }, {
     key: "onRegistration",
@@ -33491,7 +33493,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56851" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51792" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

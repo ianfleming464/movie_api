@@ -1,7 +1,9 @@
 $primary-color: #cde6f5;
 $secondary-color: #87919e;
+@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
 
 .login-container {
+  font-family: "Cabin Condensed", sans-serif;
   background-color: $primary-color;
   border-radius: 4px;
   margin-top: 150px;
@@ -10,6 +12,7 @@ $secondary-color: #87919e;
 }
 
 .button-login {
+  font-family: "Cabin Condensed", sans-serif;
   color: black;
   background-color: $secondary-color;
   border: 0;
