@@ -40,6 +40,22 @@ export class MainView extends React.Component {
 
   // These are methods which can be passed as props!
 
+  getMovies(token) {
+    axios
+      .get("https://my1980smoviesapi.herokuapp.com/movies", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        // Assign the result to the state
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   onMovieClick(movie) {
     this.setState({
       selectedMovie: movie

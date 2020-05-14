@@ -33307,6 +33307,24 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     } // These are methods which can be passed as props!
 
   }, {
+    key: "getMovies",
+    value: function getMovies(token) {
+      var _this3 = this;
+
+      _axios.default.get("https://my1980smoviesapi.herokuapp.com/movies", {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        // Assign the result to the state
+        _this3.setState({
+          movies: response.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
     key: "onMovieClick",
     value: function onMovieClick(movie) {
       this.setState({
@@ -33349,7 +33367,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$state = this.state,
           movies = _this$state.movies,
@@ -33358,18 +33376,18 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           newUser = _this$state.newUser;
       if (!user && !newUser) return _react.default.createElement(_loginView.LoginView, {
         onClick: function onClick() {
-          return _this3.onRegistration();
+          return _this4.onRegistration();
         },
         onLoggedIn: function onLoggedIn(user) {
-          return _this3.onLoggedIn(user);
+          return _this4.onLoggedIn(user);
         }
       });
       if (newUser) return _react.default.createElement(_registrationView.RegistrationView, {
         onClick: function onClick() {
-          return _this3.alreadyRegistered();
+          return _this4.alreadyRegistered();
         },
         onLoggedIn: function onLoggedIn(user) {
-          return _this3.onLoggedIn(user);
+          return _this4.onLoggedIn(user);
         }
       }); //Before the movies have been loaded
 
@@ -33381,14 +33399,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Container.default, null, _react.default.createElement(_Row.default, null, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
         movie: selectedMovie,
         previous: function previous(movie) {
-          return _this3.onMovieClick(!movie);
+          return _this4.onMovieClick(!movie);
         }
       }) : movies.map(function (movie) {
         return _react.default.createElement(_movieCard.MovieCard, {
           key: movie._id,
           movie: movie,
           onClick: function onClick(movie) {
-            return _this3.onMovieClick(movie);
+            return _this4.onMovieClick(movie);
           }
         });
       }))));
