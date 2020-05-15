@@ -3,6 +3,7 @@ import axios from "axios";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import "./main-view.scss";
 
 import { LoginView } from "../login-view/login-view";
 import { RegistrationView } from "../registration-view/registration-view";
@@ -23,19 +24,14 @@ export class MainView extends React.Component {
     };
   }
 
-  // One of the hooks available in a React component_renders the movie card view
   componentDidMount() {
-    axios
-      .get("https://my1980smoviesapi.herokuapp.com/movies")
-      .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
+    let accessToken = localStorage.getItem("token");
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem("user")
       });
+      this.getMovies(accessToken);
+    }
   }
 
   // These are methods which can be passed as props!
