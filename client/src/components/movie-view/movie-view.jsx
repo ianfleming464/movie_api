@@ -11,14 +11,14 @@ export class MovieView extends React.Component {
   }
 
   render() {
-    const { movie, previous } = this.props;
+    const { movie, onClick } = this.props;
 
     if (!movie) return null;
 
     return (
       <div className="movie-view">
         <Card className="poster-card">
-          <Card.Img className="movie-poster" src={movie.ImagePath} fluid />
+          <Card.Img className="movie-poster" src={movie.ImagePath} />
         </Card>
         <div className="movie-title">
           <span className="label">Title: </span>
@@ -39,7 +39,7 @@ export class MovieView extends React.Component {
           <span className="label">Director: </span>
           <span className="value">{movie.Director.Name}</span>
         </div>
-        <button className="back-button" onClick={() => previous(movie)}>
+        <button className="back-button" onClick={() => onClick()}>
           Back
         </button>
       </div>
