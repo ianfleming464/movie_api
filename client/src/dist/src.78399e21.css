@@ -20,6 +20,61 @@
   border-radius: 5px;
 }
 @import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
+.card-body {
+  text-align: justify;
+}
+
+.button-open:hover {
+  background-color: #8c8c8c;
+}
+
+.button-open {
+  margin-top: auto;
+  font-family: "Cabin Condensed", sans-serif;
+  color: white;
+  background-color: #87919e;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px;
+  margin-left: 2px;
+  border-radius: 5px;
+}
+@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
+.movie-view {
+  font-family: "Cabin Condensed", sans-serif;
+  background-color: #cde6f5;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+  padding: 20px;
+}
+
+.back-button {
+  color: white;
+  background-color: #87919e;
+  border: 0;
+  padding: 10px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.back-button:hover {
+  background-color: #8c8c8c;
+}
+
+.movie-title {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+}
+
+.movie-poster {
+  margin: 20px;
+}
+@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
 .login-container {
   font-family: "Cabin Condensed", sans-serif;
   background-color: #cde6f5;
@@ -67,11 +122,31 @@
   background-color: #8c8c8c;
 }
 @import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
-.card-body {
-  text-align: justify;
+body {
+  font-family: "Cabin Condensed", sans-serif;
 }
 
-.button-open {
+p {
+  margin: 0 0 16px;
+}
+
+h4 {
+  margin: 0 0 8px;
+}
+
+.genre-view {
+  background-color: #cde6f5;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+  padding: 40px;
+}
+
+.back-from-genre:hover {
+  background-color: #8c8c8c;
+}
+
+.back-from-genre {
   margin-top: auto;
   color: white;
   background-color: #87919e;
@@ -81,53 +156,30 @@
   margin-left: 2px;
   border-radius: 5px;
 }
-
-.button-open:hover {
-  background-color: #8c8c8c;
-}
 @import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
-.movie-view {
+.director-view {
+  font-family: "Cabin Condensed", sans-serif;
   background-color: #cde6f5;
   margin-top: 50px;
   margin-bottom: 50px;
   width: 100%;
-  padding: 50px;
+  padding: 20px;
 }
 
-.back-button {
-  font-family: "Cabin Condensed", sans-serif;
+.back-from-director:hover {
+  background-color: #8c8c8c;
+}
+
+.back-from-director {
   margin-top: auto;
+  font-family: "Cabin Condensed", sans-serif;
   color: white;
   background-color: #87919e;
   border: 0;
   border-radius: 4px;
   padding: 10px;
-  margin-left: 10px;
-  margin-top: 10px;
+  margin-left: 2px;
   border-radius: 5px;
-}
-
-.back-button:hover {
-  background-color: #8c8c8c;
-}
-
-.movie-description,
-.movie-genre,
-.movie-director {
-  font-family: "Cabin Condensed", sans-serif;
-  text-align: justify;
-  padding: 10px;
-}
-
-.movie-title {
-  font-family: "Cabin Condensed", sans-serif;
-  font-weight: bold;
-  text-align: center;
-  padding: 20px;
-}
-
-.movie-poster {
-  object-fit: cover;
 }
 .my-1980s {
   color: steelblue;

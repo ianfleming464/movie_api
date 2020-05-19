@@ -1,7 +1,8 @@
 import React from "react";
 import "./movie-view.scss";
+import Media from "react-bootstrap/Media";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
 
 export class MovieView extends React.Component {
   constructor() {
@@ -11,37 +12,32 @@ export class MovieView extends React.Component {
   }
 
   render() {
-    const { movie, onClick } = this.props;
+    const { movie } = this.props;
+
+    console.log(movie);
 
     if (!movie) return null;
 
     return (
       <div className="movie-view">
-        <Card className="poster-card">
-          <Card.Img className="movie-poster" src={movie.ImagePath} />
-        </Card>
-        <div className="movie-title">
-          <span className="label">Title: </span>
-          <span className="value">{movie.Title}</span>
-        </div>
-
-        <div className="movie-description">
-          <span className="label">Description: </span>
-          <span className="value">{movie.Description}</span>
-        </div>
-
-        <div className="movie-genre">
-          <span className="label">Genre: </span>
-          <span className="value">{movie.Genre.Name}</span>
-        </div>
-
-        <div className="movie-director">
-          <span className="label">Director: </span>
-          <span className="value">{movie.Director.Name}</span>
-        </div>
-        <button className="back-button" onClick={() => onClick()}>
-          Back
-        </button>
+        <Media className="d-flex flex-column flex-md-row align-items-center ml-xs-5">
+          <img width={220} height={326} className="movie-poster" src={movie.ImagePath} alt="movie-poster" />
+          <Media.Body>
+            <h2 className="title-header">{movie.Title}</h2>
+            <Link to={`/directors/${movie.Director.Name}`}>
+              <h5 className="director-link mt-3">Director: {movie.Director.Name}</h5>
+            </Link>
+            <Link to={`/genres/${movie.Genre.Name}`}>
+              <h5 className="genre-link mb-3">Genre: {movie.Genre.Name}</h5>
+            </Link>
+            <p className="text-justify">{movie.Description}</p>
+          </Media.Body>
+        </Media>
+        <Link to={`/`}>
+          <Button variant="link" size="sm" className="back-button">
+            Back
+          </Button>
+        </Link>
       </div>
     );
   }

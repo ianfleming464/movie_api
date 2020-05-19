@@ -3,15 +3,20 @@ $primary-color: #cde6f5;
 $secondary-color: #87919e;
 $font-family: "Cabin Condensed", sans-serif;
 
-.card-body {
-  text-align: justify;
+.director-view {
+  font-family: "Cabin Condensed", sans-serif;
+  background-color: $primary-color;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+  padding: 20px;
 }
 
-.button-open:hover {
+.back-from-director:hover {
   background-color: #8c8c8c;
 }
 
-.button-open {
+.back-from-director {
   margin-top: auto;
   font-family: "Cabin Condensed", sans-serif;
   color: white;
