@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
+.main-navbar {
+  background-color: #cde6f5;
+}
+
 .card-container {
   font-family: "Cabin Condensed", sans-serif;
   background-color: #cde6f5;
@@ -9,11 +13,11 @@
   padding: 10px 10px;
 }
 
-.button-logout {
-  font-family: "Cabin Condensed", sans-serif;
-  align-self: center;
-  color: black;
+.logout-button {
+  margin-top: auto;
+  color: white;
   background-color: #87919e;
+  border: 0;
   border-radius: 4px;
   padding: 10px;
   margin-left: 2px;
@@ -30,7 +34,6 @@
 
 .button-open {
   margin-top: auto;
-  font-family: "Cabin Condensed", sans-serif;
   color: white;
   background-color: #87919e;
   border: 0;
@@ -134,6 +137,10 @@ h4 {
   margin: 0 0 8px;
 }
 
+.genre-view-card {
+  background-color: #cde6f5;
+}
+
 .genre-view {
   background-color: #cde6f5;
   margin-top: 50px;
@@ -157,8 +164,24 @@ h4 {
   border-radius: 5px;
 }
 @import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
-.director-view {
+body {
   font-family: "Cabin Condensed", sans-serif;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+h4 {
+  margin: 0 0 8px;
+}
+
+.director-view-card {
+  background-color: #cde6f5;
+}
+
+.director-view {
+  text-justify: justify;
   background-color: #cde6f5;
   margin-top: 50px;
   margin-bottom: 50px;

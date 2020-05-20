@@ -2,6 +2,10 @@
 $primary-color: #cde6f5;
 $secondary-color: #87919e;
 
+.main-navbar {
+  background-color: $primary-color;
+}
+
 .card-container {
   font-family: "Cabin Condensed", sans-serif;
   background-color: $primary-color;
@@ -12,11 +16,11 @@ $secondary-color: #87919e;
   padding: 10px 10px;
 }
 
-.button-logout {
-  font-family: "Cabin Condensed", sans-serif;
-  align-self: center;
-  color: black;
+.logout-button {
+  margin-top: auto;
+  color: white;
   background-color: $secondary-color;
+  border: 0;
   border-radius: 4px;
   padding: 10px;
   margin-left: 2px;

@@ -3,8 +3,24 @@ $primary-color: #cde6f5;
 $secondary-color: #87919e;
 $font-family: "Cabin Condensed", sans-serif;
 
-.director-view {
+body {
   font-family: "Cabin Condensed", sans-serif;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+h4 {
+  margin: 0 0 8px;
+}
+
+.director-view-card {
+  background-color: $primary-color;
+}
+
+.director-view {
+  text-justify: justify;
   background-color: $primary-color;
   margin-top: 50px;
   margin-bottom: 50px;

@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import "./registration-view.scss";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 export function RegistrationView(props) {
@@ -13,28 +14,27 @@ export function RegistrationView(props) {
 
   const handleRegister = e => {
     e.preventDefault();
-    console.log(username, password, email, birthday);
-    alert("Success!");
-    props.onSignedIn(username);
+
+    axios
+      .post("https://my1980smoviesapi.herokuapp.com/users", {
+        // Correct path?
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday
+      })
+      .then(response => {
+        // Assign the result to the state
+        const data = response.data;
+        alert("Success!");
+        console.log(data);
+        window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+      })
+      .catch(e => {
+        alert("Error!");
+        console.log("Error!");
+      });
   };
-  // axios
-  //   .post("https://my1980smoviesapi.herokuapp.com/users", {
-  //     // Correct path?
-  //     Username: username,
-  //     Password: password,
-  //     Email: email,
-  //     Birthday: birthday
-  //   })
-  //   .then(response => {
-  //     // Assign the result to the state
-  //     const data = response.data;
-  //     alert("Success!");
-  //     console.log(data);
-  //     window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
-  //   })
-  //   .catch(e => {
-  //     alert("Error!");
-  //     console.log("Error!");
 
   return (
     <Container className="registration-container">
@@ -65,3 +65,10 @@ export function RegistrationView(props) {
     </Container>
   );
 }
+
+RegistrationView.propTypes = {
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
+};

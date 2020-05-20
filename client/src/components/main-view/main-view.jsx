@@ -3,6 +3,8 @@ import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
 import "./main-view.scss";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -21,8 +23,8 @@ export class MainView extends React.Component {
     this.state = {
       movies: null,
       // selectedMovie: null,
-      user: false
-      // register: false,
+      user: null,
+      register: false
       // newUser: false
     };
   }
@@ -53,12 +55,6 @@ export class MainView extends React.Component {
       });
   }
 
-  // onMovieClick(movie) {
-  //   this.setState({
-  //     selectedMovie: movie
-  //   });
-  // }
-
   onLoggedIn(authData) {
     //Updates state when user has logged in
     console.log(authData);
@@ -71,25 +67,25 @@ export class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
-  // handleLogout() {
-  //   localStorage.removeItem("token");
-  //   localStorage.removeItem("user");
-  //   this.setState({
-  //     user: null
-  //   });
-  // }
+  handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    this.setState({
+      user: null
+    });
+  }
 
-  // onRegistration() {
-  //   this.setState({
-  //     newUser: true
-  //   });
-  // }
+  handleRegistration() {
+    this.setState({
+      newUser: true
+    });
+  }
 
-  // alreadyRegistered() {
-  //   this.setState({
-  //     newUser: false
-  //   });
-  // }
+  alreadyRegistered() {
+    this.setState({
+      newUser: false
+    });
+  }
 
   // onSignedIn(user) {
   //   this.setState({
@@ -98,13 +94,27 @@ export class MainView extends React.Component {
   // }
 
   render() {
-    const { movies, user } = this.state;
+    const { movies, user, newUser } = this.state;
 
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+    if (!user && !newUser) return <LoginView onClick={() => this.handleRegistration()} onLoggedIn={user => this.onLoggedIn(user)} />;
+
+    if (newUser) return <RegistrationView onClick={() => this.alreadyRegistered()} onLoggedIn={user => this.onLoggedIn(user)} />;
+
     if (!movies) return <div className="main-view" />;
 
     return (
       <Router>
+        <Navbar sticky="top" bg="light" expand="lg" className="main-navbar mb-3 shadow-sm p-3 mb-5">
+          <Navbar.Brand href="#" className="navbar-brand">
+            My 1980s Movie API
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
+            <Button variant="primary ml-1" size="sm" className="logout-button" onClick={() => this.handleLogout()}>
+              Log out
+            </Button>
+          </Navbar.Collapse>
+        </Navbar>
         <div className="main-view">
           <Container>
             <Row>
@@ -118,7 +128,7 @@ export class MainView extends React.Component {
                 path="/directors/:name"
                 render={({ match }) => {
                   if (!movies) return <div className="main-view" />;
-                  return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} />;
+                  return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} movies={movies} />;
                 }}
               />
               <Route
@@ -126,7 +136,7 @@ export class MainView extends React.Component {
                 path="/genres/:name"
                 render={({ match }) => {
                   if (!movies) return <div className="main-view" />;
-                  return <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} />;
+                  return <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} movies={movies} />;
                 }}
               />
             </Row>
