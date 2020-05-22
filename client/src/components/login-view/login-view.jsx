@@ -5,13 +5,14 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import "./login-view.scss";
 
 export function LoginView(props) {
   const [username, setUsername] = useState(""); // Array destructuring - first item is current value, second is a function that lets us update it
   const [password, setPassword] = useState("");
 
-  const handleSubmit = e => {
+  const handleLogin = e => {
     e.preventDefault(); //
     axios
       .post("https://my1980smoviesapi.herokuapp.com/login", {
@@ -39,12 +40,14 @@ export function LoginView(props) {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
         </Form.Group>
-        <Button className="button-login" variant="primary" type="submit" onClick={handleSubmit}>
+        <Button className="button-login" variant="primary" type="submit" onClick={handleLogin}>
           Login
         </Button>
-        <Button variant="link" type="submit" onClick={() => props.onClick()}>
-          Sign up!
-        </Button>
+        <Link to={`/register`}>
+          <Button variant="link" type="submit">
+            Sign up!
+          </Button>
+        </Link>
       </Form>
     </Container>
   );
@@ -52,6 +55,5 @@ export function LoginView(props) {
 
 LoginView.propTypes = {
   username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  password: PropTypes.string.isRequired
 };

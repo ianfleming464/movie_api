@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import "./registration-view.scss";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export function RegistrationView(props) {
   const [username, createUsername] = useState(""); // Array destructuring - first item is current value, second is a function that lets us update it
@@ -58,9 +59,11 @@ export function RegistrationView(props) {
         <Button className="button-register" variant="primary" type="submit" onClick={handleRegister}>
           Register
         </Button>
-        <Button variant="link" type="submit" onClick={() => props.onClick()}>
-          Already a member?
-        </Button>
+        <Link to={`/`}>
+          <Button variant="link" type="submit">
+            Already a member?
+          </Button>
+        </Link>
       </Form>
     </Container>
   );
@@ -69,6 +72,5 @@ export function RegistrationView(props) {
 RegistrationView.propTypes = {
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  email: PropTypes.string.isRequired
 };

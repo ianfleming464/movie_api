@@ -23,6 +23,17 @@
   margin-left: 2px;
   border-radius: 5px;
 }
+
+.profile-button {
+  margin-top: auto;
+  color: white;
+  background-color: #87919e;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px;
+  margin-left: 2px;
+  border-radius: 5px;
+}
 @import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
 .card-body {
   text-align: justify;
@@ -186,7 +197,7 @@ h4 {
   margin-top: 50px;
   margin-bottom: 50px;
   width: 100%;
-  padding: 20px;
+  padding: 40px;
 }
 
 .back-from-director:hover {
