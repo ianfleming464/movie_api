@@ -51,25 +51,26 @@ export class ProfileView extends React.Component {
   // Delete user here - axios link to
 
   render() {
-    const { movies } = this.props;
+    const { username, email, birthday, favourites } = this.state;
     console.log(this.state);
+
     return (
       <div>
         <Container>
-          <h1> {this.state.username}'s Profile</h1>
+          <h1> {username}'s Profile</h1>
           <br />
           <Card>
             <Card.Body>
               <ListGroup>
-                <ListGroup.Item>Username: {this.state.username}</ListGroup.Item>
+                <ListGroup.Item>Username: {username}</ListGroup.Item>
                 <ListGroup.Item>Password:******* </ListGroup.Item>
-                <ListGroup.Item>Email: {this.state.email}</ListGroup.Item>
-                <ListGroup.Item>Birthday: {this.state.birthday}</ListGroup.Item>
-                <ListGroup.Item>Favourites: {this.state.favourites}</ListGroup.Item>
+                <ListGroup.Item>Email: {email}</ListGroup.Item>
+                <ListGroup.Item>Birthday: {birthday}</ListGroup.Item>
+                <ListGroup.Item>Favourites: {favourites}</ListGroup.Item>
               </ListGroup>
               <br />
               <br />
-              <Link to={"/users/:Username/update"}>
+              <Link to={"/users/:username/update"}>
                 <Button variant="primary">Update Profile</Button>
                 <br />
                 <br />

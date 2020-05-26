@@ -38195,8 +38195,6 @@ var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
-var _Navbar = _interopRequireDefault(require("react-bootstrap/Navbar"));
-
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _axios = _interopRequireDefault(require("axios"));
@@ -38284,7 +38282,7 @@ LoginView.propTypes = {
   username: _propTypes.default.string.isRequired,
   password: _propTypes.default.string.isRequired
 };
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Navbar":"../node_modules/react-bootstrap/esm/Navbar.js","prop-types":"../node_modules/prop-types/index.js","axios":"../../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","prop-types":"../node_modules/prop-types/index.js","axios":"../../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -39251,10 +39249,14 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var movies = this.props.movies;
+      var _this$state = this.state,
+          username = _this$state.username,
+          email = _this$state.email,
+          birthday = _this$state.birthday,
+          favourites = _this$state.favourites;
       console.log(this.state);
-      return _react.default.createElement("div", null, _react.default.createElement(_Container.default, null, _react.default.createElement("h1", null, " ", this.state.username, "'s Profile"), _react.default.createElement("br", null), _react.default.createElement(_Card.default, null, _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", this.state.username), _react.default.createElement(_ListGroup.default.Item, null, "Password:******* "), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", this.state.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", this.state.birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favourites: ", this.state.favourites)), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/users/:Username/update"
+      return _react.default.createElement("div", null, _react.default.createElement(_Container.default, null, _react.default.createElement("h1", null, " ", username, "'s Profile"), _react.default.createElement("br", null), _react.default.createElement(_Card.default, null, _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", username), _react.default.createElement(_ListGroup.default.Item, null, "Password:******* "), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favourites: ", favourites)), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/users/:username/update"
       }, _react.default.createElement(_Button.default, {
         variant: "primary"
       }, "Update Profile"), _react.default.createElement("br", null), _react.default.createElement("br", null)), _react.default.createElement(_reactRouterDom.Link, {
@@ -49762,9 +49764,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       movies: [],
       users: [],
-      user: false,
-      // register: false
-      newUser: false
+      user: null // register: false
+      // newUser: false
+
     };
     return _this;
   }
@@ -49786,24 +49788,21 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }).catch(function (error) {
         console.log(error);
       });
-    }
-  }, {
-    key: "getAllUsers",
-    value: function getAllUsers(token) {
-      var _this3 = this;
+    } // getAllUsers(token) {
+    //   axios
+    //     .get("https://my1980smoviesapi.herokuapp.com/users", {
+    //       headers: { Authorization: `Bearer ${token}` }
+    //     })
+    //     .then(response => {
+    //       this.setState({
+    //         users: response.data
+    //       });
+    //     })
+    //     .catch(function(error) {
+    //       console.log(error);
+    //     });
+    // }
 
-      _axios.default.get("https://my1980smoviesapi.herokuapp.com/users", {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).then(function (response) {
-        _this3.setState({
-          users: response.data
-        });
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
@@ -49813,8 +49812,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         this.setState({
           user: localStorage.getItem("user")
         });
-        this.getMovies(accessToken);
-        this.getAllUsers(accessToken);
+        this.getMovies(accessToken); // this.getAllUsers(accessToken);
       }
     }
   }, {
@@ -49864,7 +49862,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       var _this$state = this.state,
           movies = _this$state.movies,
@@ -49888,7 +49886,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           render: function render() {
             return _react.default.createElement(_loginView.LoginView, {
               onLoggedIn: function onLoggedIn(user) {
-                return _this4.onLoggedIn(user);
+                return _this3.onLoggedIn(user);
               }
             });
           }
@@ -49931,7 +49929,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           size: "sm",
           className: "logout-button",
           onClick: function onClick() {
-            return _this4.handleLogout();
+            return _this3.handleLogout();
           }
         }, "Log out"))), _react.default.createElement("div", {
           className: "main-view"
@@ -50004,9 +50002,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           render: function render(_ref5) {
             var match = _ref5.match;
             return _react.default.createElement(_updateView.UpdateView, {
-              user: users.find(function (user) {
-                return user.Username === match.params.Username;
-              })
+              user: user
             });
           }
         })))));
@@ -50112,7 +50108,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50532" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52343" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

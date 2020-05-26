@@ -27,9 +27,9 @@ export class MainView extends React.Component {
     this.state = {
       movies: [],
       users: [],
-      user: false,
+      user: null
       // register: false
-      newUser: false
+      // newUser: false
     };
   }
 
@@ -49,20 +49,20 @@ export class MainView extends React.Component {
       });
   }
 
-  getAllUsers(token) {
-    axios
-      .get("https://my1980smoviesapi.herokuapp.com/users", {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(response => {
-        this.setState({
-          users: response.data
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+  // getAllUsers(token) {
+  //   axios
+  //     .get("https://my1980smoviesapi.herokuapp.com/users", {
+  //       headers: { Authorization: `Bearer ${token}` }
+  //     })
+  //     .then(response => {
+  //       this.setState({
+  //         users: response.data
+  //       });
+  //     })
+  //     .catch(function(error) {
+  //       console.log(error);
+  //     });
+  // }
 
   componentDidMount() {
     let accessToken = localStorage.getItem("token");
@@ -71,7 +71,7 @@ export class MainView extends React.Component {
         user: localStorage.getItem("user")
       });
       this.getMovies(accessToken);
-      this.getAllUsers(accessToken);
+      // this.getAllUsers(accessToken);
     }
   }
 
@@ -201,11 +201,7 @@ export class MainView extends React.Component {
                   path="/users/:username"
                   render={({ match }) => <ProfileView user={users.find(user => user.Username === match.params.Username)} movies={movies} />}
                 />
-                <Route
-                  exact
-                  path="/users/:username/update"
-                  render={({ match }) => <UpdateView user={users.find(user => user.Username === match.params.Username)} />}
-                />
+                <Route exact path="/users/:username/update" render={({ match }) => <UpdateView user={user} />} />
               </Row>
             </Container>
           </div>
