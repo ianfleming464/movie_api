@@ -174,7 +174,7 @@ app.post(
 // UPDATE info of a specific user
 
 app.put(
-  "/users/:Username/update",
+  "/users/:Username",
   passport.authenticate("jwt", { session: false }),
   [
     check("Username", "Username must contain a minimum of 5 characters.").isLength({ min: 5 }),
