@@ -26,11 +26,22 @@ export class MainView extends React.Component {
 
     this.state = {
       movies: [],
-      users: [],
-      user: null
-      // register: false
+      user: null,
+      userData: null,
+      register: false
       // newUser: false
     };
+  }
+
+  componentDidMount() {
+    let accessToken = localStorage.getItem("token");
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem("user"),
+        userData: localStorage.getItem("userData")
+      });
+      this.getMovies(accessToken);
+    }
   }
 
   getMovies(token) {
@@ -49,80 +60,70 @@ export class MainView extends React.Component {
       });
   }
 
-  // getAllUsers(token) {
-  //   axios
-  //     .get("https://my1980smoviesapi.herokuapp.com/users", {
-  //       headers: { Authorization: `Bearer ${token}` }
-  //     })
-  //     .then(response => {
-  //       this.setState({
-  //         users: response.data
-  //       });
-  //     })
-  //     .catch(function(error) {
-  //       console.log(error);
-  //     });
-  // }
+  addToFavorites = movieId => {
+    const endpoint = "https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/movies";
+    axios
+      .get(endpoint, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      })
+      .then(response => {
+        let movies = response.data;
 
-  componentDidMount() {
-    let accessToken = localStorage.getItem("token");
-    if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem("user")
+        movies.forEach(movie => {
+          if (movie._id === movieId) {
+            this.setState(prevState => ({
+              favorites: prevState.favorites.concat(movie)
+            }));
+          }
+        });
+      })
+      .catch(error => {
+        console.log(error);
       });
-      this.getMovies(accessToken);
-      // this.getAllUsers(accessToken);
-    }
-  }
+  };
 
   onLoggedIn(authData) {
     //Updates state when user has logged in
-    console.log(authData);
     this.setState({
-      user: authData.user.Username
+      user: authData.user.Username,
+      userData: authData.user.userData
     });
     localStorage.setItem("token", authData.token);
     localStorage.setItem("user", authData.user.Username);
-    // localStorage.setItem("password", authData.user.Password);
-    // localStorage.setItem("email", authData.user.Email);
-    // localStorage.setItem("birthday", authData.user.Birthday);
-    // localStorage.setItem("favourites", authData.user.FavouriteMovies);
+    localStorage.setItem("userData", JSON.stringify(authData.user));
     this.getMovies(authData.token);
   }
 
   handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    // localStorage.removeItem("email");
-    // localStorage.removeItem("birthday");
-    // localStorage.removeItem("password");
-    // localStorage.removeItem("favorites");
+    localStorage.removeItem("password");
+    localStorage.removeItem("email");
+    localStorage.removeItem("birthday");
     this.setState({
-      user: null
+      user: null,
+      register: null,
+      userData: null
     });
     window.open("/", "_self");
   }
 
-  handleRegistration() {
-    this.setState({
-      newUser: true
-    });
-  }
+  // handleRegistration() {
+  //   this.setState({
+  //     newUser: true
+  //   });
+  // }
 
-  alreadyRegistered() {
-    this.setState({
-      newUser: false
-    });
-  }
+  // alreadyRegistered() {
+  //   this.setState({
+  //     newUser: false
+  //   });
+  // }
 
   render() {
-    const { movies, user, users } = this.state;
+    const { movies, user } = this.state;
 
     console.log(user);
-
-    // if (!user && !newUser) return <LoginView onClick={() => this.handleRegistration()} onLoggedIn={user => this.onLoggedIn(user)} />;
-
-    // if (newUser) return <RegistrationView onClick={() => this.alreadyRegistered()} onLoggedIn={user => this.onLoggedIn(user)} />;
 
     if (!movies) return <div className="main-view" />;
 
@@ -155,7 +156,7 @@ export class MainView extends React.Component {
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
-              <Link component={RouterLink} to={`/users/${user}`}>
+              <Link to={`/users/${user}`}>
                 <Button
                   variant="primary ml-1"
                   size="sm"
@@ -199,9 +200,11 @@ export class MainView extends React.Component {
                 <Route
                   exact
                   path="/users/:username"
-                  render={({ match }) => <ProfileView user={users.find(user => user.Username === match.params.Username)} movies={movies} />}
+                  render={() => {
+                    return <ProfileView user={user} />;
+                  }}
                 />
-                <Route exact path="/users/:username/update" render={({ match }) => <UpdateView user={user} />} />
+                <Route exact path="/users/:username/update" render={() => <UpdateView user={user} />} />
               </Row>
             </Container>
           </div>
@@ -210,3 +213,4 @@ export class MainView extends React.Component {
     }
   }
 }
+// /users/:username/update

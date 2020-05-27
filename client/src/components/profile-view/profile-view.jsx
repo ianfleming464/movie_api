@@ -7,16 +7,16 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 
 export class ProfileView extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
-      username: null,
-      password: null,
-      email: null,
-      birthday: null,
-      favoriteMovies: [],
-      movies: []
+      // username: null,
+      // password: null,
+      // email: null,
+      // birthday: null,
+      // favoriteMovies: [],
+      // movies: []
     };
   }
 
@@ -36,11 +36,11 @@ export class ProfileView extends React.Component {
 
       .then(res => {
         this.setState({
-          username: res.data.Username,
-          password: res.data.Password,
-          email: res.data.Email,
-          birthday: res.data.Birthday,
-          favourites: res.data.FavouriteMovies
+          Username: res.data.Username,
+          Password: res.data.Password,
+          Email: res.data.Email,
+          Birthday: res.data.Birthday.substr(0, 10),
+          FavouriteMovies: res.data.FavouriteMovies
         });
       })
       .catch(function(err) {
@@ -51,31 +51,32 @@ export class ProfileView extends React.Component {
   // Delete user here - axios link to
 
   render() {
-    const { username, email, birthday, favourites } = this.state;
+    const { user, movies } = this.props;
     console.log(this.state);
+    console.log(this.props);
 
     return (
       <div>
         <Container>
-          <h1> {username}'s Profile</h1>
+          <h1> {this.state.Username}'s Profile</h1>
           <br />
           <Card>
             <Card.Body>
               <ListGroup>
-                <ListGroup.Item>Username: {username}</ListGroup.Item>
-                <ListGroup.Item>Password:******* </ListGroup.Item>
-                <ListGroup.Item>Email: {email}</ListGroup.Item>
-                <ListGroup.Item>Birthday: {birthday}</ListGroup.Item>
-                <ListGroup.Item>Favourites: {favourites}</ListGroup.Item>
+                <ListGroup.Item>Username: {this.state.Username}</ListGroup.Item>
+                <ListGroup.Item>Email: {this.state.Email}</ListGroup.Item>
+                <ListGroup.Item>Birthday: {this.state.Birthday}</ListGroup.Item>
+                <ListGroup.Item>Favourites: {this.state.FavouriteMovies}</ListGroup.Item>
               </ListGroup>
               <br />
               <br />
-              <Link to={"/users/:username/update"}>
+              {/* // link match backend link?! */}
+              <Link to={`/users/${user}/update`}>
                 <Button variant="primary">Update Profile</Button>
                 <br />
                 <br />
               </Link>
-              <Link to={`/`}>Back</Link>
+              <Link to={"/"}>Back</Link>
             </Card.Body>
           </Card>
         </Container>

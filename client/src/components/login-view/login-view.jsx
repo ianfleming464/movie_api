@@ -14,12 +14,15 @@ export function LoginView(props) {
   const handleLogin = e => {
     e.preventDefault(); //
     axios
-      .post("https://my1980smoviesapi.herokuapp.com/login", {
-        Username: username,
-        Password: password
+      .post("https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/login", null, {
+        params: {
+          Username: username,
+          Password: password
+        }
       })
       .then(response => {
         const data = response.data;
+        console.log();
         props.onLoggedIn(data);
       })
       .catch(e => {
@@ -42,7 +45,7 @@ export function LoginView(props) {
         <Button className="button-login" variant="primary" type="submit" onClick={handleLogin}>
           Login
         </Button>
-        <Link to={`/register`}>
+        <Link to={"/register"}>
           <Button variant="link" type="submit">
             Sign up!
           </Button>
@@ -52,7 +55,7 @@ export function LoginView(props) {
   );
 }
 
-LoginView.propTypes = {
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired
-};
+// LoginView.propTypes = {
+//   username: PropTypes.string.isRequired,
+//   password: PropTypes.string.isRequired
+// };

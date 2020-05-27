@@ -17,7 +17,7 @@ export function RegistrationView(props) {
     e.preventDefault();
 
     axios
-      .post("https://my1980smoviesapi.herokuapp.com/users", {
+      .post("https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/users", {
         // Correct path?
         Username: username,
         Password: password,
@@ -25,7 +25,6 @@ export function RegistrationView(props) {
         Birthday: birthday
       })
       .then(response => {
-        // Assign the result to the state
         const data = response.data;
         alert("Success!");
         console.log(data);
@@ -33,7 +32,7 @@ export function RegistrationView(props) {
       })
       .catch(e => {
         alert("Error!");
-        console.log("Error!");
+        console.log(e);
       });
   };
 
@@ -59,7 +58,7 @@ export function RegistrationView(props) {
         <Button className="button-register" variant="primary" type="submit" onClick={handleRegister}>
           Register
         </Button>
-        <Link to={`/`}>
+        <Link to={"/"}>
           <Button variant="link" type="submit">
             Already a member?
           </Button>
@@ -69,8 +68,8 @@ export function RegistrationView(props) {
   );
 }
 
-RegistrationView.propTypes = {
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired
-};
+// RegistrationView.propTypes = {
+//   username: PropTypes.string.isRequired,
+//   password: PropTypes.string.isRequired,
+//   email: PropTypes.string.isRequired
+// };

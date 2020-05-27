@@ -11,35 +11,47 @@ import "./update-view.scss";
 
 export function UpdateView(props) {
   const { user } = props;
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
+  const userURL = "https://my1980smoviesapi.herokuapp.com/movies/users/";
+
   const handleUpdate = e => {
     e.preventDefault();
     axios
       .put(
-        `https://my1980smoviesapi.herokuapp.com/users/${user}`,
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
+        userURL + localStorage.getItem("user"),
         {
           // Correct path?
           Username: username,
           Password: password,
           Email: email,
           Birthday: birthday
-        }
+        },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       )
-      .then(response => {
+
+      .then(res => {
         // Assign the result to the state
-        const updatedData = response.data;
-        alert("Updated!");
-        console.log(updatedData);
-        window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+        const data = res.data;
+
+        localStorage.setItem("user", data.Username);
+        localStorage.setItem("password", data.Password);
+        localStorage.setItem("email", data.Email);
+        localStorage.setItem("birthday", data.Birthday);
+
+        console.log(data);
+        // alert("Updated!");
+        // localStorage.setItem("user", data.Username);
+        // console.log(data);
+        // window.open(`/users/${localStorage.getItem("user")}`);
       })
       .catch(e => {
         alert("Error!");
-        console.log("Error!");
+        console.log(e);
       });
   };
 
@@ -71,13 +83,13 @@ export function UpdateView(props) {
               </Row>
             </Form>
           </Container>
-          <Container className="mt-4">
+          {/* <Container className="mt-4">
             <Row className="d-flex align-items-center justify-content-center">
-              <Button variant="link" type="submit" className="unregister-btn">
+              <Button variant="link" type="submit" className="unregister-btn" onClick={() => this.deleteProfile()}>
                 Delete account
               </Button>
             </Row>
-          </Container>
+          </Container> */}
         </Col>
       </Row>
     </div>
