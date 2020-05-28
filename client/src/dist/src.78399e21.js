@@ -49651,7 +49651,7 @@ function UpdateView(props) {
     });
   };
 
-  var deleteProfile = function deleteProfile(e) {
+  var handleDelete = function handleDelete(e) {
     _axios.default.delete("https://my1980smoviesapi.herokuapp.com/movies/users/".concat(localStorage.getItem("user")), {
       headers: {
         Authorization: "Bearer ".concat(localStorage.getItem("token"))
@@ -49731,7 +49731,7 @@ function UpdateView(props) {
     variant: "link",
     type: "submit",
     className: "unregister-btn",
-    onClick: deleteProfile
+    onClick: handleDelete
   }, "Delete account"))))));
 }
 },{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../node_modules/react-bootstrap/esm/index.js","./update-view.scss":"components/update-view/update-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
@@ -49815,7 +49815,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     _this.addToFavourites = function (movieId) {
       var username = localStorage.getItem("user");
 
-      _axios.default.post("https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/users/".concat(username, "/movies/"), {
+      _axios.default.post("https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/users/".concat(username, "/movies/").concat(movie._id), {
         headers: {
           Authorization: "Bearer ".concat(localStorage.getItem("token"))
         }
@@ -49896,9 +49896,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleLogout",
     value: function handleLogout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      localStorage.removeItem("userData"); // localStorage.removeItem("email");
+      localStorage.clear(); // localStorage.removeItem("token");
+      // localStorage.removeItem("user");
+      // localStorage.removeItem("userData");
+      // localStorage.removeItem("email");
       // localStorage.removeItem("birthday");
 
       this.setState({
@@ -49954,9 +49955,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         }, _react.default.createElement(_Col.default, null, _react.default.createElement(_reactRouterDom.Route, {
           path: "/register",
           render: function render() {
-            return _react.default.createElement(_registrationView.RegistrationView, {
-              onClick: true
-            });
+            return _react.default.createElement(_registrationView.RegistrationView, null);
           }
         }))))));
       } else {
@@ -50167,7 +50166,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49394" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62619" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
