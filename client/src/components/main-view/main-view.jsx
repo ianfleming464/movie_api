@@ -66,7 +66,7 @@ export class MainView extends React.Component {
     const username = localStorage.getItem("user");
 
     axios
-      .post(`https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/users/${username}/movies/`, {
+      .post(`https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/users/${username}/movies/${movie._id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       })
       .then(response => {
@@ -100,9 +100,10 @@ export class MainView extends React.Component {
   }
 
   handleLogout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("userData");
+    localStorage.clear();
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("userData");
     // localStorage.removeItem("email");
     // localStorage.removeItem("birthday");
     this.setState({
@@ -148,7 +149,7 @@ export class MainView extends React.Component {
 
               <Row className="justify-content-center">
                 <Col>
-                  <Route path="/register" render={() => <RegistrationView onClick />} />
+                  <Route path="/register" render={() => <RegistrationView />} />
                 </Col>
               </Row>
             </Container>
