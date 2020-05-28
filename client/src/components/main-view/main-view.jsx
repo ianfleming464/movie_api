@@ -62,28 +62,28 @@ export class MainView extends React.Component {
       });
   }
 
-  addToFavourites = movieId => {
-    const username = localStorage.getItem("user");
+  // addToFavourites = movieId => {
+  //   const username = localStorage.getItem("user");
 
-    axios
-      .post(`https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/users/${username}/movies/${movie._id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      })
-      .then(response => {
-        let movies = response.data;
+  //   axios
+  //     .post(`https://my1980smoviesapi.herokuapp.com/movies${username}/movies/${movie._id}`, {
+  //       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  //     })
+  //     .then(response => {
+  //       let movies = response.data;
 
-        movies.forEach(movie => {
-          if (movie._id === movieId) {
-            this.setState(prevState => ({
-              favourites: prevState.favorites.concat(movie)
-            }));
-          }
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  //       movies.forEach(movie => {
+  //         if (movie._id === movieId) {
+  //           this.setState(prevState => ({
+  //             favourites: prevState.favorites.concat(movie)
+  //           }));
+  //         }
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
 
   onLoggedIn(authData) {
     //Updates state when user has logged in
@@ -130,7 +130,7 @@ export class MainView extends React.Component {
   // }
 
   render() {
-    const { movies, user } = this.state;
+    const { movies, user, favouriteMovies } = this.state;
 
     console.log(user);
 
@@ -188,9 +188,12 @@ export class MainView extends React.Component {
                 <Route
                   exact
                   path="/"
-                  render={() =>
-                    movies.map(m => <MovieCard key={m._id} movie={m} addFavourites={movieId => this.addToFavourites(movieId)} />)
-                  }
+                  render={() => {
+                    return movies.map(m => {
+                      // ---> add this as a prop to MovieCard after further investigation: addFavorites={movieId => this.addToFavorites(movieId)}
+                      return <MovieCard key={m._id} value={m._id} movie={m} />;
+                    });
+                  }}
                 />
                 <Route
                   path="/movies/:movieId"
