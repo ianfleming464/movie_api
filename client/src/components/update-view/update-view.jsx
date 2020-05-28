@@ -10,7 +10,8 @@ import { Button } from "react-bootstrap";
 import "./update-view.scss";
 
 export function UpdateView(props) {
-  // const { user, userId } = props;
+  const { user, userId } = props;
+  // console.log(props);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -18,31 +19,29 @@ export function UpdateView(props) {
   const [birthday, setBirthday] = useState("");
 
   const userURL = `https://my1980smoviesapi.herokuapp.com/users/${username}`;
+  const requestBody = {
+    Username: username,
+    Password: password,
+    Email: email,
+    Birthday: birthday
+  };
 
   const handleUpdate = e => {
     e.preventDefault();
+    console.log(requestBody);
     axios
-      .put(
-        userURL,
-        {
-          Username: username,
-          Password: password,
-          Email: email,
-          Birthday: birthday
-        },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-      )
+      .put(userURL, requestBody, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
 
       .then(res => {
         // Assign the result to the state
         const data = res.data;
 
-        localStorage.setItem("user", data.Username);
-        localStorage.setItem("password", data.Password);
-        localStorage.setItem("email", data.Email);
-        localStorage.setItem("birthday", data.Birthday);
-        console.log(this.props);
-        console.log(data);
+        // localStorage.setItem("user", data.Username);
+        // localStorage.setItem("password", data.Password);
+        // localStorage.setItem("email", data.Email);
+        // localStorage.setItem("birthday", data.Birthday);
+        // console.log(this.props);
+        console.log(res);
         // alert("Updated!");
         // localStorage.setItem("user", data.Username);
         // console.log(data);
