@@ -15,14 +15,24 @@ $font-family: "Cabin Condensed", sans-serif;
   margin-top: auto;
   color: white;
   background-color: $secondary-color;
-  border: 0;
-  border-radius: 4px;
+
   padding: 10px;
-  margin-left: 35%;
+  margin-left: auto;
   border-radius: 5px;
 }
 
-.card-footer {
+.button-favourites {
+  color: white;
+  background-color: $secondary-color;
+
   padding: 10px;
-  margin: 25px;
+  margin-right: auto;
+  border-radius: 5px;
 }
+
+// .div.card-footer {
+//   width: 100%;
+//   align-self: flex-end;
+//   flex: 1 1 auto;
+//   flex-direction: row;
+// }

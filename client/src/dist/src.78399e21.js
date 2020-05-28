@@ -36940,6 +36940,8 @@ var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 require("./movie-card.scss");
 
 var _reactRouterDom = require("react-router-dom");
@@ -36980,45 +36982,46 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      clicked: false
+      favourites: []
     };
     return _this;
-  } // addToFavourites = e => {
-  //   e.preventDefault();
-  //   const url = `https://my1980smoviesapi.herokuapp.com/users/`;
-  //   const user = localStorage.getItem("user");
-  //   const addMovie = `${url}${user}/movies/${movie._id}`;
-  //   let favArr = localStorage.getItem("favourites");
-  //   console.log(favArr);
-  //   let favourites = favArr ? JSON.parse(favArr) : [];
-  //   axios
-  //     .post(
-  //       addMovie,
-  //       {
-  //         Username: user
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`
-  //         }
-  //       }
-  //     )
-  //     .then(response => {
-  //       console.log(response);
-  //     })
-  //     .catch(event => {
-  //       console.log("error adding favourite!");
-  //     });
-  //   favourites.concat(movie._id);
-  //   setFav([...favArray, movie._id]);
-  //   localStorage.setItem("favourites", JSON.stringify(favourites));
-  // };
-
+  }
 
   _createClass(MovieCard, [{
+    key: "addFavourite",
+    value: function addFavourite() {
+      var movieId = this.props.value;
+      console.log(movieId); // Sets favourite to state on click, but only 1 item --->
+      // this.setState(prevState => ({
+      //   favourites: [...prevState.favourites, movieId]
+      // }));
+
+      var url = "http://my1980smoviesapi.herokuapp.com/users/";
+      var user = localStorage.getItem("user");
+      var plusMovie = "".concat(url).concat(user, "/Movies/").concat(movieId);
+
+      _axios.default.post(plusMovie, {
+        Username: user
+      }, {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem("token"))
+        }
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function (event) {
+        console.log("Cannot add movie to list");
+      });
+
+      var favourites = localStorage.setItem("favourites", this.movieId);
+      console.log(favourites);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var movie = this.props.movie;
+      var _this2 = this;
+
+      var movie = this.props.movie; // console.log(this.props.value);
+
       return _react.default.createElement(_Card.default, {
         className: "card-container box-shadow",
         style: {
@@ -37031,12 +37034,22 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
         className: "card-header text-center font-weight-bold"
       }, movie.Title), _react.default.createElement(_Card.default.Body, {
         className: "card-body d-flex flex-column"
-      }, _react.default.createElement(_Card.default.Text, null, movie.Description), _react.default.createElement(_reactRouterDom.Link, {
+      }, _react.default.createElement(_Card.default.Text, null, movie.Description), _react.default.createElement(_Card.default.Footer, {
+        className: "card-footer"
+      }, _react.default.createElement(_reactRouterDom.Link, {
         to: "/movies/".concat(movie._id)
       }, _react.default.createElement(_Button.default, {
-        className: "button-open",
+        size: "sm",
+        className: "button-open float-left",
         variant: "link"
-      }, "Open"))));
+      }, "Open")), _react.default.createElement(_Button.default, {
+        size: "sm",
+        className: "button-favourites sm float-right",
+        variant: "link",
+        onClick: function onClick() {
+          return _this2.addFavourite();
+        }
+      }, "Favourite"))));
     }
   }]);
 
@@ -37044,14 +37057,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.MovieCard = MovieCard;
-MovieCard.propTypes = {
-  movie: _propTypes.default.shape({
-    Title: _propTypes.default.string.isRequired,
-    Description: _propTypes.default.string.isRequired,
-    ImagePath: _propTypes.default.string.isRequired
-  }).isRequired
-}; // Check why buttons out of place now
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","./movie-card.scss":"components/movie-card/movie-card.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/movie-view/movie-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","axios":"../../node_modules/axios/index.js","./movie-card.scss":"components/movie-card/movie-card.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/movie-view/movie-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -49899,10 +49905,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       this.setState({
         user: authData.user.Username,
         userData: authData.user.userData,
+        favourites: authData.user.FavouriteMovies,
         userId: authData.user._id
       });
       localStorage.setItem("token", authData.token);
       localStorage.setItem("user", authData.user.Username);
+      localStorage.setItem("favourites", authData.user.FavouriteMovies);
       localStorage.setItem("userId", authData.user._id);
       localStorage.setItem("userData", JSON.stringify(authData.user));
       this.getMovies(authData.token);
@@ -49944,7 +49952,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           movies = _this$state.movies,
           user = _this$state.user,
-          favouriteMovies = _this$state.favouriteMovies;
+          favourites = _this$state.favourites;
       console.log(user);
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
@@ -50180,7 +50188,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55834" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56390" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

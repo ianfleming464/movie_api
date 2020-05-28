@@ -90,10 +90,12 @@ export class MainView extends React.Component {
     this.setState({
       user: authData.user.Username,
       userData: authData.user.userData,
+      favourites: authData.user.FavouriteMovies,
       userId: authData.user._id
     });
     localStorage.setItem("token", authData.token);
     localStorage.setItem("user", authData.user.Username);
+    localStorage.setItem("favourites", authData.user.FavouriteMovies);
     localStorage.setItem("userId", authData.user._id);
     localStorage.setItem("userData", JSON.stringify(authData.user));
     this.getMovies(authData.token);
@@ -130,7 +132,7 @@ export class MainView extends React.Component {
   // }
 
   render() {
-    const { movies, user, favouriteMovies } = this.state;
+    const { movies, user, favourites } = this.state;
 
     console.log(user);
 
