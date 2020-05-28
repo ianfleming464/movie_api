@@ -54,7 +54,7 @@ export function UpdateView(props) {
       });
   };
 
-  const deleteProfile = e => {
+  const handleDelete = e => {
     axios
       .delete(`https://my1980smoviesapi.herokuapp.com/movies/users/${localStorage.getItem("user")}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
@@ -109,7 +109,7 @@ export function UpdateView(props) {
           </Container>
           <Container className="mt-4">
             <Row className="d-flex align-items-center justify-content-center">
-              <Button variant="link" type="submit" className="unregister-btn" onClick={deleteProfile}>
+              <Button variant="link" type="submit" className="unregister-btn" onClick={handleDelete}>
                 Delete account
               </Button>
             </Row>
