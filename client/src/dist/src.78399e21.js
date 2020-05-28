@@ -36979,22 +36979,41 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, MovieCard);
 
     _this = _super.call(this, props);
-
-    _this.addFavourites = function () {
-      console.log(_this.props);
-
-      _this.props.addFavourites(_this.props.value);
-
-      _this.setState({
-        clicked: true
-      });
-    };
-
     _this.state = {
       clicked: false
     };
     return _this;
-  }
+  } // addToFavourites = e => {
+  //   e.preventDefault();
+  //   const url = `https://my1980smoviesapi.herokuapp.com/users/`;
+  //   const user = localStorage.getItem("user");
+  //   const addMovie = `${url}${user}/movies/${movie._id}`;
+  //   let favArr = localStorage.getItem("favourites");
+  //   console.log(favArr);
+  //   let favourites = favArr ? JSON.parse(favArr) : [];
+  //   axios
+  //     .post(
+  //       addMovie,
+  //       {
+  //         Username: user
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`
+  //         }
+  //       }
+  //     )
+  //     .then(response => {
+  //       console.log(response);
+  //     })
+  //     .catch(event => {
+  //       console.log("error adding favourite!");
+  //     });
+  //   favourites.concat(movie._id);
+  //   setFav([...favArray, movie._id]);
+  //   localStorage.setItem("favourites", JSON.stringify(favourites));
+  // };
+
 
   _createClass(MovieCard, [{
     key: "render",
@@ -37017,12 +37036,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Button.default, {
         className: "button-open",
         variant: "link"
-      }, "Open")), _react.default.createElement(_Card.default.Footer, {
-        className: "card-footer"
-      }, !this.state.clicked ? _react.default.createElement(_Button.default, {
-        variant: "link",
-        onClick: this.addFavourites
-      }, "Add to Favourites") : _react.default.createElement("p", null, "Added to Favourites"))));
+      }, "Open"))));
     }
   }]);
 
@@ -49598,7 +49612,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function UpdateView(props) {
   var _this = this;
 
-  // const { user, userId } = props;
+  var user = props.user,
+      userId = props.userId; // console.log(props);
+
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -49620,28 +49636,30 @@ function UpdateView(props) {
       setBirthday = _useState8[1];
 
   var userURL = "https://my1980smoviesapi.herokuapp.com/users/".concat(username);
+  var requestBody = {
+    Username: username,
+    Password: password,
+    Email: email,
+    Birthday: birthday
+  };
 
   var handleUpdate = function handleUpdate(e) {
     e.preventDefault();
+    console.log(requestBody);
 
-    _axios.default.put(userURL, {
-      Username: username,
-      Password: password,
-      Email: email,
-      Birthday: birthday
-    }, {
+    _axios.default.put(userURL, requestBody, {
       headers: {
         Authorization: "Bearer ".concat(localStorage.getItem("token"))
       }
     }).then(function (res) {
       // Assign the result to the state
-      var data = res.data;
-      localStorage.setItem("user", data.Username);
-      localStorage.setItem("password", data.Password);
-      localStorage.setItem("email", data.Email);
-      localStorage.setItem("birthday", data.Birthday);
-      console.log(_this.props);
-      console.log(data); // alert("Updated!");
+      var data = res.data; // localStorage.setItem("user", data.Username);
+      // localStorage.setItem("password", data.Password);
+      // localStorage.setItem("email", data.Email);
+      // localStorage.setItem("birthday", data.Birthday);
+      // console.log(this.props);
+
+      console.log(res); // alert("Updated!");
       // localStorage.setItem("user", data.Username);
       // console.log(data);
       // window.open(`/users/${localStorage.getItem("user")}`);
@@ -49811,30 +49829,6 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, MainView);
 
     _this = _super.call(this);
-
-    _this.addToFavourites = function (movieId) {
-      var username = localStorage.getItem("user");
-
-      _axios.default.post("https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/users/".concat(username, "/movies/").concat(movie._id), {
-        headers: {
-          Authorization: "Bearer ".concat(localStorage.getItem("token"))
-        }
-      }).then(function (response) {
-        var movies = response.data;
-        movies.forEach(function (movie) {
-          if (movie._id === movieId) {
-            _this.setState(function (prevState) {
-              return {
-                favourites: prevState.favorites.concat(movie)
-              };
-            });
-          }
-        });
-      }).catch(function (error) {
-        console.log(error);
-      });
-    };
-
     _this.state = {
       movies: [],
       user: null,
@@ -49877,7 +49871,27 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }).catch(function (error) {
         console.log(error);
       });
-    }
+    } // addToFavourites = movieId => {
+    //   const username = localStorage.getItem("user");
+    //   axios
+    //     .post(`https://my1980smoviesapi.herokuapp.com/movies${username}/movies/${movie._id}`, {
+    //       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    //     })
+    //     .then(response => {
+    //       let movies = response.data;
+    //       movies.forEach(movie => {
+    //         if (movie._id === movieId) {
+    //           this.setState(prevState => ({
+    //             favourites: prevState.favorites.concat(movie)
+    //           }));
+    //         }
+    //       });
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // };
+
   }, {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
@@ -49929,7 +49943,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
       var _this$state = this.state,
           movies = _this$state.movies,
-          user = _this$state.user;
+          user = _this$state.user,
+          favouriteMovies = _this$state.favouriteMovies;
       console.log(user);
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
@@ -49995,12 +50010,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           path: "/",
           render: function render() {
             return movies.map(function (m) {
+              // ---> add this as a prop to MovieCard after further investigation: addFavorites={movieId => this.addToFavorites(movieId)}
               return _react.default.createElement(_movieCard.MovieCard, {
                 key: m._id,
-                movie: m,
-                addFavourites: function addFavourites(movieId) {
-                  return _this3.addToFavourites(movieId);
-                }
+                value: m._id,
+                movie: m
               });
             });
           }
@@ -50166,7 +50180,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62619" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55834" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
