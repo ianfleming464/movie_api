@@ -36973,10 +36973,27 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(MovieCard);
 
-  function MovieCard() {
+  function MovieCard(props) {
+    var _this;
+
     _classCallCheck(this, MovieCard);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+
+    _this.addFavourites = function () {
+      console.log(_this.props);
+
+      _this.props.addFavourites(_this.props.value);
+
+      _this.setState({
+        clicked: true
+      });
+    };
+
+    _this.state = {
+      clicked: false
+    };
+    return _this;
   }
 
   _createClass(MovieCard, [{
@@ -37000,7 +37017,12 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_Button.default, {
         className: "button-open",
         variant: "link"
-      }, "Open"))));
+      }, "Open")), _react.default.createElement(_Card.default.Footer, {
+        className: "card-footer"
+      }, !this.state.clicked ? _react.default.createElement(_Button.default, {
+        variant: "link",
+        onClick: this.addFavourites
+      }, "Add to Favourites") : _react.default.createElement("p", null, "Added to Favourites"))));
     }
   }]);
 
@@ -49629,6 +49651,29 @@ function UpdateView(props) {
     });
   };
 
+  var deleteProfile = function deleteProfile(e) {
+    _axios.default.delete("https://my1980smoviesapi.herokuapp.com/movies/users/".concat(localStorage.getItem("user")), {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem("token"))
+      }
+    }).then(function (res) {
+      alert("Do you really want to delete your account?");
+    }).then(function (res) {
+      alert("Account was successfully deleted");
+    }).then(function (res) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      _this.setState({
+        user: null
+      });
+
+      window.open("/", "_self");
+    }).catch(function (e) {
+      alert(e);
+    });
+  };
+
   return _react.default.createElement("div", {
     className: "update-view justify-content-center"
   }, _react.default.createElement(_reactBootstrap.Row, {
@@ -49678,7 +49723,16 @@ function UpdateView(props) {
     variant: "primary",
     type: "submit",
     onClick: handleUpdate
-  }, "Update")))))));
+  }, "Update")))), _react.default.createElement(_reactBootstrap.Container, {
+    className: "mt-4"
+  }, _react.default.createElement(_reactBootstrap.Row, {
+    className: "d-flex align-items-center justify-content-center"
+  }, _react.default.createElement(_reactBootstrap.Button, {
+    variant: "link",
+    type: "submit",
+    className: "unregister-btn",
+    onClick: deleteProfile
+  }, "Delete account"))))));
 }
 },{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap":"../node_modules/react-bootstrap/esm/index.js","./update-view.scss":"components/update-view/update-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
@@ -49758,10 +49812,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this);
 
-    _this.addToFavorites = function (movieId) {
-      var endpoint = "https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/movies";
+    _this.addToFavourites = function (movieId) {
+      var username = localStorage.getItem("user");
 
-      _axios.default.get(endpoint, {
+      _axios.default.post("https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/users/".concat(username, "/movies/"), {
         headers: {
           Authorization: "Bearer ".concat(localStorage.getItem("token"))
         }
@@ -49771,7 +49825,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           if (movie._id === movieId) {
             _this.setState(function (prevState) {
               return {
-                favorites: prevState.favorites.concat(movie)
+                favourites: prevState.favorites.concat(movie)
               };
             });
           }
@@ -49786,7 +49840,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       user: null,
       userData: null,
       _id: null,
-      register: false // newUser: false
+      register: false,
+      favouriteMovies: [] // newUser: false
 
     };
     return _this;
@@ -49847,9 +49902,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       // localStorage.removeItem("birthday");
 
       this.setState({
+        movies: [],
         user: null,
-        register: null,
-        userData: null
+        userData: null,
+        _id: null,
+        register: false,
+        favouriteMovies: []
       });
       window.open("/", "_self");
     } // handleRegistration() {
@@ -49940,7 +49998,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             return movies.map(function (m) {
               return _react.default.createElement(_movieCard.MovieCard, {
                 key: m._id,
-                movie: m
+                movie: m,
+                addFavourites: function addFavourites(movieId) {
+                  return _this3.addToFavourites(movieId);
+                }
               });
             });
           }
@@ -50106,7 +50167,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49413" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49394" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -29,7 +29,8 @@ export class MainView extends React.Component {
       user: null,
       userData: null,
       _id: null,
-      register: false
+      register: false,
+      favouriteMovies: []
       // newUser: false
     };
   }
@@ -61,10 +62,11 @@ export class MainView extends React.Component {
       });
   }
 
-  addToFavorites = movieId => {
-    const endpoint = "https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/movies";
+  addToFavourites = movieId => {
+    const username = localStorage.getItem("user");
+
     axios
-      .get(endpoint, {
+      .post(`https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/users/${username}/movies/`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       })
       .then(response => {
@@ -73,7 +75,7 @@ export class MainView extends React.Component {
         movies.forEach(movie => {
           if (movie._id === movieId) {
             this.setState(prevState => ({
-              favorites: prevState.favorites.concat(movie)
+              favourites: prevState.favorites.concat(movie)
             }));
           }
         });
@@ -104,9 +106,12 @@ export class MainView extends React.Component {
     // localStorage.removeItem("email");
     // localStorage.removeItem("birthday");
     this.setState({
+      movies: [],
       user: null,
-      register: null,
-      userData: null
+      userData: null,
+      _id: null,
+      register: false,
+      favouriteMovies: []
     });
     window.open("/", "_self");
   }
@@ -179,7 +184,13 @@ export class MainView extends React.Component {
           <div className="main-view">
             <Container>
               <Row>
-                <Route exact path="/" render={() => movies.map(m => <MovieCard key={m._id} movie={m} />)} />
+                <Route
+                  exact
+                  path="/"
+                  render={() =>
+                    movies.map(m => <MovieCard key={m._id} movie={m} addFavourites={movieId => this.addToFavourites(movieId)} />)
+                  }
+                />
                 <Route
                   path="/movies/:movieId"
                   render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />}

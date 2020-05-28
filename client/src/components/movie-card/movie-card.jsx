@@ -7,6 +7,21 @@ import "./movie-card.scss";
 import { Link } from "react-router-dom";
 
 export class MovieCard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      clicked: false
+    };
+  }
+
+  addFavourites = () => {
+    console.log(this.props);
+    this.props.addFavourites(this.props.value);
+    this.setState({
+      clicked: true
+    });
+  };
   render() {
     const { movie } = this.props;
 
@@ -21,6 +36,15 @@ export class MovieCard extends React.Component {
               Open
             </Button>
           </Link>
+          <Card.Footer className="card-footer">
+            {!this.state.clicked ? (
+              <Button variant="link" onClick={this.addFavourites}>
+                Add to Favourites
+              </Button>
+            ) : (
+              <p>Added to Favourites</p>
+            )}
+          </Card.Footer>
         </Card.Body>
       </Card>
     );

@@ -54,6 +54,31 @@ export function UpdateView(props) {
       });
   };
 
+  const deleteProfile = e => {
+    axios
+      .delete(`https://my1980smoviesapi.herokuapp.com/movies/users/${localStorage.getItem("user")}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      })
+      .then(res => {
+        alert("Do you really want to delete your account?");
+      })
+      .then(res => {
+        alert("Account was successfully deleted");
+      })
+      .then(res => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        this.setState({
+          user: null
+        });
+        window.open("/", "_self");
+      })
+      .catch(e => {
+        alert(e);
+      });
+  };
+
   return (
     <div className="update-view justify-content-center">
       <Row className="justify-content-center">
@@ -82,13 +107,13 @@ export function UpdateView(props) {
               </Row>
             </Form>
           </Container>
-          {/* <Container className="mt-4">
+          <Container className="mt-4">
             <Row className="d-flex align-items-center justify-content-center">
-              <Button variant="link" type="submit" className="unregister-btn" onClick={() => this.deleteProfile()}>
+              <Button variant="link" type="submit" className="unregister-btn" onClick={deleteProfile}>
                 Delete account
               </Button>
             </Row>
-          </Container> */}
+          </Container>
         </Col>
       </Row>
     </div>
