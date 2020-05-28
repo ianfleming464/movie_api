@@ -15,13 +15,43 @@ export class MovieCard extends React.Component {
     };
   }
 
-  addFavourites = () => {
-    console.log(this.props);
-    this.props.addFavourites(this.props.value);
-    this.setState({
-      clicked: true
-    });
-  };
+  // addToFavourites = e => {
+  //   e.preventDefault();
+  //   const url = `https://my1980smoviesapi.herokuapp.com/users/`;
+  //   const user = localStorage.getItem("user");
+  //   const addMovie = `${url}${user}/movies/${movie._id}`;
+
+  //   let favArr = localStorage.getItem("favourites");
+  //   console.log(favArr);
+
+  //   let favourites = favArr ? JSON.parse(favArr) : [];
+
+  //   axios
+  //     .post(
+  //       addMovie,
+  //       {
+  //         Username: user
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`
+  //         }
+  //       }
+  //     )
+  //     .then(response => {
+  //       console.log(response);
+  //     })
+  //     .catch(event => {
+  //       console.log("error adding favourite!");
+  //     });
+
+  //   favourites.concat(movie._id);
+
+  //   setFav([...favArray, movie._id]);
+
+  //   localStorage.setItem("favourites", JSON.stringify(favourites));
+  // };
+
   render() {
     const { movie } = this.props;
 
@@ -36,15 +66,15 @@ export class MovieCard extends React.Component {
               Open
             </Button>
           </Link>
-          <Card.Footer className="card-footer">
+          {/* <Card.Footer className="card-footer">
             {!this.state.clicked ? (
-              <Button variant="link" onClick={this.addFavourites}>
+              <Button variant="link" onClick={this.addToFavourites}>
                 Add to Favourites
               </Button>
             ) : (
               <p>Added to Favourites</p>
             )}
-          </Card.Footer>
+          </Card.Footer> */}
         </Card.Body>
       </Card>
     );
