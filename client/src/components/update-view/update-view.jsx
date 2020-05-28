@@ -10,22 +10,21 @@ import { Button } from "react-bootstrap";
 import "./update-view.scss";
 
 export function UpdateView(props) {
-  const { user } = props;
+  // const { user, userId } = props;
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const userURL = "https://my1980smoviesapi.herokuapp.com/movies/users/";
+  const userURL = `https://my1980smoviesapi.herokuapp.com/users/${username}`;
 
   const handleUpdate = e => {
     e.preventDefault();
     axios
       .put(
-        userURL + localStorage.getItem("user"),
+        userURL,
         {
-          // Correct path?
           Username: username,
           Password: password,
           Email: email,
@@ -42,7 +41,7 @@ export function UpdateView(props) {
         localStorage.setItem("password", data.Password);
         localStorage.setItem("email", data.Email);
         localStorage.setItem("birthday", data.Birthday);
-
+        console.log(this.props);
         console.log(data);
         // alert("Updated!");
         // localStorage.setItem("user", data.Username);

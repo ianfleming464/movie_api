@@ -28,6 +28,7 @@ export class MainView extends React.Component {
       movies: [],
       user: null,
       userData: null,
+      _id: null,
       register: false
       // newUser: false
     };
@@ -86,10 +87,12 @@ export class MainView extends React.Component {
     //Updates state when user has logged in
     this.setState({
       user: authData.user.Username,
-      userData: authData.user.userData
+      userData: authData.user.userData,
+      userId: authData.user._id
     });
     localStorage.setItem("token", authData.token);
     localStorage.setItem("user", authData.user.Username);
+    localStorage.setItem("userId", authData.user._id);
     localStorage.setItem("userData", JSON.stringify(authData.user));
     this.getMovies(authData.token);
   }
@@ -97,9 +100,9 @@ export class MainView extends React.Component {
   handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    localStorage.removeItem("password");
-    localStorage.removeItem("email");
-    localStorage.removeItem("birthday");
+    localStorage.removeItem("userData");
+    // localStorage.removeItem("email");
+    // localStorage.removeItem("birthday");
     this.setState({
       user: null,
       register: null,
@@ -201,10 +204,10 @@ export class MainView extends React.Component {
                   exact
                   path="/users/:username"
                   render={() => {
-                    return <ProfileView user={user} />;
+                    return <ProfileView user={user} id={localStorage.getItem("userId")} />;
                   }}
                 />
-                <Route exact path="/users/:username/update" render={() => <UpdateView user={user} />} />
+                <Route exact path="/users/:username/update" render={() => <UpdateView user={user} id={localStorage.getItem("userId")} />} />
               </Row>
             </Container>
           </div>

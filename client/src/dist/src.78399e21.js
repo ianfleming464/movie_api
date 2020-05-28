@@ -39202,7 +39202,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, ProfileView);
 
     _this = _super.call(this);
-    _this.state = {// username: null,
+    _this.state = {// username: this.Username
       // password: null,
       // email: null,
       // birthday: null,
@@ -39248,7 +39248,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           user = _this$props.user,
-          movies = _this$props.movies;
+          id = _this$props.id;
       console.log(this.state);
       console.log(this.props);
       return _react.default.createElement("div", null, _react.default.createElement(_Container.default, null, _react.default.createElement("h1", null, " ", this.state.Username, "'s Profile"), _react.default.createElement("br", null), _react.default.createElement(_Card.default, null, _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", this.state.Username), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", this.state.Email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", this.state.Birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favourites: ", this.state.FavouriteMovies)), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_reactRouterDom.Link, {
@@ -49574,8 +49574,9 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function UpdateView(props) {
-  var user = props.user;
+  var _this = this;
 
+  // const { user, userId } = props;
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -49596,13 +49597,12 @@ function UpdateView(props) {
       birthday = _useState8[0],
       setBirthday = _useState8[1];
 
-  var userURL = "https://my1980smoviesapi.herokuapp.com/movies/users/";
+  var userURL = "https://my1980smoviesapi.herokuapp.com/users/".concat(username);
 
   var handleUpdate = function handleUpdate(e) {
     e.preventDefault();
 
-    _axios.default.put(userURL + localStorage.getItem("user"), {
-      // Correct path?
+    _axios.default.put(userURL, {
       Username: username,
       Password: password,
       Email: email,
@@ -49618,6 +49618,7 @@ function UpdateView(props) {
       localStorage.setItem("password", data.Password);
       localStorage.setItem("email", data.Email);
       localStorage.setItem("birthday", data.Birthday);
+      console.log(_this.props);
       console.log(data); // alert("Updated!");
       // localStorage.setItem("user", data.Username);
       // console.log(data);
@@ -49784,6 +49785,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       movies: [],
       user: null,
       userData: null,
+      _id: null,
       register: false // newUser: false
 
     };
@@ -49827,10 +49829,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       //Updates state when user has logged in
       this.setState({
         user: authData.user.Username,
-        userData: authData.user.userData
+        userData: authData.user.userData,
+        userId: authData.user._id
       });
       localStorage.setItem("token", authData.token);
       localStorage.setItem("user", authData.user.Username);
+      localStorage.setItem("userId", authData.user._id);
       localStorage.setItem("userData", JSON.stringify(authData.user));
       this.getMovies(authData.token);
     }
@@ -49839,9 +49843,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     value: function handleLogout() {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      localStorage.removeItem("password");
-      localStorage.removeItem("email");
-      localStorage.removeItem("birthday");
+      localStorage.removeItem("userData"); // localStorage.removeItem("email");
+      // localStorage.removeItem("birthday");
+
       this.setState({
         user: null,
         register: null,
@@ -49985,7 +49989,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           path: "/users/:username",
           render: function render() {
             return _react.default.createElement(_profileView.ProfileView, {
-              user: user
+              user: user,
+              id: localStorage.getItem("userId")
             });
           }
         }), _react.default.createElement(_reactRouterDom.Route, {
@@ -49993,7 +49998,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           path: "/users/:username/update",
           render: function render() {
             return _react.default.createElement(_updateView.UpdateView, {
-              user: user
+              user: user,
+              id: localStorage.getItem("userId")
             });
           }
         })))));
@@ -50100,7 +50106,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52159" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49413" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

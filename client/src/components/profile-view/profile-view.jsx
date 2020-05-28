@@ -11,7 +11,7 @@ export class ProfileView extends React.Component {
     super();
 
     this.state = {
-      // username: null,
+      // username: this.Username
       // password: null,
       // email: null,
       // birthday: null,
@@ -51,7 +51,7 @@ export class ProfileView extends React.Component {
   // Delete user here - axios link to
 
   render() {
-    const { user, movies } = this.props;
+    const { user, id } = this.props;
     console.log(this.state);
     console.log(this.props);
 
