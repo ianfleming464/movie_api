@@ -15,7 +15,7 @@ export class ProfileView extends React.Component {
       // password: null,
       // email: null,
       // birthday: null,
-      // favoriteMovies: [],
+      // favoriteMovies: []
       // movies: []
     };
   }
@@ -39,16 +39,15 @@ export class ProfileView extends React.Component {
           Username: res.data.Username,
           Password: res.data.Password,
           Email: res.data.Email,
-          Birthday: res.data.Birthday.substr(0, 10),
+          Birthday: res.data.Birthday ? res.data.Birthday.substr(0, 10) : " ",
           FavouriteMovies: res.data.FavouriteMovies
         });
+        console.log(res.data.FavouriteMovies);
       })
       .catch(function(err) {
         console.log(err);
       });
   }
-
-  // Delete user here - axios link to
 
   render() {
     const { user, id } = this.props;

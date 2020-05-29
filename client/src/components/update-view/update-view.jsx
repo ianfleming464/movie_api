@@ -18,13 +18,15 @@ export function UpdateView(props) {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const userURL = `https://my1980smoviesapi.herokuapp.com/users/${username}`;
+  const userURL = `https://my1980smoviesapi.herokuapp.com/users/${user}`;
   const requestBody = {
     Username: username,
     Password: password,
     Email: email,
     Birthday: birthday
   };
+
+  // Update user info
 
   const handleUpdate = e => {
     e.preventDefault();
@@ -36,16 +38,14 @@ export function UpdateView(props) {
         // Assign the result to the state
         const data = res.data;
 
-        // localStorage.setItem("user", data.Username);
-        // localStorage.setItem("password", data.Password);
-        // localStorage.setItem("email", data.Email);
-        // localStorage.setItem("birthday", data.Birthday);
-        // console.log(this.props);
-        console.log(res);
-        // alert("Updated!");
-        // localStorage.setItem("user", data.Username);
-        // console.log(data);
-        // window.open(`/users/${localStorage.getItem("user")}`);
+        localStorage.setItem("user", data.Username);
+        localStorage.setItem("password", data.Password);
+        localStorage.setItem("email", data.Email);
+        localStorage.setItem("birthday", data.Birthday);
+        alert("Updated!");
+        localStorage.setItem("user", data.Username);
+        console.log(data);
+        window.open(`/users/${localStorage.getItem("user")}`);
       })
       .catch(e => {
         alert("Error!");
@@ -53,9 +53,11 @@ export function UpdateView(props) {
       });
   };
 
+  // Delete user
+
   const handleDelete = e => {
     axios
-      .delete(`https://my1980smoviesapi.herokuapp.com/movies/users/${localStorage.getItem("user")}`, {
+      .delete(`https://my1980smoviesapi.herokuapp.com/users/${localStorage.getItem("user")}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       })
       .then(res => {
@@ -67,14 +69,11 @@ export function UpdateView(props) {
       .then(res => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-
-        this.setState({
-          user: null
-        });
         window.open("/", "_self");
       })
       .catch(e => {
         alert(e);
+        console.log(e);
       });
   };
 

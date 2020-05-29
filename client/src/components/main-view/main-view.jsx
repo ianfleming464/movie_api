@@ -6,7 +6,6 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
-import { RouterLink } from "react-router-dom";
 import "./main-view.scss";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -62,29 +61,6 @@ export class MainView extends React.Component {
       });
   }
 
-  // addToFavourites = movieId => {
-  //   const username = localStorage.getItem("user");
-
-  //   axios
-  //     .post(`https://my1980smoviesapi.herokuapp.com/movies${username}/movies/${movie._id}`, {
-  //       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-  //     })
-  //     .then(response => {
-  //       let movies = response.data;
-
-  //       movies.forEach(movie => {
-  //         if (movie._id === movieId) {
-  //           this.setState(prevState => ({
-  //             favourites: prevState.favorites.concat(movie)
-  //           }));
-  //         }
-  //       });
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // };
-
   onLoggedIn(authData) {
     //Updates state when user has logged in
     this.setState({
@@ -103,11 +79,7 @@ export class MainView extends React.Component {
 
   handleLogout() {
     localStorage.clear();
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("user");
-    // localStorage.removeItem("userData");
-    // localStorage.removeItem("email");
-    // localStorage.removeItem("birthday");
+
     this.setState({
       movies: [],
       user: null,
@@ -118,18 +90,6 @@ export class MainView extends React.Component {
     });
     window.open("/", "_self");
   }
-
-  // handleRegistration() {
-  //   this.setState({
-  //     newUser: true
-  //   });
-  // }
-
-  // alreadyRegistered() {
-  //   this.setState({
-  //     newUser: false
-  //   });
-  // }
 
   render() {
     const { movies, user, favourites } = this.state;
@@ -162,9 +122,9 @@ export class MainView extends React.Component {
       return (
         <Router>
           <Navbar sticky="top" bg="light" expand="lg" className="main-navbar mb-3 shadow-sm p-3 mb-5">
-            <Navbar.Brand href="#" className="navbar-brand">
-              My 1980s Movie API
-            </Navbar.Brand>
+            <Link to={"/"}>
+              <Navbar.Brand className="navbar-brand">My 1980s Movie API</Navbar.Brand>
+            </Link>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
               <Link to={`/users/${user}`}>
@@ -192,7 +152,6 @@ export class MainView extends React.Component {
                   path="/"
                   render={() => {
                     return movies.map(m => {
-                      // ---> add this as a prop to MovieCard after further investigation: addFavorites={movieId => this.addToFavorites(movieId)}
                       return <MovieCard key={m._id} value={m._id} movie={m} />;
                     });
                   }}
@@ -233,4 +192,3 @@ export class MainView extends React.Component {
     }
   }
 }
-// /users/:username/update

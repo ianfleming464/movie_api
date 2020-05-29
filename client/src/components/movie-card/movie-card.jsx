@@ -41,8 +41,7 @@ export class MovieCard extends React.Component {
         console.log("Cannot add movie to list");
       });
 
-    let favourites = localStorage.setItem("favourites", this.movieId);
-    console.log(favourites);
+    localStorage.setItem("favourites", movieId);
   }
 
   render() {

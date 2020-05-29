@@ -37012,8 +37012,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
         console.log("Cannot add movie to list");
       });
 
-      var favourites = localStorage.setItem("favourites", this.movieId);
-      console.log(favourites);
+      localStorage.setItem("favourites", movieId);
     }
   }, {
     key: "render",
@@ -39248,7 +39247,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
       // password: null,
       // email: null,
       // birthday: null,
-      // favoriteMovies: [],
+      // favoriteMovies: []
       // movies: []
     };
     return _this;
@@ -39277,14 +39276,15 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
           Username: res.data.Username,
           Password: res.data.Password,
           Email: res.data.Email,
-          Birthday: res.data.Birthday.substr(0, 10),
+          Birthday: res.data.Birthday ? res.data.Birthday.substr(0, 10) : " ",
           FavouriteMovies: res.data.FavouriteMovies
         });
+
+        console.log(res.data.FavouriteMovies);
       }).catch(function (err) {
         console.log(err);
       });
-    } // Delete user here - axios link to
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -49616,8 +49616,6 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function UpdateView(props) {
-  var _this = this;
-
   var user = props.user,
       userId = props.userId; // console.log(props);
 
@@ -49641,13 +49639,13 @@ function UpdateView(props) {
       birthday = _useState8[0],
       setBirthday = _useState8[1];
 
-  var userURL = "https://my1980smoviesapi.herokuapp.com/users/".concat(username);
+  var userURL = "https://my1980smoviesapi.herokuapp.com/users/".concat(user);
   var requestBody = {
     Username: username,
     Password: password,
     Email: email,
     Birthday: birthday
-  };
+  }; // Update user info
 
   var handleUpdate = function handleUpdate(e) {
     e.preventDefault();
@@ -49659,24 +49657,24 @@ function UpdateView(props) {
       }
     }).then(function (res) {
       // Assign the result to the state
-      var data = res.data; // localStorage.setItem("user", data.Username);
-      // localStorage.setItem("password", data.Password);
-      // localStorage.setItem("email", data.Email);
-      // localStorage.setItem("birthday", data.Birthday);
-      // console.log(this.props);
-
-      console.log(res); // alert("Updated!");
-      // localStorage.setItem("user", data.Username);
-      // console.log(data);
-      // window.open(`/users/${localStorage.getItem("user")}`);
+      var data = res.data;
+      localStorage.setItem("user", data.Username);
+      localStorage.setItem("password", data.Password);
+      localStorage.setItem("email", data.Email);
+      localStorage.setItem("birthday", data.Birthday);
+      alert("Updated!");
+      localStorage.setItem("user", data.Username);
+      console.log(data);
+      window.open("/users/".concat(localStorage.getItem("user")));
     }).catch(function (e) {
       alert("Error!");
       console.log(e);
     });
-  };
+  }; // Delete user
+
 
   var handleDelete = function handleDelete(e) {
-    _axios.default.delete("https://my1980smoviesapi.herokuapp.com/movies/users/".concat(localStorage.getItem("user")), {
+    _axios.default.delete("https://my1980smoviesapi.herokuapp.com/users/".concat(localStorage.getItem("user")), {
       headers: {
         Authorization: "Bearer ".concat(localStorage.getItem("token"))
       }
@@ -49687,14 +49685,10 @@ function UpdateView(props) {
     }).then(function (res) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-
-      _this.setState({
-        user: null
-      });
-
       window.open("/", "_self");
     }).catch(function (e) {
       alert(e);
+      console.log(e);
     });
   };
 
@@ -49877,27 +49871,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       }).catch(function (error) {
         console.log(error);
       });
-    } // addToFavourites = movieId => {
-    //   const username = localStorage.getItem("user");
-    //   axios
-    //     .post(`https://my1980smoviesapi.herokuapp.com/movies${username}/movies/${movie._id}`, {
-    //       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-    //     })
-    //     .then(response => {
-    //       let movies = response.data;
-    //       movies.forEach(movie => {
-    //         if (movie._id === movieId) {
-    //           this.setState(prevState => ({
-    //             favourites: prevState.favorites.concat(movie)
-    //           }));
-    //         }
-    //       });
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     });
-    // };
-
+    }
   }, {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
@@ -49918,12 +49892,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleLogout",
     value: function handleLogout() {
-      localStorage.clear(); // localStorage.removeItem("token");
-      // localStorage.removeItem("user");
-      // localStorage.removeItem("userData");
-      // localStorage.removeItem("email");
-      // localStorage.removeItem("birthday");
-
+      localStorage.clear();
       this.setState({
         movies: [],
         user: null,
@@ -49933,17 +49902,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         favouriteMovies: []
       });
       window.open("/", "_self");
-    } // handleRegistration() {
-    //   this.setState({
-    //     newUser: true
-    //   });
-    // }
-    // alreadyRegistered() {
-    //   this.setState({
-    //     newUser: false
-    //   });
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -49987,10 +49946,11 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           bg: "light",
           expand: "lg",
           className: "main-navbar mb-3 shadow-sm p-3 mb-5"
+        }, _react.default.createElement(_reactRouterDom.Link, {
+          to: "/"
         }, _react.default.createElement(_Navbar.default.Brand, {
-          href: "#",
           className: "navbar-brand"
-        }, "My 1980s Movie API"), _react.default.createElement(_Navbar.default.Toggle, {
+        }, "My 1980s Movie API")), _react.default.createElement(_Navbar.default.Toggle, {
           "aria-controls": "basic-navbar-nav"
         }), _react.default.createElement(_Navbar.default.Collapse, {
           className: "justify-content-end",
@@ -50018,7 +49978,6 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           path: "/",
           render: function render() {
             return movies.map(function (m) {
-              // ---> add this as a prop to MovieCard after further investigation: addFavorites={movieId => this.addToFavorites(movieId)}
               return _react.default.createElement(_movieCard.MovieCard, {
                 key: m._id,
                 value: m._id,
@@ -50090,8 +50049,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return MainView;
-}(_react.default.Component); // /users/:username/update
-
+}(_react.default.Component);
 
 exports.MainView = MainView;
 },{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Navbar":"../node_modules/react-bootstrap/esm/Navbar.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./main-view.scss":"components/main-view/main-view.scss","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../login-view/login-view":"components/login-view/login-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","../genre-view/genre-view":"components/genre-view/genre-view.jsx","../director-view/director-view":"components/director-view/director-view.jsx","../profile-view/profile-view":"components/profile-view/profile-view.jsx","../update-view/update-view":"components/update-view/update-view.jsx"}],"index.scss":[function(require,module,exports) {
@@ -50188,7 +50146,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56390" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50138" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
