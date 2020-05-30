@@ -12,17 +12,15 @@ export class MovieCard extends React.Component {
     super(props);
 
     this.state = {
-      favourites: []
+      favourites: [],
+      disabled: false
     };
   }
 
   addFavourite() {
     const movieId = this.props.value;
     console.log(movieId);
-    // Sets favourite to state on click, but only 1 item --->
-    // this.setState(prevState => ({
-    //   favourites: [...prevState.favourites, movieId]
-    // }));
+
     const url = `http://my1980smoviesapi.herokuapp.com/users/`;
     const user = localStorage.getItem("user");
     const plusMovie = `${url}${user}/Movies/${movieId}`;
@@ -42,6 +40,10 @@ export class MovieCard extends React.Component {
       });
 
     localStorage.setItem("favourites", movieId);
+    if (this.state.disabled) {
+      return;
+    }
+    this.setState({ disabled: true });
   }
 
   render() {
@@ -60,8 +62,14 @@ export class MovieCard extends React.Component {
                 Open
               </Button>
             </Link>
-            <Button size="sm" className="button-favourites sm float-right" variant="link" onClick={() => this.addFavourite()}>
-              Favourite
+            <Button
+              size="sm"
+              className="button-favourites float-right"
+              variant="link"
+              onClick={() => this.addFavourite()}
+              disabled={this.state.disabled}
+            >
+              {this.state.disabled ? "Added!" : "Favourite"}
             </Button>
           </Card.Footer>
         </Card.Body>

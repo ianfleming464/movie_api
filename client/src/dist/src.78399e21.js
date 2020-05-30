@@ -36982,7 +36982,8 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      favourites: []
+      favourites: [],
+      disabled: false
     };
     return _this;
   }
@@ -36991,11 +36992,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
     key: "addFavourite",
     value: function addFavourite() {
       var movieId = this.props.value;
-      console.log(movieId); // Sets favourite to state on click, but only 1 item --->
-      // this.setState(prevState => ({
-      //   favourites: [...prevState.favourites, movieId]
-      // }));
-
+      console.log(movieId);
       var url = "http://my1980smoviesapi.herokuapp.com/users/";
       var user = localStorage.getItem("user");
       var plusMovie = "".concat(url).concat(user, "/Movies/").concat(movieId);
@@ -37013,6 +37010,14 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
       });
 
       localStorage.setItem("favourites", movieId);
+
+      if (this.state.disabled) {
+        return;
+      }
+
+      this.setState({
+        disabled: true
+      });
     }
   }, {
     key: "render",
@@ -37043,12 +37048,13 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
         variant: "link"
       }, "Open")), _react.default.createElement(_Button.default, {
         size: "sm",
-        className: "button-favourites sm float-right",
+        className: "button-favourites float-right",
         variant: "link",
         onClick: function onClick() {
           return _this2.addFavourite();
-        }
-      }, "Favourite"))));
+        },
+        disabled: this.state.disabled
+      }, this.state.disabled ? "Added!" : "Favourite"))));
     }
   }]);
 
@@ -38286,6 +38292,7 @@ function LoginView(props) {
       var data = response.data;
       console.log();
       props.onLoggedIn(data);
+      console.log(data);
     }).catch(function (e) {
       console.log("No such user!");
     });
@@ -39206,6 +39213,8 @@ var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
+var _Media = _interopRequireDefault(require("react-bootstrap/Media"));
+
 var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -39237,19 +39246,13 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(ProfileView);
 
-  function ProfileView() {
+  function ProfileView(props) {
     var _this;
 
     _classCallCheck(this, ProfileView);
 
-    _this = _super.call(this);
-    _this.state = {// username: this.Username
-      // password: null,
-      // email: null,
-      // birthday: null,
-      // favoriteMovies: []
-      // movies: []
-    };
+    _this = _super.call(this, props);
+    _this.state = {};
     return _this;
   }
 
@@ -39284,22 +39287,41 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
       }).catch(function (err) {
         console.log(err);
       });
-    }
+    } // filterList = () => {
+    //   let favouritesList = movies.filter(m => this.state.FavouriteMovies.includes(m._id));
+    //   console.log(favouritesList);
+    // };
+
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          user = _this$props.user,
-          id = _this$props.id;
+      var movies = this.props.movies;
       console.log(this.state);
       console.log(this.props);
-      return _react.default.createElement("div", null, _react.default.createElement(_Container.default, null, _react.default.createElement("h1", null, " ", this.state.Username, "'s Profile"), _react.default.createElement("br", null), _react.default.createElement(_Card.default, null, _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", this.state.Username), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", this.state.Email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", this.state.Birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favourites: ", this.state.FavouriteMovies)), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/users/".concat(user, "/update")
-      }, _react.default.createElement(_Button.default, {
-        variant: "primary"
-      }, "Update Profile"), _react.default.createElement("br", null), _react.default.createElement("br", null)), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/"
-      }, "Back")))));
+      return _react.default.createElement("div", {
+        className: "profile-view"
+      }, _react.default.createElement(_Media.default, {
+        className: "d-flex flex-column flex-md-row align-items-center ml-xs-5"
+      }, _react.default.createElement(_Media.default.Body, null, _react.default.createElement("h2", null, this.state.Username, "'s Profile"), _react.default.createElement("h4", null, "Username: ", this.state.Username), _react.default.createElement("h4", null, "Email: ", this.state.Email), _react.default.createElement("h4", null, "Birthday: ", this.state.Birthday), _react.default.createElement("h4", null, "Favourite Movies:"), _react.default.createElement("div", {
+        className: "d-flex row mt-3 ml-1"
+      }, movies.map(function (movie) {
+        // if (movie._id === this.FavouriteMovies)
+        return _react.default.createElement("div", {
+          key: movie._id
+        }, _react.default.createElement(_Card.default, {
+          className: "profile-view-card box-shadow",
+          style: {
+            width: "16rem"
+          }
+        }, _react.default.createElement(_Card.default.Img, {
+          variant: "top",
+          src: movie.ImagePath
+        }), _react.default.createElement(_reactRouterDom.Link, {
+          to: "/movies/".concat(movie._id)
+        }, _react.default.createElement(_Card.default.Header, {
+          className: "favourite-card-title-link text-center font-weight-bold"
+        }, movie.Title)), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Text, null, movie.Description))));
+      })))));
     }
   }]);
 
@@ -39307,7 +39329,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 exports.ProfileView = ProfileView;
-},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/ListGroup":"../node_modules/react-bootstrap/esm/ListGroup.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js"}],"../node_modules/react-bootstrap/esm/AccordionContext.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/ListGroup":"../node_modules/react-bootstrap/esm/ListGroup.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Media":"../node_modules/react-bootstrap/esm/Media.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js"}],"../node_modules/react-bootstrap/esm/AccordionContext.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -49835,7 +49857,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       userData: null,
       _id: null,
       register: false,
-      favouriteMovies: [] // newUser: false
+      favourites: [],
+      users: [] // newUser: false
 
     };
     return _this;
@@ -49868,6 +49891,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         _this2.setState({
           movies: response.data
         });
+
+        localStorage.setItem("movies", JSON.stringify(response.data));
       }).catch(function (error) {
         console.log(error);
       });
@@ -49910,8 +49935,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
       var _this$state = this.state,
           movies = _this$state.movies,
-          user = _this$state.user,
-          favourites = _this$state.favourites;
+          user = _this$state.user;
       console.log(user);
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
@@ -50028,10 +50052,10 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         }), _react.default.createElement(_reactRouterDom.Route, {
           exact: true,
           path: "/users/:username",
-          render: function render() {
+          render: function render(_ref4) {
+            var match = _ref4.match;
             return _react.default.createElement(_profileView.ProfileView, {
-              user: user,
-              id: localStorage.getItem("userId")
+              movies: movies
             });
           }
         }), _react.default.createElement(_reactRouterDom.Route, {
@@ -50146,7 +50170,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50138" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63816" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -29,7 +29,8 @@ export class MainView extends React.Component {
       userData: null,
       _id: null,
       register: false,
-      favouriteMovies: []
+      favourites: [],
+      users: []
       // newUser: false
     };
   }
@@ -55,6 +56,7 @@ export class MainView extends React.Component {
         this.setState({
           movies: response.data
         });
+        localStorage.setItem("movies", JSON.stringify(response.data));
       })
       .catch(function(error) {
         console.log(error);
@@ -92,7 +94,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user, favourites } = this.state;
+    const { movies, user } = this.state;
 
     console.log(user);
 
@@ -179,8 +181,8 @@ export class MainView extends React.Component {
                 <Route
                   exact
                   path="/users/:username"
-                  render={() => {
-                    return <ProfileView user={user} id={localStorage.getItem("userId")} />;
+                  render={({ match }) => {
+                    return <ProfileView movies={movies} />;
                   }}
                 />
                 <Route exact path="/users/:username/update" render={() => <UpdateView user={user} id={localStorage.getItem("userId")} />} />
