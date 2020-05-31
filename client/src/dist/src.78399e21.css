@@ -229,6 +229,91 @@ h4 {
   margin-left: 2px;
   border-radius: 5px;
 }
+@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
+body {
+  font-family: "Cabin Condensed", sans-serif;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+h4 {
+  margin: 0 0 8px;
+}
+
+.profile-view-card {
+  background-color: #cde6f5;
+}
+
+.profile-view {
+  text-justify: justify;
+  background-color: #cde6f5;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+  padding: 40px;
+}
+
+.link-to-update,
+.back-to-main {
+  margin-top: auto;
+  color: white;
+  background-color: #87919e;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px;
+  margin-left: 2px;
+  border-radius: 5px;
+}
+
+.button-delete-favourite {
+  margin-top: auto;
+  color: white;
+  background-color: #87919e;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px;
+  margin-left: 75px;
+  border-radius: 5px;
+}
+@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
+.update-view {
+  text-justify: justify;
+  background-color: #cde6f5;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+  padding: 40px;
+}
+
+.unregister-btn,
+.update-btn {
+  margin-top: auto;
+  color: white;
+  background-color: #87919e;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px;
+  margin-left: 16px;
+  border-radius: 5px;
+}
+
+.back-to-profile {
+  margin-top: auto;
+  float: right;
+  color: white;
+  background-color: #87919e;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px;
+  margin-right: 16px;
+  border-radius: 5px;
+}
+
+.btn-row {
+  justify-content: space-between;
+}
 .my-1980s {
   color: steelblue;
 }

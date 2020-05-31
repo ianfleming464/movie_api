@@ -98,10 +98,15 @@ export function UpdateView(props) {
               <Form.Group controlId="formBasicBirthday">
                 <Form.Control type="text" placeholder="New birthday" value={birthday} onChange={e => setBirthday(e.target.value)} />
               </Form.Group>
-              <Row className="justify-content-end">
-                <Button className="update-btn mr-3" variant="primary" type="submit" onClick={handleUpdate}>
+              <Row className="btn-row">
+                <Button className="update-btn mr-3 float-left" variant="primary" type="submit" onClick={handleUpdate}>
                   Update
                 </Button>
+                <Link to={`/`}>
+                  <Button className="back-to-profile float-right justify-content-end" variant="primary">
+                    Back
+                  </Button>
+                </Link>
               </Row>
             </Form>
           </Container>

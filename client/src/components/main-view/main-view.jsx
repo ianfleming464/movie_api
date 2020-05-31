@@ -27,12 +27,27 @@ export class MainView extends React.Component {
       movies: [],
       user: null,
       userData: null,
-      _id: null,
       register: false,
-      favourites: [],
-      users: []
-      // newUser: false
+      favourites: []
     };
+  }
+  onLoggedIn(authData) {
+    //Updates state when user has logged in
+    this.setState({
+      user: authData.user.Username,
+      userData: authData.user.userData,
+      favourites: authData.user.FavouriteMovies,
+      userId: authData.user._id
+    });
+
+    localStorage.setItem("token", authData.token);
+    localStorage.setItem("user", authData.user.Username);
+
+    localStorage.setItem("favourites", JSON.stringify(authData.user.FavouriteMovies));
+
+    localStorage.setItem("userId", authData.user._id);
+    localStorage.setItem("userData", JSON.stringify(authData.user));
+    this.getMovies(authData.token);
   }
 
   componentDidMount() {
@@ -42,7 +57,18 @@ export class MainView extends React.Component {
         user: localStorage.getItem("user"),
         userData: localStorage.getItem("userData")
       });
+
       this.getMovies(accessToken);
+    }
+
+    // ensures that the favourites array persists
+
+    if (this.state.favourites.length == 0) {
+      let persistentFaves = localStorage.getItem("favourites");
+      let FaveArray = JSON.parse(persistentFaves);
+      this.setState({
+        favourites: FaveArray
+      });
     }
   }
 
@@ -63,22 +89,6 @@ export class MainView extends React.Component {
       });
   }
 
-  onLoggedIn(authData) {
-    //Updates state when user has logged in
-    this.setState({
-      user: authData.user.Username,
-      userData: authData.user.userData,
-      favourites: authData.user.FavouriteMovies,
-      userId: authData.user._id
-    });
-    localStorage.setItem("token", authData.token);
-    localStorage.setItem("user", authData.user.Username);
-    localStorage.setItem("favourites", authData.user.FavouriteMovies);
-    localStorage.setItem("userId", authData.user._id);
-    localStorage.setItem("userData", JSON.stringify(authData.user));
-    this.getMovies(authData.token);
-  }
-
   handleLogout() {
     localStorage.clear();
 
@@ -86,7 +96,6 @@ export class MainView extends React.Component {
       movies: [],
       user: null,
       userData: null,
-      _id: null,
       register: false,
       favouriteMovies: []
     });
@@ -94,9 +103,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
-
-    console.log(user);
+    const { movies, user, favourites } = this.state;
 
     if (!movies) return <div className="main-view" />;
 
@@ -154,7 +161,7 @@ export class MainView extends React.Component {
                   path="/"
                   render={() => {
                     return movies.map(m => {
-                      return <MovieCard key={m._id} value={m._id} movie={m} />;
+                      return <MovieCard key={m._id} value={m._id} movie={m} favourites={favourites} />;
                     });
                   }}
                 />

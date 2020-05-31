@@ -12,10 +12,19 @@ export class MovieCard extends React.Component {
     super(props);
 
     this.state = {
-      favourites: [],
       disabled: false
     };
   }
+
+  // componentDidMount() {
+  //   let alreadyAdded;
+  //   if (this.props.favourites) {
+  //     alreadyAdded = this.props.movies.filter(m => favourites.includes(m._id));
+  //   }
+  //   this.setState({
+  //     disabled: true
+  //   });
+  // }
 
   addFavourite() {
     const movieId = this.props.value;
@@ -47,8 +56,14 @@ export class MovieCard extends React.Component {
   }
 
   render() {
-    const { movie } = this.props;
-    // console.log(this.props.value);
+    const { movie, favourites } = this.props;
+
+    // let alreadyAdded;
+    // if (favourites) {
+    //   alreadyAdded = movie.filter(m => this.props.favourites.includes(m._id));
+    // }
+
+    // console.log(alreadyAdded);
 
     return (
       <Card className="card-container box-shadow" style={{ width: "16rem" }}>

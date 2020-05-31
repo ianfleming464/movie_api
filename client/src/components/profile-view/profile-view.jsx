@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
+import "./profile-view.scss";
 import { Link } from "react-router-dom";
-import ListGroup from "react-bootstrap/ListGroup";
+import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Media from "react-bootstrap/Media";
@@ -36,49 +37,87 @@ export class ProfileView extends React.Component {
           Birthday: res.data.Birthday ? res.data.Birthday.substr(0, 10) : " ",
           FavouriteMovies: res.data.FavouriteMovies
         });
-        console.log(res.data.FavouriteMovies);
       })
       .catch(function(err) {
         console.log(err);
       });
   }
 
-  // filterList = () => {
-  //   let favouritesList = movies.filter(m => this.state.FavouriteMovies.includes(m._id));
-  //   console.log(favouritesList);
+  // deleteFavourite = movieId => {
+  //   console.log(movieId);
+  //   axios
+  //     .delete(`https://my1980smoviesapi.herokuapp.com/users/${localStorage.getItem("user")}/Movies/${movieId}`, {
+  //       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  //     })
+  //     .then(response => {
+  //       console.log(response);
+  //       this.getUser(localStorage.getItem("token"));
+  //     })
+  //     .catch(event => {
+  //       console.log(event);
+  //     });
   // };
 
   render() {
-    const { movies } = this.props;
-    console.log(this.state);
-    console.log(this.props);
+    const { movies, id } = this.props;
+    console.log("Profile-view state: ", this.state);
+    console.log("Profile-view props: ", this.props);
+
+    let favouritesList;
+    if (this.state.FavouriteMovies) {
+      favouritesList = movies.filter(m => this.state.FavouriteMovies.includes(m._id));
+    }
+
+    console.log("Profile-view favList: ", favouritesList);
+
+    if (!favouritesList)
+      return (
+        <Spinner animation="border" variant="info" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      );
 
     return (
       <div className="profile-view">
         <Media className="d-flex flex-column flex-md-row align-items-center ml-xs-5">
           <Media.Body>
             <h2>{this.state.Username}'s Profile</h2>
+            <Link to={`/`}>
+              <Button className="back-to-main float-right" variant="primary">
+                Back
+              </Button>
+            </Link>
+            <Link to={"/users/:username/update"}>
+              <Button className="link-to-update float-right" variant="primary">
+                Update Profile
+              </Button>
+            </Link>
             <h4>Username: {this.state.Username}</h4>
             <h4>Email: {this.state.Email}</h4>
             <h4>Birthday: {this.state.Birthday}</h4>
             <h4>Favourite Movies:</h4>
             <div className="d-flex row mt-3 ml-1">
-              {movies.map(movie => {
-                // if (movie._id === this.FavouriteMovies)
-                return (
-                  <div key={movie._id}>
-                    <Card className="profile-view-card box-shadow" style={{ width: "16rem" }}>
-                      <Card.Img variant="top" src={movie.ImagePath} />
-                      <Link to={`/movies/${movie._id}`}>
-                        <Card.Header className="favourite-card-title-link text-center font-weight-bold">{movie.Title}</Card.Header>
-                      </Link>
-                      <Card.Body>
-                        <Card.Text>{movie.Description}</Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                );
-              })}
+              {favouritesList &&
+                favouritesList.map(movie => {
+                  return (
+                    <div key={movie._id}>
+                      <Card className="profile-view-card box-shadow" style={{ width: "16rem" }}>
+                        <Card.Img variant="top" src={movie.ImagePath} />
+                        <Link to={`/movies/${movie._id}`}>
+                          <Card.Header className="favourite-card-title-link text-center font-weight-bold">{movie.Title}</Card.Header>
+                        </Link>
+                        <Card.Body>
+                          <Card.Text>{movie.Description}</Card.Text>
+                        </Card.Body>
+                        <Card.Footer>
+                          <Button size="sm" className="button-delete-favourite" variant="link" onClick={() => this.deleteFavourite()}>
+                            Delete
+                          </Button>
+                        </Card.Footer>
+                      </Card>
+                    </div>
+                  );
+                })}
             </div>
           </Media.Body>
         </Media>
