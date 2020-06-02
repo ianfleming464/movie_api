@@ -63,13 +63,13 @@ export class MainView extends React.Component {
 
     // ensures that the favourites array persists
 
-    if (this.state.favourites.length == 0) {
-      let persistentFaves = localStorage.getItem("favourites");
-      let FaveArray = JSON.parse(persistentFaves);
-      this.setState({
-        favourites: FaveArray
-      });
-    }
+    // if (this.state.favourites.length == 0) {
+    //   let persistentFaves = localStorage.getItem("favourites");
+    //   let faveArray = JSON.parse(persistentFaves);
+    //   this.setState({
+    //     favourites: faveArray
+    //   });
+    // }
   }
 
   getMovies(token) {

@@ -43,12 +43,12 @@ export class MovieCard extends React.Component {
       )
       .then(response => {
         console.log(response);
+        // localStorage.setItem("favourites", JSON.stringify(response.concat(movieId)));
       })
       .catch(event => {
         console.log("Cannot add movie to list");
       });
 
-    localStorage.setItem("favourites", movieId);
     if (this.state.disabled) {
       return;
     }
@@ -57,13 +57,6 @@ export class MovieCard extends React.Component {
 
   render() {
     const { movie, favourites } = this.props;
-
-    // let alreadyAdded;
-    // if (favourites) {
-    //   alreadyAdded = movie.filter(m => this.props.favourites.includes(m._id));
-    // }
-
-    // console.log(alreadyAdded);
 
     return (
       <Card className="card-container box-shadow" style={{ width: "16rem" }}>

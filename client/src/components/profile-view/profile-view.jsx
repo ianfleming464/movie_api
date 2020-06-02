@@ -50,13 +50,15 @@ export class ProfileView extends React.Component {
       .delete(`http://my1980smoviesapi.herokuapp.com/users/${user}/Movies/${movieId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       })
-      .then(response => {
-        console.log(response);
+      .then(res => {
+        this.setState({
+          FavouriteMovies: res.data.FavouriteMovies
+        });
       })
       .catch(event => {
         console.log("Cannot delete movie from list");
       });
-    console.log(this.state);
+    this.setState;
   }
 
   render() {
@@ -69,7 +71,7 @@ export class ProfileView extends React.Component {
       favouritesList = movies.filter(m => this.state.FavouriteMovies.includes(m._id));
     }
 
-    // console.log("Profile-view favList: ", favouritesList);
+    console.log("Profile-view favList: ", favouritesList);
 
     if (!favouritesList)
       return (
@@ -98,6 +100,7 @@ export class ProfileView extends React.Component {
             <h4>Birthday: {this.state.Birthday}</h4>
             <h4>Favourite Movies:</h4>
             <div className="d-flex row mt-3 ml-1">
+              {favouritesList == 0 && <h2> No favourites yet!</h2>}
               {favouritesList &&
                 favouritesList.map(movie => {
                   return (

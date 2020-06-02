@@ -37012,12 +37012,10 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(localStorage.getItem("token"))
         }
       }).then(function (response) {
-        console.log(response);
+        console.log(response); // localStorage.setItem("favourites", JSON.stringify(response.concat(movieId)));
       }).catch(function (event) {
         console.log("Cannot add movie to list");
       });
-
-      localStorage.setItem("favourites", movieId);
 
       if (this.state.disabled) {
         return;
@@ -37034,12 +37032,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
 
       var _this$props = this.props,
           movie = _this$props.movie,
-          favourites = _this$props.favourites; // let alreadyAdded;
-      // if (favourites) {
-      //   alreadyAdded = movie.filter(m => this.props.favourites.includes(m._id));
-      // }
-      // console.log(alreadyAdded);
-
+          favourites = _this$props.favourites;
       return _react.default.createElement(_Card.default, {
         className: "card-container box-shadow",
         style: {
@@ -38871,24 +38864,28 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "deleteFavourite",
     value: function deleteFavourite(movieId) {
+      var _this3 = this;
+
       var user = localStorage.getItem("user");
 
       _axios.default.delete("http://my1980smoviesapi.herokuapp.com/users/".concat(user, "/Movies/").concat(movieId), {
         headers: {
           Authorization: "Bearer ".concat(localStorage.getItem("token"))
         }
-      }).then(function (response) {
-        console.log(response);
+      }).then(function (res) {
+        _this3.setState({
+          FavouriteMovies: res.data.FavouriteMovies
+        });
       }).catch(function (event) {
         console.log("Cannot delete movie from list");
       });
 
-      console.log(this.state);
+      this.setState;
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var movies = this.props.movies; // console.log("Profile-view state: ", this.state);
       // console.log("Profile-view props: ", this.props);
@@ -38897,11 +38894,11 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
 
       if (this.state.FavouriteMovies) {
         favouritesList = movies.filter(function (m) {
-          return _this3.state.FavouriteMovies.includes(m._id);
+          return _this4.state.FavouriteMovies.includes(m._id);
         });
-      } // console.log("Profile-view favList: ", favouritesList);
+      }
 
-
+      console.log("Profile-view favList: ", favouritesList);
       if (!favouritesList) return _react.default.createElement(_Spinner.default, {
         animation: "border",
         variant: "info",
@@ -38925,7 +38922,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         variant: "primary"
       }, "Update Profile")), _react.default.createElement("h4", null, "Username: ", this.state.Username), _react.default.createElement("h4", null, "Email: ", this.state.Email), _react.default.createElement("h4", null, "Birthday: ", this.state.Birthday), _react.default.createElement("h4", null, "Favourite Movies:"), _react.default.createElement("div", {
         className: "d-flex row mt-3 ml-1"
-      }, favouritesList && favouritesList.map(function (movie) {
+      }, favouritesList == 0 && _react.default.createElement("h2", null, " No favourites yet!"), favouritesList && favouritesList.map(function (movie) {
         return _react.default.createElement("div", {
           key: movie._id
         }, _react.default.createElement(_Card.default, {
@@ -38945,7 +38942,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
           className: "button-delete-favourite",
           variant: "link",
           onClick: function onClick() {
-            return _this3.deleteFavourite(movie._id);
+            return _this4.deleteFavourite(movie._id);
           }
         }, "Delete"))));
       })))));
@@ -49961,15 +49958,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         });
         this.getMovies(accessToken);
       } // ensures that the favourites array persists
+      // if (this.state.favourites.length == 0) {
+      //   let persistentFaves = localStorage.getItem("favourites");
+      //   let faveArray = JSON.parse(persistentFaves);
+      //   this.setState({
+      //     favourites: faveArray
+      //   });
+      // }
 
-
-      if (this.state.favourites.length == 0) {
-        var persistentFaves = localStorage.getItem("favourites");
-        var FaveArray = JSON.parse(persistentFaves);
-        this.setState({
-          favourites: FaveArray
-        });
-      }
     }
   }, {
     key: "getMovies",
@@ -50247,7 +50243,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49365" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49616" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
