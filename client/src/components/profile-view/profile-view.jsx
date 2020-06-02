@@ -43,32 +43,33 @@ export class ProfileView extends React.Component {
       });
   }
 
-  // deleteFavourite = movieId => {
-  //   console.log(movieId);
-  //   axios
-  //     .delete(`https://my1980smoviesapi.herokuapp.com/users/${localStorage.getItem("user")}/Movies/${movieId}`, {
-  //       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-  //     })
-  //     .then(response => {
-  //       console.log(response);
-  //       this.getUser(localStorage.getItem("token"));
-  //     })
-  //     .catch(event => {
-  //       console.log(event);
-  //     });
-  // };
+  deleteFavourite(movieId) {
+    const user = localStorage.getItem("user");
+
+    axios
+      .delete(`http://my1980smoviesapi.herokuapp.com/users/${user}/Movies/${movieId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(event => {
+        console.log("Cannot delete movie from list");
+      });
+    console.log(this.state);
+  }
 
   render() {
-    const { movies, id } = this.props;
-    console.log("Profile-view state: ", this.state);
-    console.log("Profile-view props: ", this.props);
+    const { movies } = this.props;
+    // console.log("Profile-view state: ", this.state);
+    // console.log("Profile-view props: ", this.props);
 
     let favouritesList;
     if (this.state.FavouriteMovies) {
       favouritesList = movies.filter(m => this.state.FavouriteMovies.includes(m._id));
     }
 
-    console.log("Profile-view favList: ", favouritesList);
+    // console.log("Profile-view favList: ", favouritesList);
 
     if (!favouritesList)
       return (
@@ -110,7 +111,12 @@ export class ProfileView extends React.Component {
                           <Card.Text>{movie.Description}</Card.Text>
                         </Card.Body>
                         <Card.Footer>
-                          <Button size="sm" className="button-delete-favourite" variant="link" onClick={() => this.deleteFavourite()}>
+                          <Button
+                            size="sm"
+                            className="button-delete-favourite"
+                            variant="link"
+                            onClick={() => this.deleteFavourite(movie._id)}
+                          >
                             Delete
                           </Button>
                         </Card.Footer>

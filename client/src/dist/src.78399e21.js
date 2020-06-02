@@ -38867,40 +38867,41 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
       }).catch(function (err) {
         console.log(err);
       });
-    } // deleteFavourite = movieId => {
-    //   console.log(movieId);
-    //   axios
-    //     .delete(`https://my1980smoviesapi.herokuapp.com/users/${localStorage.getItem("user")}/Movies/${movieId}`, {
-    //       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-    //     })
-    //     .then(response => {
-    //       console.log(response);
-    //       this.getUser(localStorage.getItem("token"));
-    //     })
-    //     .catch(event => {
-    //       console.log(event);
-    //     });
-    // };
+    }
+  }, {
+    key: "deleteFavourite",
+    value: function deleteFavourite(movieId) {
+      var user = localStorage.getItem("user");
 
+      _axios.default.delete("http://my1980smoviesapi.herokuapp.com/users/".concat(user, "/Movies/").concat(movieId), {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem("token"))
+        }
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function (event) {
+        console.log("Cannot delete movie from list");
+      });
+
+      console.log(this.state);
+    }
   }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      var _this$props = this.props,
-          movies = _this$props.movies,
-          id = _this$props.id;
-      console.log("Profile-view state: ", this.state);
-      console.log("Profile-view props: ", this.props);
+      var movies = this.props.movies; // console.log("Profile-view state: ", this.state);
+      // console.log("Profile-view props: ", this.props);
+
       var favouritesList;
 
       if (this.state.FavouriteMovies) {
         favouritesList = movies.filter(function (m) {
           return _this3.state.FavouriteMovies.includes(m._id);
         });
-      }
+      } // console.log("Profile-view favList: ", favouritesList);
 
-      console.log("Profile-view favList: ", favouritesList);
+
       if (!favouritesList) return _react.default.createElement(_Spinner.default, {
         animation: "border",
         variant: "info",
@@ -38944,7 +38945,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
           className: "button-delete-favourite",
           variant: "link",
           onClick: function onClick() {
-            return _this3.deleteFavourite();
+            return _this3.deleteFavourite(movie._id);
           }
         }, "Delete"))));
       })))));
@@ -50246,7 +50247,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51743" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49365" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
