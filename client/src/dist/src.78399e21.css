@@ -68,6 +68,11 @@
   border-radius: 5px;
 }
 @import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
+.card-margin {
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
 .movie-view {
   font-family: "Cabin Condensed", sans-serif;
   background-color: #cde6f5;

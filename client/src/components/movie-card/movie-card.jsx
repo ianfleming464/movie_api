@@ -48,7 +48,6 @@ export class MovieCard extends React.Component {
       .catch(event => {
         console.log("Cannot add movie to list");
       });
-
     if (this.state.disabled) {
       return;
     }
@@ -59,7 +58,7 @@ export class MovieCard extends React.Component {
     const { movie, favourites } = this.props;
 
     return (
-      <Card className="card-container box-shadow" style={{ width: "16rem" }}>
+      <Card className="card-container box-shadow d-flex flex-stretch" style={{ width: "16rem" }}>
         <Card.Img variant="top" src={movie.ImagePath} />
         <Card.Header className="card-header text-center font-weight-bold">{movie.Title}</Card.Header>
         <Card.Body className="card-body d-flex flex-column">

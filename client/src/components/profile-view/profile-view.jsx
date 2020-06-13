@@ -1,12 +1,11 @@
 import React from "react";
 import axios from "axios";
+import { setMovies } from "../../actions/actions";
+import { setUser } from "../../actions/actions";
+import { connect } from "react-redux";
 import "./profile-view.scss";
 import { Link } from "react-router-dom";
-import Spinner from "react-bootstrap/Spinner";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Media from "react-bootstrap/Media";
-import Card from "react-bootstrap/Card";
+import { Spinner, Button, Media, Card } from "react-bootstrap";
 
 export class ProfileView extends React.Component {
   constructor(props) {
@@ -62,9 +61,8 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { movies } = this.props;
-    // console.log("Profile-view state: ", this.state);
-    // console.log("Profile-view props: ", this.props);
+    const { movies, currentUser, user } = this.props;
+    console.log("Profile-view state: ", currentUser);
 
     let favouritesList;
     if (this.state.FavouriteMovies) {
@@ -99,7 +97,7 @@ export class ProfileView extends React.Component {
             <h4>Email: {this.state.Email}</h4>
             <h4>Birthday: {this.state.Birthday}</h4>
             <h4>Favourite Movies:</h4>
-            <div className="d-flex row mt-3 ml-1">
+            <div className="d-flex row mt-3 ml-1 stretch">
               {favouritesList == 0 && <h2> No favourites yet!</h2>}
               {favouritesList &&
                 favouritesList.map(movie => {
@@ -134,3 +132,9 @@ export class ProfileView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = state => {
+  return { movies: state.movies, userInfo: state.userInfo };
+};
+
+export default connect()(ProfileView);

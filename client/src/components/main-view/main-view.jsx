@@ -1,15 +1,20 @@
+// 11.6.2020 - currently just writing the action/reducer to set and save user data in the store
+// add favourites currently undefined because need to pass addFAvourite as a prop to Movie card in the MoviesList component
+
 import React from "react";
 import axios from "axios";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
-import Navbar from "react-bootstrap/Navbar";
+import { Container, Col, Row, Button, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./main-view.scss";
 
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+// #0
+import { setMovies } from "../../actions/actions";
+import { setUser } from "../../actions/actions";
+
+import MoviesList from "../movies-list/movies-list";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -19,35 +24,17 @@ import { DirectorView } from "../director-view/director-view";
 import { ProfileView } from "../profile-view/profile-view";
 import { UpdateView } from "../update-view/update-view";
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      movies: [],
-      user: null,
-      userData: null,
-      register: false,
-      favourites: []
+      // movies: [],
+      // user: null
+      // userData: null,
+      // register: false,
+      // favourites: []
     };
-  }
-  onLoggedIn(authData) {
-    //Updates state when user has logged in
-    this.setState({
-      user: authData.user.Username,
-      userData: authData.user.userData,
-      favourites: authData.user.FavouriteMovies,
-      userId: authData.user._id
-    });
-
-    localStorage.setItem("token", authData.token);
-    localStorage.setItem("user", authData.user.Username);
-
-    localStorage.setItem("favourites", JSON.stringify(authData.user.FavouriteMovies));
-
-    localStorage.setItem("userId", authData.user._id);
-    localStorage.setItem("userData", JSON.stringify(authData.user));
-    this.getMovies(authData.token);
   }
 
   componentDidMount() {
@@ -78,34 +65,78 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
-        localStorage.setItem("movies", JSON.stringify(response.data));
+        // #1 Gets the movie info
+        this.props.setMovies(response.data);
+        // localStorage.setItem("movies", JSON.stringify(response.data));
       })
       .catch(function(error) {
         console.log(error);
       });
   }
 
+  getProfileInfo(token) {
+    const username = localStorage.getItem("user");
+    // #1.1 Gets the profile/user info
+    axios
+      .get(`https://my1980smoviesapi.herokuapp.com/users/${username}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        this.props.setUser(response.data);
+        // this.setState({
+        //   Username: response.data.Username,
+        //   Email: response.data.Email,
+        //   Birthdate: response.data.Birthday ? response.data.Birthday.substr(0, 10) : " ",
+        //   FavouriteMovies: response.data.FavouriteMovies
+        // });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
+  onLoggedIn(authData) {
+    //Updates state when user has logged in
+    this.setState({
+      user: authData.user.Username
+      // userData: authData.user.userData,
+      // favourites: authData.user.FavouriteMovies,
+      // userId: authData.user._id
+    });
+
+    localStorage.setItem("token", authData.token);
+    localStorage.setItem("user", authData.user.Username);
+    localStorage.setItem("favourites", JSON.stringify(authData.user.FavouriteMovies));
+    localStorage.setItem("userId", authData.user._id);
+    localStorage.setItem("userData", JSON.stringify(authData.user));
+
+    this.getMovies(authData.token);
+    this.getProfileInfo(authData.token);
+  }
+
   handleLogout() {
     localStorage.clear();
 
     this.setState({
-      movies: [],
-      user: null,
-      userData: null,
-      register: false,
-      favouriteMovies: []
+      // movies: [],
+      user: null
+      // userData: null,
+      // register: false,
+      // favouriteMovies: []
     });
     window.open("/", "_self");
   }
 
   render() {
-    const { movies, user, favourites } = this.state;
+    // #2
+    let { movies, currentUser } = this.props;
+    let { user } = this.state;
 
-    if (!movies) return <div className="main-view" />;
+    console.log(this.props);
+
+    // const { movies, user, favourites } = this.state;
+
+    if (!movies && !currentUser) return <div className="main-view" />;
 
     if (!user) {
       return (
@@ -156,15 +187,7 @@ export class MainView extends React.Component {
           <div className="main-view">
             <Container>
               <Row>
-                <Route
-                  exact
-                  path="/"
-                  render={() => {
-                    return movies.map(m => {
-                      return <MovieCard key={m._id} value={m._id} movie={m} favourites={favourites} />;
-                    });
-                  }}
-                />
+                <Route exact path="/" render={() => <MoviesList movies={movies} />} />
                 <Route
                   path="/movies/:movieId"
                   render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />}
@@ -188,8 +211,9 @@ export class MainView extends React.Component {
                 <Route
                   exact
                   path="/users/:username"
-                  render={({ match }) => {
-                    return <ProfileView movies={movies} />;
+                  render={() => {
+                    if (!setUser) return <div className="main-view" />;
+                    return <ProfileView movies={movies} user={user} currentUser={currentUser} />;
                   }}
                 />
                 <Route exact path="/users/:username/update" render={() => <UpdateView user={user} id={localStorage.getItem("userId")} />} />
@@ -201,3 +225,11 @@ export class MainView extends React.Component {
     }
   }
 }
+
+// #3
+let mapStateToProps = state => {
+  return { movies: state.movies, currentUser: state.currentUser };
+};
+
+// #4
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);
