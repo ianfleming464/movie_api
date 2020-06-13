@@ -20,7 +20,7 @@ function movies(state = [], action) {
   }
 }
 
-function currentUser(state = null, action) {
+function currentUser(state = {}, action) {
   switch (action.type) {
     case SET_USER:
       return action.value;
