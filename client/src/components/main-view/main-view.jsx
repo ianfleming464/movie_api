@@ -124,7 +124,7 @@ class MainView extends React.Component {
       // register: false,
       // favouriteMovies: []
     });
-    window.open("/", "_self");
+    window.open("/client", "_self");
   }
 
   render() {
@@ -140,12 +140,12 @@ class MainView extends React.Component {
 
     if (!user) {
       return (
-        <Router>
+        <Router basename="/client">
           <div className="main-view">
             <Container>
               <Row className="justify-content-center">
                 <Col>
-                  <Route exact path="/" render={() => <LoginView onLoggedIn={user => this.onLoggedIn(user)} />} />
+                  <Route path="/" render={() => <LoginView onLoggedIn={user => this.onLoggedIn(user)} />} />
                 </Col>
               </Row>
 
@@ -160,10 +160,13 @@ class MainView extends React.Component {
       );
     } else {
       return (
-        <Router>
+        <Router basename="/client">
           <Navbar sticky="top" bg="light" expand="lg" className="main-navbar mb-3 shadow-sm p-3 mb-5">
             <Link to={"/"}>
-              <Navbar.Brand className="navbar-brand">My 1980s Movie API</Navbar.Brand>
+              <Navbar.Brand className="navbar-brand">
+                {" "}
+                <img alt="" src="../public/just_logo.png" width="30" height="30" className="d-inline-block align-top" /> My 1980s Movie API
+              </Navbar.Brand>
             </Link>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">

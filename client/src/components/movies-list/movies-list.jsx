@@ -29,7 +29,7 @@ function MoviesList(props) {
         </Row>
         <Row>
           {filteredMovies.map(m => (
-            <Row>
+            <Row key={m._id}>
               <Col key={m._id} className="card-margin box-shadow d-flex flex-stretch" style={{ width: "16rem" }}>
                 <MovieCard key={m._id} value={m._id} movie={m} addFavourite={movieId => this.addFavourite(movieId)} />
               </Col>

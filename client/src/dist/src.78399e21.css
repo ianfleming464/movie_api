@@ -34,7 +34,10 @@
   margin-left: 2px;
   border-radius: 5px;
 }
-@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
+#formBasicFilterInput {
+  border-radius: 5px;
+  border-color: grey;
+}
 .card-body {
   text-align: justify;
 }
@@ -107,9 +110,7 @@
 .movie-poster {
   margin: 20px;
 }
-@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
 .login-container {
-  font-family: "Cabin Condensed", sans-serif;
   background-color: #cde6f5;
   border-radius: 4px;
   margin-top: 150px;
@@ -118,7 +119,6 @@
 }
 
 .button-login {
-  font-family: "Cabin Condensed", sans-serif;
   color: black;
   background-color: #87919e;
   border: 0;
@@ -130,6 +130,10 @@
 
 .button-login:hover {
   background-color: #8c8c8c;
+}
+
+.login-navbar {
+  background-color: #cde6f5;
 }
 .registration-container {
   font-family: "Cabin Condensed", sans-serif;
@@ -154,7 +158,6 @@
 .button-register:hover {
   background-color: #8c8c8c;
 }
-@import url("https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&display=swap");
 body {
   font-family: "Cabin Condensed", sans-serif;
 }
