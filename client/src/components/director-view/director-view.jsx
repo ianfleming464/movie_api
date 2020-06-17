@@ -32,11 +32,11 @@ export class DirectorView extends React.Component {
                 {director.Biography} Movies by {director.Name} include :{" "}
               </p>
               <Link to={`/`}>
-                <Button variant="link" size="sm" className="back-button">
+                <Button variant="link" size="sm" className="back-from-director">
                   Back to movie list
                 </Button>
               </Link>
-              <div className="d-flex row mt-3 ml-1">
+              <div className="d-flex row mt-3 ml-1 stretch">
                 {movies.map(movie => {
                   if (movie.Director.Name === director.Name) {
                     return (

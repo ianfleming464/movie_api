@@ -51291,7 +51291,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
         className: "card-header text-center font-weight-bold"
       }, movie.Title), _react.default.createElement(_Card.default.Body, {
         className: "card-body d-flex flex-column"
-      }, _react.default.createElement(_Card.default.Text, null, movie.Description), _react.default.createElement(_Card.default.Footer, {
+      }, _react.default.createElement(_Card.default.Text, null, movie.Description, " "), _react.default.createElement(_Card.default.Footer, {
         className: "card-footer"
       }, _react.default.createElement(_reactRouterDom.Link, {
         to: "/movies/".concat(movie._id)
@@ -51556,7 +51556,7 @@ function LoginView(props) {
   var handleLogin = function handleLogin(e) {
     e.preventDefault(); //
 
-    _axios.default.post("https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/login", null, {
+    _axios.default.post("https://my1980smoviesapi.herokuapp.com/login", null, {
       params: {
         Username: username,
         Password: password
@@ -51951,9 +51951,9 @@ var DirectorView = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement(_reactBootstrap.Button, {
         variant: "link",
         size: "sm",
-        className: "back-button"
+        className: "back-from-director"
       }, "Back to movie list")), _react.default.createElement("div", {
-        className: "d-flex row mt-3 ml-1"
+        className: "d-flex row mt-3 ml-1 stretch"
       }, movies.map(function (movie) {
         if (movie.Director.Name === director.Name) {
           return _react.default.createElement("div", {
@@ -52150,7 +52150,7 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         return _react.default.createElement("div", {
           key: movie._id
         }, _react.default.createElement(_reactBootstrap.Card, {
-          className: "profile-view-card box-shadow",
+          className: "profile-view-card box-shadow d-flex flex-stretch",
           style: {
             width: "16rem"
           }
@@ -52877,7 +52877,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63459" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53457" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

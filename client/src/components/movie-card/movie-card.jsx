@@ -62,7 +62,7 @@ export class MovieCard extends React.Component {
         <Card.Img variant="top" src={movie.ImagePath} />
         <Card.Header className="card-header text-center font-weight-bold">{movie.Title}</Card.Header>
         <Card.Body className="card-body d-flex flex-column">
-          <Card.Text>{movie.Description}</Card.Text>
+          <Card.Text>{movie.Description} </Card.Text>
           <Card.Footer className="card-footer">
             <Link to={`/movies/${movie._id}`}>
               <Button size="sm" className="button-open float-left" variant="link">

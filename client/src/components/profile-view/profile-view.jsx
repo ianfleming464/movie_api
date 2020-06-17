@@ -103,7 +103,7 @@ export class ProfileView extends React.Component {
                 favouritesList.map(movie => {
                   return (
                     <div key={movie._id}>
-                      <Card className="profile-view-card box-shadow" style={{ width: "16rem" }}>
+                      <Card className="profile-view-card box-shadow d-flex flex-stretch" style={{ width: "16rem" }}>
                         <Card.Img variant="top" src={movie.ImagePath} />
                         <Link to={`/movies/${movie._id}`}>
                           <Card.Header className="favourite-card-title-link text-center font-weight-bold">{movie.Title}</Card.Header>
