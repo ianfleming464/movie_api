@@ -51690,7 +51690,7 @@ function RegistrationView(props) {
       var data = response.data;
       alert("Success!");
       console.log(data);
-      window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+      window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
     }).catch(function (e) {
       alert("Error!");
       console.log(e);
@@ -52545,7 +52545,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         // favouriteMovies: []
 
       });
-      window.open("/client", "_self");
+      window.open("/", "_self");
     }
   }, {
     key: "render",
@@ -52564,9 +52564,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
 
       if (!user) {
-        return _react.default.createElement(_reactRouterDom.BrowserRouter, {
-          basename: "/client"
-        }, _react.default.createElement("div", {
+        return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
           className: "main-view"
         }, _react.default.createElement(_reactBootstrap.Container, null, _react.default.createElement(_reactBootstrap.Row, {
           className: "justify-content-center"
@@ -52588,9 +52586,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           }
         }))))));
       } else {
-        return _react.default.createElement(_reactRouterDom.BrowserRouter, {
-          basename: "/client"
-        }, _react.default.createElement(_reactBootstrap.Navbar, {
+        return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_reactBootstrap.Navbar, {
           sticky: "top",
           bg: "light",
           expand: "lg",
@@ -52882,7 +52878,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53178" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56548" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

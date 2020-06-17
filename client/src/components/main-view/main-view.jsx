@@ -124,7 +124,7 @@ class MainView extends React.Component {
       // register: false,
       // favouriteMovies: []
     });
-    window.open("/client", "_self");
+    window.open("/", "_self");
   }
 
   render() {
@@ -140,7 +140,7 @@ class MainView extends React.Component {
 
     if (!user) {
       return (
-        <Router basename="/client">
+        <Router>
           <div className="main-view">
             <Container>
               <Row className="justify-content-center">
@@ -160,7 +160,7 @@ class MainView extends React.Component {
       );
     } else {
       return (
-        <Router basename="/client">
+        <Router>
           <Navbar sticky="top" bg="light" expand="lg" className="main-navbar mb-3 shadow-sm p-3 mb-5">
             <Link to={"/"}>
               <Navbar.Brand className="navbar-brand">
