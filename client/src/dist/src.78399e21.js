@@ -52589,7 +52589,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           }
         }))))));
       } else {
-        return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_reactBootstrap.Navbar, {
+        return _react.default.createElement(_reactRouterDom.BrowserRouter, {
+          basename: "/client"
+        }, _react.default.createElement(_reactBootstrap.Navbar, {
           sticky: "top",
           bg: "light",
           expand: "lg",

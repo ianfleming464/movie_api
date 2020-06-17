@@ -157,7 +157,7 @@ class MainView extends React.Component {
       );
     } else {
       return (
-        <Router>
+        <Router basename="/client">
           <Navbar sticky="top" bg="light" expand="lg" className="main-navbar mb-3 shadow-sm p-3 mb-5">
             <Link to={"/"}>
               <Navbar.Brand className="navbar-brand">My 1980s Movie API</Navbar.Brand>
