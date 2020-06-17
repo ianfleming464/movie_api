@@ -12,7 +12,7 @@ export function LoginView(props) {
   const handleLogin = e => {
     e.preventDefault(); //
     axios
-      .post("https://cors-anywhere.herokuapp.com/https://my1980smoviesapi.herokuapp.com/login", null, {
+      .post("https://my1980smoviesapi.herokuapp.com/login", null, {
         params: {
           Username: username,
           Password: password
