@@ -51690,7 +51690,7 @@ function RegistrationView(props) {
       var data = response.data;
       alert("Success!");
       console.log(data);
-      window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+      window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
     }).catch(function (e) {
       alert("Error!");
       console.log(e);
@@ -52545,7 +52545,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         // favouriteMovies: []
 
       });
-      window.open("/", "_self");
+      window.open("/client", "_self");
     }
   }, {
     key: "render",
@@ -52564,11 +52564,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
 
       if (!user) {
-        return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
+        return _react.default.createElement(_reactRouterDom.BrowserRouter, {
+          basename: "/client"
+        }, _react.default.createElement("div", {
           className: "main-view"
         }, _react.default.createElement(_reactBootstrap.Container, null, _react.default.createElement(_reactBootstrap.Row, {
           className: "justify-content-center"
         }, _react.default.createElement(_reactBootstrap.Col, null, _react.default.createElement(_reactRouterDom.Route, {
+          exact: true,
           path: "/",
           render: function render() {
             return _react.default.createElement(_loginView.LoginView, {
@@ -52595,13 +52598,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           to: "/"
         }, _react.default.createElement(_reactBootstrap.Navbar.Brand, {
           className: "navbar-brand"
-        }, " ", _react.default.createElement("img", {
-          alt: "",
-          src: "../public/just_logo.png",
-          width: "30",
-          height: "30",
-          className: "d-inline-block align-top"
-        }), " My 1980s Movie API")), _react.default.createElement(_reactBootstrap.Navbar.Toggle, {
+        }, "My 1980s Movie API")), _react.default.createElement(_reactBootstrap.Navbar.Toggle, {
           "aria-controls": "basic-navbar-nav"
         }), _react.default.createElement(_reactBootstrap.Navbar.Collapse, {
           className: "justify-content-end",
@@ -52878,7 +52875,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56548" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58291" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

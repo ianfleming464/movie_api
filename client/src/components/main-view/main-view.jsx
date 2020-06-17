@@ -1,6 +1,3 @@
-// 11.6.2020 - currently just writing the action/reducer to set and save user data in the store
-// add favourites currently undefined because need to pass addFAvourite as a prop to Movie card in the MoviesList component
-
 import React from "react";
 import axios from "axios";
 import { Container, Col, Row, Button, Navbar } from "react-bootstrap";
@@ -124,7 +121,7 @@ class MainView extends React.Component {
       // register: false,
       // favouriteMovies: []
     });
-    window.open("/", "_self");
+    window.open("/client", "_self");
   }
 
   render() {
@@ -140,12 +137,12 @@ class MainView extends React.Component {
 
     if (!user) {
       return (
-        <Router>
+        <Router basename="/client">
           <div className="main-view">
             <Container>
               <Row className="justify-content-center">
                 <Col>
-                  <Route path="/" render={() => <LoginView onLoggedIn={user => this.onLoggedIn(user)} />} />
+                  <Route exact path="/" render={() => <LoginView onLoggedIn={user => this.onLoggedIn(user)} />} />
                 </Col>
               </Row>
 
@@ -163,10 +160,7 @@ class MainView extends React.Component {
         <Router>
           <Navbar sticky="top" bg="light" expand="lg" className="main-navbar mb-3 shadow-sm p-3 mb-5">
             <Link to={"/"}>
-              <Navbar.Brand className="navbar-brand">
-                {" "}
-                <img alt="" src="../public/just_logo.png" width="30" height="30" className="d-inline-block align-top" /> My 1980s Movie API
-              </Navbar.Brand>
+              <Navbar.Brand className="navbar-brand">My 1980s Movie API</Navbar.Brand>
             </Link>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
@@ -228,11 +222,9 @@ class MainView extends React.Component {
     }
   }
 }
-
 // #3
 let mapStateToProps = state => {
   return { movies: state.movies, currentUser: state.currentUser };
 };
-
 // #4
 export default connect(mapStateToProps, { setMovies, setUser })(MainView);
