@@ -93,7 +93,7 @@
         </tr>
         <tr>
           <td>Allow users to add a movie to a list of favourites by ID</td>
-          <td>/users/[Username]/favourites</td>
+          <td>/users/[Username]/Movies/[MovieID]</td>
           <td>POST</td>
           <td>
             JSON object holding movie data, for example: { title: 'Red Heat', genre: 'action', director: 'Walter Hill', image URL: '****'',
@@ -103,7 +103,7 @@
         </tr>
         <tr>
           <td>Allow users to remove a movie from their list of favourites</td>
-          <td>/users/[Username]/favourites/</td>
+          <td>/users/[Username]/Movies/[MovieID]</td>
           <td>DELETE</td>
           <td>None</td>
           <td>Text message indicating that the relevant movie was deleted</td>
