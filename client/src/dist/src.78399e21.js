@@ -51577,7 +51577,9 @@ function LoginView(props) {
     className: "justify-content-center"
   }, _react.default.createElement(_reactBootstrap.Col, null, _react.default.createElement(_reactBootstrap.Container, {
     className: "login-container"
-  }, _react.default.createElement(_reactBootstrap.Form, null, _react.default.createElement(_reactBootstrap.Form.Group, {
+  }, _react.default.createElement("h3", {
+    className: "text-center"
+  }, "My 1980s Movies API - Login"), _react.default.createElement(_reactBootstrap.Form, null, _react.default.createElement(_reactBootstrap.Form.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_reactBootstrap.Form.Label, null, "Username"), _react.default.createElement(_reactBootstrap.Form.Control, {
     type: "text",
@@ -51699,7 +51701,9 @@ function RegistrationView(props) {
 
   return _react.default.createElement(_Container.default, {
     className: "registration-container"
-  }, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Group, {
+  }, _react.default.createElement("h3", {
+    className: "text-center"
+  }, "My 1980s Movies API - Sign up!"), _react.default.createElement("br", null), _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -52877,7 +52881,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53457" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53417" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

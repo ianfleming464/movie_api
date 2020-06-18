@@ -38,6 +38,8 @@ export function RegistrationView(props) {
 
   return (
     <Container className="registration-container">
+      <h3 className="text-center">My 1980s Movies API - Sign up!</h3>
+      <br></br>
       <Form>
         <Form.Group controlId="formBasicUsername">
           <Form.Control type="text" placeholder="Enter Username" value={username} onChange={e => createUsername(e.target.value)} />

@@ -34,6 +34,7 @@ export function LoginView(props) {
       <Row className="justify-content-center">
         <Col>
           <Container className="login-container">
+            <h3 className="text-center">My 1980s Movies API - Login</h3>
             <Form>
               <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username</Form.Label>
