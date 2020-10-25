@@ -10,13 +10,10 @@ const mongoose = require("mongoose");
 const path = require("path");
 
 // importing mongoose schemas
-/** @requires models.js, contains the data schema for this application */
 const Models = require("./models.js");
 
-/** @const Movies data schema for Movies object  */
 const Movies = Models.Movie;
 
-/** @const Users data schema for Users object  */
 const Users = Models.User;
 
 // Connect locally:
@@ -24,21 +21,6 @@ const Users = Models.User;
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true
 // });
-
-// Not showing up in JSDocs - not really necessary?
-/**
- * @class Router
- * @description Index.js manages all HTTP requests
- * @requires express, a server framework for Node.js
- * @requires body-parser, a parsing middleware for node.js that is needed to read HTTP POST data which is stored in req.body
- * @requires uuid, which generates user ids
- * @requires validator, Express middleware that provide validators sanitizer functions
- * @requires cors, Express middleware that manages the CORS settings (Cross-Origin-Resource-Sharing)
- * @const app encapsulate express functionality
- * @requires morgan, logger middleware function
- * @requires mongoose, an object data modeling library (ODM) for MongoDB database
- * @requires path, part of Node.js core, manages file and folder paths
- */
 
 // Connect API with online database:
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -71,7 +53,6 @@ app.use(bodyParser.json());
 let auth = require("./auth")(app);
 
 // Importing passport
-/** @requires passport, authentication middleware for Node.js */
 const passport = require("passport");
 require("./passport");
 
@@ -99,28 +80,64 @@ app.get("/", function(req, res) {
 
 /**
  * Returns a list of ALL movies to the user
- * @function GET /movies
- * @example response: JSON file, data of all movies:
+ * Endpoint: /movies
+ * GET request
+ * @method getMovies
+ * @param {string} endpoint - API endpoint
+ * @param {function} authorisation - Bearer token
+ * @example Request:
+ *   getMovies(token) {
+ *   axios
+ *     .get("https://my1980smoviesapi.herokuapp.com/movies", {
+ *       headers: { Authorization: `Bearer ${token}` }
+ *     })
+ *     .then(response => {
+ *       this.props.setMovies(response.data);
+ *     })
+ *     .catch(function(error) {
+ *       console.log(error);
+ *     });
+ * }
+ * @example Response: JSON file, data of all movies:
  *[
  *   {
- *     "Genre": {
- *       "Name": " ",
- *       "Description": " "
- *     },
- *     "Director": {
- *       "Name": " ",
- *       "Born": " ",
- *       "Biography": " "
- *     },
- *     "_id": "",
- *     "Title": "",
- *     "Description": ".",
- *     "ImagePath": "",
- *     "Year": " ",
- *     "Featured": ""
+ *       "Genre": {
+ *           "Name": "Comedy",
+ *           "Description": "A comedy film is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect. Films in this style traditionally have a happy ending (black comedy being an exception)"
+ *       },
+ *       "Director": {
+ *           "Name": "Jim Abrahams",
+ *           "Born": "May 10, 1944",
+ *           "Biography": "Jim Abrahams was born on May 10, 1944 in Shorewood, Wisconsin, USA, and is the son of an educational researcher and a lawyer. He attended Shorewood High School. He has a home in Eagle River, Wisconsin where he has spent summers since he was a child.  He is best known for the spoof movies that he co-wrote and produced with brothers Jerry Zucker and David Zucker, such as Airplane! (for which he was nominated for a BAFTA Award for Best Screenplay) and The Naked Gun series. The team of Zucker, Abrahams and Zucker (also referred to as \"ZAZ\") really began when the three men grew up together in Milwaukee, Wisconsin. He directed movies on his own, such as Big Business, and further honed his skills in parody with Hot Shots! and its 1993 sequel, Hot Shots! Part Deux.  Abrahams and his wife, Nancy (née Cocuzzo) co-founded The Charlie Foundation To Help Cure Pediatric Epilepsy. "
+ *       },
+ *       "Actors": [],
+ *       "_id": "5e8e31cca8f8ed3e8b4a2740",
+ *       "Title": "Airplane!",
+ *       "Description": "A man afraid to fly must ensure that a plane lands safely after the pilots become sick.",
+ *       "ImagePath": "https://image.tmdb.org/t/p/original/zOiB3p2WTTiwCFgTMnXuDGgzbTN.jpg",
+ *       "Year": "1980",
+ *       "Featured": false
  *   },
- *]
+ * {
+ *       "Genre": {
+ *           "Name": "Adventure",
+ *           "Description": "Adventure films are a genre of film that typically use their action scenes to display and explore exotic locations in an energetic way. Main plot elements include quests for lost continents and exotic setting; struggles and situations that confront the main characters, the creation of empires, characters embarking on treasure and heroic journeys, travels, explorations, quests and searches for the unknown usually also having to overcome an adversary."
+ *       },
+ *       "Director": {
+ *           "Name": "Rob Reiner",
+ *           "Born": "March 6, 1947",
+ *           "Biography": "Robert Reiner was born in New York City, to Estelle Reiner (née Lebost) and Emmy-winning actor, comedian, writer, and producer Carl Reiner.  As a child, he often looked up to his father as his inspiration and role-model. Carl Reiner was on The Dick Van Dyke Show, which he created and also starred in.   When Rob graduated high school, his parents advised him to participate in Summer Theatre. Reiner got a job as an apprentice in the Bucks County Playhouse in Pennsylvania. He went to be further educated at UCLA Film School. Reiner felt he still wasn't successful even having a recurring role on one of the biggest shows in the country, All in the Family. Reiner began his directing career with the Oscar-nominated films This Is Spinal Tap, Stand By Me, and The Princess Bride,.  With these successful box-office movies in 1987, Reiner founded his own production company, Castle Rock Entertainment, along with Martin Shafer, Andrew Scheinman, Glenn Padnick, and Alan Horn. For Castle Rock Entertainment, he went to direct the Oscar-nominated films When Harry Met Sally, Misery, and A Few Good Men. Reiner often credits former co-star Carroll O'Connor in helping him get into the directing business, and showing Reiner the ropes.  Reiner also is known as a political activist, co-founding the American Foundation For Equal Rights, a group that was an advisory for same-sex-marriage. Reiner has spoken at several rallies on several controversial topics, and is also seen as an advocate on social issues, such as domestic violence and tobacco use."
+ *       },
+ *       "Actors": [],
+ *       "_id": "5e8e3859a8f8ed3e8b4a2744",
+ *       "Title": "The Princess Bride",
+ *       "Description": "Adapted by William Goldman from his 1973 novel The Princess Bride, it tells the story of a farmhand named Westley, accompanied by companions befriended along the way, who must rescue his true love Princess Buttercup from the odious Prince Humperdinck.",
+ *       "ImagePath": "https://image.tmdb.org/t/p/original/dvjqlp2sAhUeFjUOfQDgqwpphHj.jpg",
+ *       "Year": "1987",
+ *       "Featured": false
+ *   }, etc.
  */
+
 app.get("/movies", passport.authenticate("jwt", { session: false }), (req, res) => {
   Movies.find()
     .then(movies => {
@@ -135,25 +152,24 @@ app.get("/movies", passport.authenticate("jwt", { session: false }), (req, res) 
 /**
  * Returns data about a single movie by title
  * @function GET /movies/:Title
- * @param title {string} - movie title
- * @example requests:
- * @example response: JSON file with movie information:
+ * @example Response: JSON file with movie information:
  *   {
- *     "Genre": {
- *       "Name": " ",
- *       "Description": " "
- *     }
- *     "Director": {
- *       "Name": " ",
- *       "Born": " ",
- *       "Biography": " "
- *     },
- *     "_id": "",
- *     "Title": "",
- *     "Description": ".",
- *     "ImagePath": "",
- *     "Year": " ",
- *     "Featured": ""
+ *       "Genre": {
+ *           "Name": "Comedy",
+ *           "Description": "A comedy film is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect. Films in this style traditionally have a happy ending (black comedy being an exception)"
+ *       },
+ *       "Director": {
+ *           "Name": "Jim Abrahams",
+ *           "Born": "May 10, 1944",
+ *           "Biography": "Jim Abrahams was born on May 10, 1944 in Shorewood, Wisconsin, USA, and is the son of an educational researcher and a lawyer. He attended Shorewood High School. He has a home in Eagle River, Wisconsin where he has spent summers since he was a child.  He is best known for the spoof movies that he co-wrote and produced with brothers Jerry Zucker and David Zucker, such as Airplane! (for which he was nominated for a BAFTA Award for Best Screenplay) and The Naked Gun series. The team of Zucker, Abrahams and Zucker (also referred to as \"ZAZ\") really began when the three men grew up together in Milwaukee, Wisconsin. He directed movies on his own, such as Big Business, and further honed his skills in parody with Hot Shots! and its 1993 sequel, Hot Shots! Part Deux.  Abrahams and his wife, Nancy (née Cocuzzo) co-founded The Charlie Foundation To Help Cure Pediatric Epilepsy. "
+ *       },
+ *       "Actors": [],
+ *       "_id": "5e8e31cca8f8ed3e8b4a2740",
+ *       "Title": "Airplane!",
+ *       "Description": "A man afraid to fly must ensure that a plane lands safely after the pilots become sick.",
+ *       "ImagePath": "https://image.tmdb.org/t/p/original/zOiB3p2WTTiwCFgTMnXuDGgzbTN.jpg",
+ *       "Year": "1980",
+ *       "Featured": false
  *   },
  */
 
@@ -170,15 +186,13 @@ app.get("/movies/:Title", passport.authenticate("jwt", { session: false }), (req
 
 /**
  * Returns genre description by name
- *
  * @function GET /movies/genres/:Name
  * @param Name {string} - genre name
- * @example response: JSON file with genre information:
- *   {
- *     "Genre": {
- *       "Name": " ",
- *       "Description": " "
- *     }
+ * @example Response: JSON file with genre information:
+ *       "Genre": {
+ *           "Name": "Comedy",
+ *           "Description": "A comedy film is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect. Films in this style traditionally have a happy ending (black comedy being an exception)"
+ *       },
  */
 
 app.get("/movies/genres/:Name", passport.authenticate("jwt", { session: false }), (req, res) => {
@@ -193,18 +207,17 @@ app.get("/movies/genres/:Name", passport.authenticate("jwt", { session: false })
 });
 
 /**
-* Returns director information by name
-  /**
-  * @function GET /movies/directors/:Name
-  * @param Name {string} name - director's name
-  * @example JSON file with director info:
-  *{
-  *   "Name": " ",
-  *   "Born": " ",
-  *   "Died": " ",
-  *   "Biography": " ",
-  * }
-*/
+ * Returns director information by name
+ * @function GET /movies/directors/:Name
+ * @param Name {string} name - director's name
+ * @example JSON file with director info:
+ *{
+ *   "Name": " ",
+ *   "Born": " ",
+ *   "Died": " ",
+ *   "Biography": " ",
+ * }
+ */
 
 app.get("/movies/directors/:Name", passport.authenticate("jwt", { session: false }), (req, res) => {
   Movies.findOne({ "Director.Name": req.params.Name })
@@ -218,17 +231,16 @@ app.get("/movies/directors/:Name", passport.authenticate("jwt", { session: false
 });
 
 /**
-* Add new user (i.e. Registration)
-  /**
-  * @function POST /users
-  * @example request body format JSON file:
-  *{
-  *   "Username": "",
-  *   "Password": "",
-  *   "Email": "",
-  *   "Birthday": "",
-  * }
-*/
+ * Add new user (i.e. Registration)
+ * @function POST /users
+ * @example request body format JSON file:
+ *{
+ *   "Username": "",
+ *   "Password": "",
+ *   "Email": "",
+ *   "Birthday": "",
+ * }
+ */
 
 app.post(
   "/users",
@@ -279,18 +291,17 @@ app.post(
 );
 
 /**
-* UPDATE info of a specific user
-  /**
-  * @function PUT /users/:Username
-  * @param username {string} username - username
-  * @example request body format JSON file:
-  *{
-  *   "Username": "",
-  *   "Password": "",
-  *   "Email": "",
-  *   "Birthday": "",
-  * }
-  */
+ * UPDATE info of a specific user
+ * @function PUT /users/:Username
+ * @param username {string} username - username
+ * @example request body format JSON file:
+ *{
+ *   "Username": "",
+ *   "Password": "",
+ *   "Email": "",
+ *   "Birthday": "",
+ * }
+ */
 
 app.put(
   "/users/:Username",
@@ -335,22 +346,21 @@ app.put(
 );
 
 /**
-* UPDATE/add movie to favourites list
-  /**
-  * @function PUT /users/:Username/Movies/:MovieID
-  * @param username {string} username - username
-  * @param id {string} id - user's id
-  * @example JSON file:
-  *{
-  *   "FavouriteMovies": [],
-  *   "_id": "",
-  *   "Username": "",
-  *   "Password": "",
-  *   "Email": "",
-  *   "Birthday": "",
-  *   "__v": 0
-  * }
-  */
+ * UPDATE/add movie to favourites list
+ * @function PUT /users/:Username/Movies/:MovieID
+ * @param username {string} username - username
+ * @param id {string} id - user's id
+ * @example JSON file:
+ *{
+ *   "FavouriteMovies": [],
+ *   "_id": "",
+ *   "Username": "",
+ *   "Password": "",
+ *   "Email": "",
+ *   "Birthday": "",
+ *   "__v": 0
+ * }
+ */
 
 app.post("/users/:Username/Movies/:MovieID", passport.authenticate("jwt", { session: false }), (req, res) => {
   Users.findOneAndUpdate(
@@ -398,8 +408,8 @@ app.delete("/users/:Username/Movies/:MovieID", passport.authenticate("jwt", { se
  * DELETE a user by username
  * @function DELETE /users/:Username
  * @param Username {string} username
- * @example  response:
- *[Username] was deleted.'
+ * @example  Response:
+ *[Username] was deleted.
  */
 
 app.delete("/users/:Username", passport.authenticate("jwt", { session: false }), (req, res) => {
