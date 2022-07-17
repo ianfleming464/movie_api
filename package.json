@@ -19,15 +19,15 @@
     "prettier": "^1.19.1"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "bcrypt": "^4.0.1",
+    "axios": "^0.21.2",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.5.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mongoose": "^5.9.19",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
