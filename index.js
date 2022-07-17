@@ -138,10 +138,9 @@ app.get("/", function(req, res) {
  *   }, etc.
  */
 
+//
 
-// passport.authenticate("jwt", { session: false }
-
-app.get("/movies"), (req, res) => {
+app.get("/movies", (req, res) => {
   Movies.find()
     .then(movies => {
       res.status(201).json(movies);
