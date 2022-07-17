@@ -17,13 +17,13 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 // Connect locally:
-// mongoose.connect("mongodb://localhost:27017/WaxOnWaxOffDB", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
+mongoose.connect("mongodb://localhost:27017/WaxOnWaxOffDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // Connect API with online database:
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // adding CORS - task requires from all origins (default)
 
@@ -138,7 +138,10 @@ app.get("/", function(req, res) {
  *   }, etc.
  */
 
-app.get("/movies", passport.authenticate("jwt", { session: false }), (req, res) => {
+
+// passport.authenticate("jwt", { session: false }
+
+app.get("/movies"), (req, res) => {
   Movies.find()
     .then(movies => {
       res.status(201).json(movies);
